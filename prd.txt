@@ -1,0 +1,31 @@
+# DOKUMEN PERANCANGAN & PENGEMBANGAN WEBSITE: PT AZZAM TAWAQAL BERKEMAJUAN ("LEZATMU")
+
+## 1. Profil & Identitas Perusahaan
+- **Nama Badan Usaha**: PT Azzam Tawaqal Berkemajuan (PT ATB)
+- **Afiliasi / Naungan**: Badan Usaha Milik Muhammadiyah (BUMM) binaan **Pimpinan Cabang Muhammadiyah (PCM) Serpong Utara**, Kota Tangerang Selatan, Banten.
+- **Merek Kuliner**: **LEZATMU**
+- **Jenis Website**: Company Profile & Interactive Food Catalog (Profil BUMM & Katalog Kuliner Inovasi Mie Sehat)
+- **Lokasi Resmi**: Kecamatan Serpong Utara, Kota Tangerang Selatan, Banten 15326 (Kawasan Alam Sutera, Graha Raya & sekitarnya).
+
+---
+
+## 2. Fitur Baru: Kelola Produk (Tambah, Edit, Upload Foto & Deskripsi)
+1. **Tambah Menu Produk Baru**:
+   - Form interaktif untuk menambahkan barang baru secara langsung ke katalog.
+   - Input: Nama Barang, Kategori Menu (Mie Utama, Camilan, Minuman), Upload Foto Barang (File lokal dari HP/Laptop dengan konversi Base64 atau URL tautan gambar), Deskripsi Rasa, Cerita Lengkap, Komposisi Bahan Utama, Slider Tingkat Pedas (0-5) & Tingkat Manis (0-5), Saran Penyajian, Info Higienis/Alergen, serta opsi menandai sebagai *Best Seller*.
+2. **Edit Menu Produk**:
+   - Kemampuan mengubah nama, foto hidangan, deskripsi rasa, tingkat kepedasan/kemanisan, dan bahan utama pada produk yang sudah ada.
+   - Tombol edit dapat diakses langsung dari kartu menu (melalui Mode Edit) maupun dari dalam jendela *Modal Detail Menu*.
+3. **Hapus Menu Produk**:
+   - Dialog konfirmasi hapus barang dari katalog secara aman.
+4. **Penyimpanan Lokal (LocalStorage Persistence)**:
+   - Seluruh penambahan, pengeditan, atau penghapusan produk tersimpan otomatis di *browser storage* pengguna sehingga data tidak hilang saat halaman di-*refresh*.
+   - Dilengkapi tombol *Reset Menu Bawaan* untuk mengembalikan daftar menu ke setelan standar PT Azzam Tawaqal Berkemajuan kapan saja.
+5. **Notifikasi Toast Interaktif**:
+   - Menampilkan umpan balik visual saat menu berhasil ditambahkan, diperbarui, dihapus, atau di-reset.
+
+---
+
+## 3. Aturan Utama Sistem
+- **TIDAK ADA** tombol keranjang belanja (Add to Cart), tombol Checkout, ataupun gerbang pembayaran (Payment Gateway).
+- Seluruh tombol aksi diarahkan ke **informasi detail produk mie** (Modal interaktif) dan tombol **Chat WhatsApp Resmi Admin Serpong Utara** untuk konsultasi porsi, katering, reseller, dan pemesanan.

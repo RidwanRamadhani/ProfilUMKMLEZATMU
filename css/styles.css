@@ -1,0 +1,206 @@
+/* ==========================================================================
+   PT AZZAM TAWAQAL BERKEMAJUAN (LEZATMU) - STYLESHEET & FALLBACK ENGINE
+   Ensures 100% reliable layout, colors, typography, animations, and components
+   ========================================================================== */
+
+/* CSS Variables */
+:root {
+  --brand-gold: #D4A373;
+  --brand-gold-light: #FAEDCD;
+  --brand-gold-dark: #B8860B;
+  --brand-brown: #4A3525;
+  --brand-brown-dark: #2E1F14;
+  --brand-brown-light: #6F533E;
+  --brand-cream: #FEFAE0;
+  --brand-cream-soft: #FDFBF7;
+  --brand-warm: #E9D8A6;
+  --brand-accent: #D9531E;
+  --brand-accent-hover: #B83E0E;
+}
+
+/* Base Reset & Typography */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #2E1F14;
+  background-color: #FDFBF7;
+}
+
+body {
+  background-color: #FDFBF7;
+  color: #2E1F14;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+button, input, select, textarea {
+  font-family: inherit;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #fdfbf7;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d4a373;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #b8860b;
+}
+
+/* Color Utilities (Fallback) */
+.bg-brand-cream-soft { background-color: #FDFBF7 !important; }
+.bg-brand-cream { background-color: #FEFAE0 !important; }
+.bg-brand-gold-light { background-color: #FAEDCD !important; }
+.bg-brand-gold { background-color: #D4A373 !important; }
+.bg-brand-brown { background-color: #4A3525 !important; }
+.bg-brand-brown-dark { background-color: #2E1F14 !important; }
+.bg-brand-accent { background-color: #D9531E !important; }
+.bg-brand-accent-hover:hover { background-color: #B83E0E !important; }
+
+.text-brand-brown-dark { color: #2E1F14 !important; }
+.text-brand-brown { color: #4A3525 !important; }
+.text-brand-brown-light { color: #6F533E !important; }
+.text-brand-gold { color: #D4A373 !important; }
+.text-brand-gold-light { color: #FAEDCD !important; }
+.text-brand-gold-dark { color: #B8860B !important; }
+.text-brand-accent { color: #D9531E !important; }
+
+.border-brand-gold { border-color: #D4A373 !important; }
+.border-brand-gold-light { border-color: #FAEDCD !important; }
+.border-brand-brown { border-color: #4A3525 !important; }
+
+/* Font Serif Class */
+.font-serif {
+  font-family: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif !important;
+}
+
+.font-sans {
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+}
+
+/* Animations */
+@keyframes scaleUp {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes bounceSlow {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-bounce-slow {
+  animation: bounceSlow 3.5s ease-in-out infinite;
+}
+
+/* Navigation Links */
+.nav-link {
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #D9531E !important;
+}
+
+.nav-link.active-link {
+  color: #D9531E !important;
+  border-bottom: 2px solid #D9531E;
+}
+
+/* Modals */
+#productModal, #articleModal, #productFormModal, #deleteConfirmModal {
+  transition: opacity 0.25s ease;
+}
+
+/* Taste Indicators */
+.spicy-flame-active {
+  color: #e63946 !important;
+  fill: #e63946 !important;
+}
+
+.spicy-flame-inactive {
+  color: #d1d5db !important;
+  fill: #f3f4f6 !important;
+}
+
+.sweet-drop-active {
+  color: #d97706 !important;
+  fill: #f59e0b !important;
+}
+
+.sweet-drop-inactive {
+  color: #d1d5db !important;
+  fill: #f3f4f6 !important;
+}
+
+/* Line clamp support */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Range input styling */
+input[type=range] {
+  height: 6px;
+  border-radius: 5px;
+  background: #e5e7eb;
+}
+
+/* Shadows */
+.shadow-warm {
+  box-shadow: 0 10px 30px -10px rgba(74, 53, 37, 0.12);
+}
+
+.shadow-warm-lg {
+  box-shadow: 0 20px 40px -15px rgba(74, 53, 37, 0.2);
+}
