@@ -100,57 +100,93 @@ const culinaryData = {
 
   articles: {
     "article-1": {
-      title: "Mengenal Inovasi Mi Sehat LezatMU: Keunggulan Tepung Mocaf & Kunyit Alami",
-      category: "Tips Pangan Sehat",
-      date: "5 Oktober 2026",
+      title: "Menghadirkan Kehangatan Klasik yang Menyehatkan dengan Mi Instan LezatMU Rasa Ayam Bawang",
+      category: "Varian Ayam Bawang",
+      date: "12 Oktober 2026",
       readTime: "4 Menit",
       image: "images/mi-ayam-bawang.jpg",
       content: `
-        <p class="mb-4">Mi instan adalah makanan favorit masyarakat. PT Azzam Tawaqal Berkemajuan (LEZATMU) di Serpong Utara menghadirkan terobosan mi instan yang lebih sehat dan aman dikonsumsi harian.</p>
-        
-        <h4 class="font-serif font-bold text-lg text-brand-brown-dark mb-2">1. Inovasi Tepung Mocaf (Modified Cassava Flour)</h4>
-        <p class="mb-4">Menggunakan perpaduan tepung mocaf berkualitas tinggi yang kaya serat pangan alami, membantu menjaga kesehatan pencernaan dan lebih ramah bagi lambung.</p>
-        
-        <h4 class="font-serif font-bold text-lg text-brand-brown-dark mb-2">2. Warna Kuning Alami dari Ekstrak Kunyit</h4>
-        <p class="mb-4">Tanpa menggunakan pewarna sintetis buatan (seperti tartrazin). Warna alami mi murni bersumber dari ekstrak kunyit alami yang kaya antioksidan kurkumin.</p>
+        <p class="mb-4">Kehadiran mi instan di tengah masyarakat modern telah menjadi bagian dari gaya hidup yang serbapraktis. Namun, kesadaran masyarakat yang semakin tinggi terhadap kesehatan membuat banyak orang mulai selektif dalam memilih makanan cepat saji. Menjawab kebutuhan tersebut, <strong>Mi Instan LezatMU Rasa Ayam Bawang</strong> hadir sebagai solusi cerdas yang memadukan kelezatan rasa klasik dengan kebaikan bahan-bahan alami pilihan.</p>
 
-        <h4 class="font-serif font-bold text-lg text-brand-brown-dark mb-2">3. Aman Dikonsumsi Kapan Saja</h4>
-        <p class="mb-4">Diproduksi secara higienis dengan standar halal penuh BPJPH & MUI di bawah naungan BUMM PCM Serpong Utara, Kota Tangerang Selatan.</p>
+        <h4 class="font-serif font-bold text-lg text-brand-brown-dark mb-2">Inovasi Mi Sehat Berkualitas Tinggi</h4>
+        <p class="mb-4">Berbeda dari mi instan pada umumnya, Mi Instan LezatMU diproduksi oleh <strong>PT Azam Tawaqal Berkemajuan (ATB)</strong> dengan formulasi khusus yang mengutamakan kesehatan konsumen. Produk ini menggunakan <strong>campuran tepung terigu berkualitas yang dipadukan dengan tepung mocaf (<em>Modified Cassava Flour</em>)</strong>. Penggunaan tepung mocaf lokal tidak hanya memberikan tekstur yang khas, tetapi juga meningkatkan kandungan serat serta menjadikan mi ini lebih ramah bagi pencernaan dan rendah gluten (<em>low gluten</em>).</p>
+
+        <p class="mb-4">Selain itu, warna kuning alami yang memikat pada mi ini bukan berasal dari pewarna sintetis kimiawi, melainkan dari <strong>ekstrak kunyit murni</strong>. Kunyit dikenal luas memiliki berbagai khasiat alami, sehingga memberikan nilai tambah kesehatan di setiap bungkusnya. Mi Instan LezatMU juga diproduksi tanpa bahan pengawet berbahaya serta bebas dari penggunaan penguat rasa berlebihan (non-MSG), menjadikannya pilihan aman untuk dikonsumsi oleh seluruh anggota keluarga.</p>
+
+        <h4 class="font-serif font-bold text-lg text-brand-brown-dark mb-2">Cita Rasa Kaldu Ayam Bawang yang Otentik dan Menenangkan</h4>
+        <p class="mb-4">Varian <strong>Rasa Ayam Bawang</strong> dirancang khusus bagi para pencinta kuliner yang merindukan cita rasa gurih yang hangat dan menenangkan. Kombinasi bumbu kaldu ayam yang kaya rempah berpadu sempurna dengan keharuman bawang yang khas, menciptakan aroma yang langsung menggugah selera sejak bungkusan dibuka.</p>
+
+        <p class="mb-4">Kuah gurihnya terasa pas di lidah—tidak terlalu pekat namun memiliki kedalaman rasa yang memuaskan. Sangat nikmat disajikan selagi hangat, terutama saat cuaca dingin, hari yang melelahkan, atau ketika Anda membutuhkan hidangan praktis yang menghangatkan tubuh.</p>
+
+        <h4 class="font-serif font-bold text-lg text-brand-brown-dark mb-2">Keunggulan Utama Mi Instan LezatMU Rasa Ayam Bawang:</h4>
+        <ul class="list-disc list-inside mb-4 space-y-2 text-xs sm:text-sm">
+          <li><strong>Bahan Dasar Berkualitas:</strong> Perpaduan tepung terigu pilihan dan tepung mocaf lokal yang kaya serat.</li>
+          <li><strong>Pewarna Alami:</strong> Memanfaatkan ekstrak kunyit murni tanpa tambahan zat pewarna sintetis.</li>
+          <li><strong>Lebih Aman:</strong> Tanpa bahan pengawet dan diformulasikan tanpa penguat rasa berlebihan.</li>
+          <li><strong>Praktis dan Bergizi:</strong> Menghadirkan kelezatan rasa ayam bawang klasik yang ramah dikonsumsi sehari-hari.</li>
+        </ul>
+
+        <p class="mb-2 italic">Jadikan <strong>Mi Instan LezatMU Rasa Ayam Bawang</strong> sebagai menu andalan di dapur Anda untuk menikmati waktu santai yang lezat sekaligus menyehatkan.</p>
       `
     },
     "article-2": {
-      title: "Di Balik Produksi Mi Instan LezatMU: Kemandirian Ekonomi Umat PCM Serpong Utara",
-      category: "Behind The Scene",
-      date: "28 September 2026",
+      title: "Nikmatnya Mi Goreng Tanpa Rasa Bersalah Bersama Mi Instan LezatMU Mi Goreng",
+      category: "Varian Mi Goreng",
+      date: "12 Oktober 2026",
       readTime: "5 Menit",
       image: "images/mi-goreng.jpg",
       content: `
-        <p class="mb-4">Pimpinan Cabang Muhammadiyah (PCM) Serpong Utara membuktikan bahwa kemandirian ekonomi umat dapat diwujudkan melalui unit usaha riil berbasis produk pangan pokok berkualitas.</p>
-        
-        <h4 class="font-serif font-bold text-lg text-brand-brown-dark mb-2">3 Varian Andalan Mi Instan LezatMU</h4>
-        <p class="mb-4">Kini hadir 3 varian pilihan: <strong>Rasa Ayam Bawang</strong> dengan kaldu gurih klasik, <strong>Mi Goreng</strong> dengan bumbu rempah nusantara istimewa, dan <strong>Kuah Rasa Soto</strong> yang segar menghangatkan.</p>
-        
-        <h4 class="font-serif font-bold text-lg text-brand-brown-dark mb-2">Dari Serpong Utara untuk Seluruh Nusantara</h4>
-        <p class="mb-4">Distribusi produk terus meluas melalui jaringan toko ritel Sunmartmu, agen kemitraan, serta pemesanan langsung melalui admin resmi WhatsApp.</p>
+        <p class="mb-4">Bagi masyarakat Indonesia, mi goreng menduduki posisi istimewa sebagai salah satu makanan favorit di segala suasana. Mulai dari menu sarapan cepat, teman lembur di malam hari, hingga sajian santai di akhir pekan. Namun, kekhawatiran akan kandungan bahan kimia, pengawet, dan minyak berlebih sering kali membuat penikmat mi harus membatasi diri. Kini, Anda dapat menikmati hidangan favorit tanpa rasa khawatir melalui <strong>Mi Instan LezatMU Mi Goreng</strong>.</p>
+
+        <h4 class="font-serif font-bold text-lg text-brand-brown-dark mb-2">Komposisi Sehat Berbasis Tepung Mocaf dan Kunyit Alami</h4>
+        <p class="mb-4">Diproduksi di bawah naungan <strong>PT Azam Tawaqal Berkemajuan (ATB)</strong>, Mi Instan LezatMU Mi Goreng membawa standar baru dalam industri makanan instan di Indonesia. Komposisi utamanya diformulasikan dari <strong>campuran tepung terigu dan tepung mocaf (<em>Modified Cassava Flour</em>)</strong>, sebuah inovasi pangan lokal yang kaya akan serat alami dan lebih ramah bagi sistem pencernaan.</p>
+
+        <p class="mb-4">Komitmen terhadap kesehatan juga dibuktikan dengan proses produksinya yang <strong>tanpa menggunakan pewarna sintetis</strong> dan <strong>tanpa bahan pengawet</strong>. Warna kuning cerah pada mi didapatkan secara alami dari <strong>ekstrak kunyit murni</strong>. Hal ini menjadikan Mi Instan LezatMU Mi Goreng sebagai pilihan cerdas bagi Anda yang ingin menerapkan gaya hidup sehat tanpa harus mengorbankan kenikmatan kuliner.</p>
+
+        <h4 class="font-serif font-bold text-lg text-brand-brown-dark mb-2">Kelezatan Bumbu Rempah Nusantara yang Kaya Rasa</h4>
+        <p class="mb-4">Dari segi rasa, varian mi goreng ini tidak kalah bersaing dengan produk konvensional. Mi Instan LezatMU Mi Goreng menawarkan tekstur mi yang kenyal, lembut, dan tidak mudah lembek saat dimasak.</p>
+
+        <p class="mb-4">Dipadukan dengan racikan bumbu mi goreng khas Nusantara yang kaya rempah, minyak bumbu yang harum, serta kecap berkualitas, setiap suapannya menghadirkan perpaduan rasa gurih, manis, dan sedap yang pas di lidah. Aroma bumbu yang semerbak saat diaduk siap membangkitkan selera makan siapa saja yang menciumnya.</p>
+
+        <h4 class="font-serif font-bold text-lg text-brand-brown-dark mb-2">Keunggulan Utama Mi Instan LezatMU Mi Goreng:</h4>
+        <ul class="list-disc list-inside mb-4 space-y-2 text-xs sm:text-sm">
+          <li><strong>Inovasi Pangan Sehat:</strong> Menggunakan tepung mocaf yang kaya serat dan mendukung produk lokal.</li>
+          <li><strong>Tanpa Zat Sintetis:</strong> Bebas dari pewarna buatan dan bahan pengawet kimia.</li>
+          <li><strong>Pewarna Alami Kunyit:</strong> Mengandalkan kebaikan ekstrak kunyit untuk warna mi yang alami dan menarik.</li>
+          <li><strong>Cita Rasa Autentik:</strong> Bumbu rempah pilihan yang menghasilkan rasa mi goreng lezat, gurih, dan memuaskan.</li>
+        </ul>
+
+        <p class="mb-2 italic">Nikmati momen bersantap yang lebih berkualitas dan menenangkan bersama keluarga dengan menyajikan kelezatan <strong>Mi Instan LezatMU Mi Goreng</strong>.</p>
       `
     },
     "article-3": {
-      title: "PT Azzam Tawaqal Berkemajuan Buka Kemitraan Reseller Mi Instan LezatMU",
-      category: "Event & Kemitraan",
-      date: "15 Oktober 2026",
-      readTime: "3 Menit",
+      title: "Kesegaran Rempah Tradisional Nusantara dalam Semangkuk Mi Instan LezatMU Kuah Rasa Soto",
+      category: "Varian Kuah Soto",
+      date: "12 Oktober 2026",
+      readTime: "4 Menit",
       image: "images/mi-kuah-soto.jpg",
       content: `
-        <p class="mb-4">PT Azzam Tawaqal Berkemajuan membuka peluang kemitraan bagi agen sembako, warung ritel, toko kelontong, dan komunitas di wilayah Tangerang Selatan, Jabodetabek, dan sekitarnya.</p>
-        
-        <h4 class="font-serif font-bold text-lg text-brand-brown-dark mb-2">Keunggulan Kemitraan Mi Instan LezatMU:</h4>
-        <ul class="list-disc list-inside mb-4 space-y-2 text-sm">
-          <li><strong>Produk Halal & Berizin Resmi:</strong> Kualitas terjamin dengan standar BPJPH & MUI.</li>
-          <li><strong>Diferensiasi Produk Sehat:</strong> Menggunakan tepung mocaf dan kunyit alami yang diminati konsumen sadar kesehatan.</li>
-          <li><strong>Dukungan Promosi & Distribusi:</strong> Layanan konsultasi cepat dan pengiriman terorganisir dari sentra PCM Serpong Utara.</li>
+        <p class="mb-4">Soto adalah salah satu mahakarya kuliner Indonesia yang terkenal dengan kekayaan rempah, kuah yang gurih, serta aroma yang menyegarkan. Kelezatan khas inilah yang diadopsi kedalam semangkuk <strong>Mi Instan LezatMU Kuah Rasa Soto</strong>, menghadirkan kehangatan masakan tradisional yang praktis disajikan di rumah Anda.</p>
+
+        <h4 class="font-serif font-bold text-lg text-brand-brown-dark mb-2">Standar Kualitas Tinggi dengan Bahan Alami Pilihan</h4>
+        <p class="mb-4">Sebagai bagian dari lini produk mi sehat <strong>PT Azam Tawaqal Berkemajuan (ATB)</strong>, varian Kuah Rasa Soto dibuat dengan dedikasi tinggi terhadap kesehatan konsumen. Mi ini diracik menggunakan <strong>campuran tepung terigu dan tepung mocaf (<em>Modified Cassava Flour</em>)</strong>. Penggunaan tepung mocaf memberikan keunggulan berupa kandungan serat yang lebih baik serta tekstur mi yang mantap saat dikonsumsi.</p>
+
+        <p class="mb-4">Keunggulan utama lainnya terletak pada komitmen produk untuk <strong>tidak menggunakan pewarna sintetis</strong> maupun <strong>bahan pengawet</strong>. Warna kuning alami mi diperoleh secara higienis dari <strong>ekstrak kunyit</strong>, sehingga aman dikonsumsi secara rutin oleh berbagai kalangan usia. Tanpa tambahan penguat rasa berlebihan, produk ini dirancang untuk memberikan rasa yang lezat secara natural.</p>
+
+        <h4 class="font-serif font-bold text-lg text-brand-brown-dark mb-2">Kuah Soto yang Gurih, Segar, dan Kaya Rempah</h4>
+        <p class="mb-4">Varian Kuah Rasa Soto menawarkan pengalaman kuliner yang memanjakan indra perasa. Bumbu soto instannya diracik dari perpaduan rempah-rempah pilihan seperti serai, kunyit, bawang putih, dan daun jeruk yang menghasilkan aroma harum khas soto nusantara.</p>
+
+        <p class="mb-4">Ketika diseduh, kuahnya memunculkan warna kekuningan yang menggugah selera dengan rasa kaldu yang gurih, segar, dan tidak membuat enek. Sangat cocok dinikmati saat cuaca hujan, ketika badan terasa kurang fit, atau sekadar sebagai hidangan <em>comfort food</em> yang menghangatkan suasana bersama keluarga tercinta.</p>
+
+        <h4 class="font-serif font-bold text-lg text-brand-brown-dark mb-2">Keunggulan Utama Mi Instan LezatMU Kuah Rasa Soto:</h4>
+        <ul class="list-disc list-inside mb-4 space-y-2 text-xs sm:text-sm">
+          <li><strong>Formulasi Sehat Berbasis Mocaf:</strong> Kaya serat dan menggunakan bahan baku berkualitas tinggi.</li>
+          <li><strong>100% Pewarna Alami Kunyit:</strong> Tanpa pewarna buatan atau bahan kimia berbahaya.</li>
+          <li><strong>Bebas Pengawet:</strong> Diproduksi secara higienis dan aman untuk konsumsi harian keluarga.</li>
+          <li><strong>Cita Rasa Soto Autentik:</strong> Kuah rempah yang gurih, harum, dan menyegarkan selera.</li>
         </ul>
 
-        <p class="mb-4">Hubungi WhatsApp resmi kami di 0896-6825-1739 untuk informasi katalog karton dan harga kemitraan agen!</p>
+        <p class="mb-2 italic">Hadirkan kehangatan cita rasa tradisional yang menyehatkan di meja makan Anda dengan memilih <strong>Mi Instan LezatMU Kuah Rasa Soto</strong>.</p>
       `
     }
   }
