@@ -3,6 +3,9 @@
    Ensures 100% reliable layout, colors, typography, animations, and components
    ========================================================================== */
 
+/* Import Google Fonts directly to prevent any external CDN blocking */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap');
+
 /* CSS Variables */
 :root {
   --brand-gold: #D4A373;
@@ -27,7 +30,7 @@
 
 html {
   scroll-behavior: smooth;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
   color: #2E1F14;
   background-color: #FDFBF7;
 }
@@ -35,7 +38,7 @@ html {
 body {
   background-color: #FDFBF7;
   color: #2E1F14;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
