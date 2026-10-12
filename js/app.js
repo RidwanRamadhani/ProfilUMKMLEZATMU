@@ -349,7 +349,16 @@ function initCatalog() {
   const closeAdminPinBtn = document.getElementById("closeAdminPinBtn");
   const cancelAdminPinBtn = document.getElementById("cancelAdminPinBtn");
   const openAddBtn = document.getElementById("openAddProductBtn");
-  const adminLockIcon = document.getElementById("adminLockIcon");
+  const adminDedicatedPanel = document.getElementById("adminDedicatedPanel");
+  const exitAdminPanelBtn = document.getElementById("exitAdminPanelBtn");
+
+  const navAdminBtn = document.getElementById("navAdminBtn");
+  const navAdminLabel = document.getElementById("navAdminLabel");
+  const navAdminLockIcon = document.getElementById("navAdminLockIcon");
+
+  const mobileAdminBtn = document.getElementById("mobileAdminBtn");
+  const mobileAdminLabel = document.getElementById("mobileAdminLabel");
+  const mobileAdminLockIcon = document.getElementById("mobileAdminLockIcon");
 
   function closeAdminPinModal() {
     if (adminPinModal) {
@@ -375,37 +384,49 @@ function initCatalog() {
   }
 
   function updateAdminModeUI() {
-    const label = document.getElementById("adminToggleLabel");
-    const badge = document.getElementById("adminModeActiveBadge");
-
     if (isAdminMode) {
-      toggleAdminBtn.classList.add("bg-emerald-100", "border-emerald-400", "text-emerald-900");
-      toggleAdminBtn.classList.remove("bg-brand-cream-soft", "text-brand-brown");
-      if (label) label.textContent = "Keluar Mode Admin";
-      if (adminLockIcon) adminLockIcon.setAttribute("data-lucide", "lock-open");
-      if (badge) badge.classList.remove("hidden");
-      if (openAddBtn) {
-        openAddBtn.classList.remove("hidden");
-        openAddBtn.classList.add("inline-flex");
+      // 1. Tampilkan Panel Khusus Admin di dalam katalog
+      if (adminDedicatedPanel) {
+        adminDedicatedPanel.classList.remove("hidden");
       }
-      if (resetDefaultDataBtn) {
-        resetDefaultDataBtn.classList.remove("hidden");
-        resetDefaultDataBtn.classList.add("inline-flex");
+
+      // 2. Ubah Status Tombol di Navbar Desktop
+      if (navAdminBtn) {
+        navAdminBtn.classList.add("bg-emerald-100", "border-emerald-400", "text-emerald-900");
+        navAdminBtn.classList.remove("bg-brand-cream-soft", "text-brand-brown");
       }
+      if (navAdminLabel) navAdminLabel.textContent = "Keluar Admin";
+      if (navAdminLockIcon) navAdminLockIcon.setAttribute("data-lucide", "lock-open");
+
+      // 3. Ubah Status Tombol di Mobile Menu
+      if (mobileAdminBtn) {
+        mobileAdminBtn.classList.add("bg-emerald-100", "border-emerald-400", "text-emerald-900");
+        mobileAdminBtn.classList.remove("bg-brand-cream-soft", "text-brand-brown");
+      }
+      if (mobileAdminLabel) mobileAdminLabel.textContent = "Keluar Mode Admin";
+      if (mobileAdminLockIcon) mobileAdminLockIcon.setAttribute("data-lucide", "lock-open");
+
     } else {
-      toggleAdminBtn.classList.remove("bg-emerald-100", "border-emerald-400", "text-emerald-900");
-      toggleAdminBtn.classList.add("bg-brand-cream-soft", "text-brand-brown");
-      if (label) label.textContent = "Mode Admin";
-      if (adminLockIcon) adminLockIcon.setAttribute("data-lucide", "lock");
-      if (badge) badge.classList.add("hidden");
-      if (openAddBtn) {
-        openAddBtn.classList.add("hidden");
-        openAddBtn.classList.remove("inline-flex");
+      // 1. Sembunyikan Panel Khusus Admin di katalog untuk pengunjung umum
+      if (adminDedicatedPanel) {
+        adminDedicatedPanel.classList.add("hidden");
       }
-      if (resetDefaultDataBtn) {
-        resetDefaultDataBtn.classList.add("hidden");
-        resetDefaultDataBtn.classList.remove("inline-flex");
+
+      // 2. Kembalikan Status Tombol di Navbar Desktop
+      if (navAdminBtn) {
+        navAdminBtn.classList.remove("bg-emerald-100", "border-emerald-400", "text-emerald-900");
+        navAdminBtn.classList.add("bg-brand-cream-soft", "text-brand-brown");
       }
+      if (navAdminLabel) navAdminLabel.textContent = "Mode Admin";
+      if (navAdminLockIcon) navAdminLockIcon.setAttribute("data-lucide", "lock");
+
+      // 3. Kembalikan Status Tombol di Mobile Menu
+      if (mobileAdminBtn) {
+        mobileAdminBtn.classList.remove("bg-emerald-100", "border-emerald-400", "text-emerald-900");
+        mobileAdminBtn.classList.add("bg-brand-cream-soft", "text-brand-brown");
+      }
+      if (mobileAdminLabel) mobileAdminLabel.textContent = "Mode Admin (Pengelola)";
+      if (mobileAdminLockIcon) mobileAdminLockIcon.setAttribute("data-lucide", "lock");
     }
 
     initLucide();
@@ -413,19 +434,24 @@ function initCatalog() {
     renderBestSellers();
   }
 
-  if (toggleAdminBtn) {
-    toggleAdminBtn.addEventListener("click", () => {
-      if (isAdminMode) {
-        // Logout langsung tanpa perlu PIN
-        isAdminMode = false;
-        updateAdminModeUI();
-        showToast("Mode Admin telah dinonaktifkan.", "info");
-      } else {
-        // Meminta PIN 2026 tanpa bocoran contoh
-        openAdminPinModal();
-      }
-    });
-  }
+  // Handler Klik Tombol Mode Admin (Navbar Desktop & Mobile)
+  const handleAdminToggleClick = () => {
+    if (isAdminMode) {
+      isAdminMode = false;
+      updateAdminModeUI();
+      showToast("Mode Admin telah dinonaktifkan.", "info");
+    } else {
+      openAdminPinModal();
+    }
+  };
+
+  if (navAdminBtn) navAdminBtn.addEventListener("click", handleAdminToggleClick);
+  if (mobileAdminBtn) mobileAdminBtn.addEventListener("click", handleAdminToggleClick);
+  if (exitAdminPanelBtn) exitAdminPanelBtn.addEventListener("click", () => {
+    isAdminMode = false;
+    updateAdminModeUI();
+    showToast("Mode Admin dinonaktifkan. Katalog kembali ke tampilan umum.", "info");
+  });
 
   if (closeAdminPinBtn) closeAdminPinBtn.addEventListener("click", closeAdminPinModal);
   if (cancelAdminPinBtn) cancelAdminPinBtn.addEventListener("click", closeAdminPinModal);
