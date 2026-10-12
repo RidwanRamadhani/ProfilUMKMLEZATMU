@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderArticles();
   initCatalog();
   initProductFormManagement();
+  initSupabaseManagement();
   initSyncManagement();
   initModals();
   initConsultationForm();
@@ -34,14 +35,15 @@ function initLucide() {
   }
 }
 
-// 0. Data Initialization with LocalStorage Persistence & Cloud Sync
+// 0. Data Initialization with Supabase Realtime Fetch & LocalStorage Fallback
 const CURRENT_CATALOG_VERSION = "lezatmu_v3_official";
 const CLOUD_DB_KEY = "lezatmu_cloud_db_url_v1";
 
-function initProductData() {
+async function initProductData() {
   const version = localStorage.getItem("lezatmu_catalog_ver");
   const stored = localStorage.getItem("lezatmu_products_data_v3");
   
+  // 1. Tampilkan dulu data dari cache / baseline agar halaman tidak menunggu layar kosong
   if (version === CURRENT_CATALOG_VERSION && stored) {
     try {
       productsList = JSON.parse(stored);
@@ -50,15 +52,61 @@ function initProductData() {
       productsList = [...culinaryData.products];
     }
   } else {
-    // Otomatis bersihkan data lama dan pasang menu resmi terbaru
     localStorage.removeItem("lezatmu_products_data");
     productsList = [...culinaryData.products];
     localStorage.setItem("lezatmu_catalog_ver", CURRENT_CATALOG_VERSION);
     saveProductsToStorage(false);
   }
 
-  // Cek apakah ada Cloud Database URL terhubung untuk sinkronisasi otomatis
+  // Render tampilan awal
+  renderCatalogGrid();
+  renderBestSellers();
+
+  // 2. Fetch data realtime dari Supabase Cloud Database (HP A, HP B, dan semua perangkat)
+  await fetchProductsFromSupabase(false);
+
+  // 3. Fallback sync sekunder jika ada REST endpoint cloud lain terpasang
   checkAndSyncFromCloud(true);
+}
+
+// Fetch produk langsung dari tabel Supabase
+async function fetchProductsFromSupabase(showToastOnSuccess = false) {
+  if (typeof getSupabaseClient !== "function") return;
+  const sb = getSupabaseClient();
+  if (!sb) return;
+
+  try {
+    const { data, error } = await sb
+      .from("products")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.warn("Supabase fetch warning:", error.message);
+      if (showToastOnSuccess) showToast("Koneksi Supabase: " + error.message, "error");
+      return;
+    }
+
+    if (data && data.length > 0) {
+      // Petakan baris Supabase menjadi objek produk
+      productsList = data.map(formatProductFromDb);
+      // Simpan ke local cache untuk performa offline
+      localStorage.setItem("lezatmu_products_data_v3", JSON.stringify(productsList));
+      renderCatalogGrid();
+      renderBestSellers();
+      if (showToastOnSuccess) {
+        showToast(`Berhasil mengambil ${data.length} menu langsung dari Supabase Cloud!`, "success");
+      }
+    } else if (data && data.length === 0) {
+      console.log("Tabel products di Supabase masih kosong.");
+      if (showToastOnSuccess) {
+        showToast("Tabel Supabase masih kosong. Anda dapat mengklik tombol 'Isi Menu Awal (Seed)'.", "info");
+      }
+    }
+  } catch (err) {
+    console.warn("Koneksi Supabase error:", err);
+    if (showToastOnSuccess) showToast("Koneksi Supabase gagal: " + err.message, "error");
+  }
 }
 
 function saveProductsToStorage(syncCloud = true) {
@@ -885,7 +933,7 @@ function initProductFormManagement() {
         // Edit Mode
         const index = productsList.findIndex(p => p.id === editId);
         if (index !== -1) {
-          productsList[index] = {
+          const updatedProduct = {
             ...productsList[index],
             name,
             category,
@@ -901,10 +949,29 @@ function initProductFormManagement() {
             isBestSeller,
             whyFavorite: isBestSeller ? (whyFavorite || "Racikan bumbu rempah otentik dan mie mocaf yang kenyal sempurna.") : ""
           };
+
+          productsList[index] = updatedProduct;
           showToast(`Menu "${name}" berhasil diperbarui!`, "success");
+
+          // PERBARUI DI SUPABASE (Update)
+          if (typeof getSupabaseClient === "function") {
+            const sb = getSupabaseClient();
+            if (sb) {
+              sb.from("products").update(formatProductForDb(updatedProduct)).eq("id", editId).then(({ error }) => {
+                if (error) {
+                  console.error("Supabase update error:", error);
+                  showToast(`Update lokal sukses, gagal sync Supabase: ${error.message}`, "warning");
+                } else {
+                  showToast(`Menu "${name}" berhasil diperbarui di Supabase & otomatis tersinkron ke semua HP!`, "success");
+                }
+              }).catch(err => {
+                console.error("Gagal update ke Supabase:", err);
+              });
+            }
+          }
         }
       } else {
-        // Create New Product Mode
+        // Create New Product Mode (Insert)
         const newId = `mie-${Date.now()}`;
         const newProduct = {
           id: newId,
@@ -929,6 +996,24 @@ function initProductFormManagement() {
 
         productsList.unshift(newProduct);
         showToast(`Menu baru "${name}" berhasil ditambahkan ke katalog!`, "success");
+
+        // SIMPAN KE SUPABASE (Insert)
+        if (typeof getSupabaseClient === "function") {
+          const sb = getSupabaseClient();
+          if (sb) {
+            sb.from("products").insert([formatProductForDb(newProduct)]).then(({ error }) => {
+              if (error) {
+                console.error("Supabase insert error:", error);
+                showToast(`Menu tersimpan lokal, namun gagal sync Supabase: ${error.message}`, "warning");
+              } else {
+                showToast(`Menu "${name}" berhasil disimpan di Supabase & otomatis tampil di semua HP!`, "success");
+              }
+            }).catch(err => {
+              console.error("Gagal koneksi Supabase:", err);
+              showToast(`Gagal kirim ke Supabase: ${err.message}`, "warning");
+            });
+          }
+        }
       }
 
       saveProductsToStorage();
@@ -956,11 +1041,28 @@ function initProductFormManagement() {
       if (pendingDeleteProductId) {
         const item = productsList.find(p => p.id === pendingDeleteProductId);
         const name = item ? item.name : "Menu";
+        const deleteId = pendingDeleteProductId;
         productsList = productsList.filter(p => p.id !== pendingDeleteProductId);
         saveProductsToStorage();
         renderCatalogGrid();
         renderBestSellers();
         showToast(`Menu "${name}" berhasil dihapus dari katalog.`, "warning");
+
+        // HAPUS DARI SUPABASE (Delete)
+        if (typeof getSupabaseClient === "function") {
+          const sb = getSupabaseClient();
+          if (sb) {
+            sb.from("products").delete().eq("id", deleteId).then(({ error }) => {
+              if (error) {
+                console.error("Supabase delete error:", error);
+              } else {
+                showToast(`Menu "${name}" berhasil dihapus dari database online Supabase.`, "warning");
+              }
+            }).catch(err => {
+              console.error("Gagal delete Supabase:", err);
+            });
+          }
+        }
       }
       deleteModal.classList.add("hidden");
       deleteModal.classList.remove("flex");
@@ -1846,5 +1948,209 @@ const culinaryData = {
       URL.revokeObjectURL(url);
       showToast("Berkas data.js berhasil diunduh!", "success");
     });
+  }
+}
+
+// 11. Supabase Cloud Database Management & Helper Handlers
+function initSupabaseManagement() {
+  const openBtn = document.getElementById("openSupabaseModalBtn");
+  const modal = document.getElementById("supabaseModal");
+  const closeBtn = document.getElementById("closeSupabaseModalBtn");
+
+  const urlInput = document.getElementById("sbUrlInput");
+  const keyInput = document.getElementById("sbKeyInput");
+  const saveBtn = document.getElementById("saveSupabaseCredentialsBtn");
+  const fetchBtn = document.getElementById("fetchFromSupabaseBtn");
+  const seedBtn = document.getElementById("seedSupabaseBtn");
+  const quickTestBtn = document.getElementById("quickTestSupabaseBtn");
+  const copySqlBtn = document.getElementById("copySqlScriptBtn");
+  const sqlScriptText = document.getElementById("sqlScriptText");
+
+  const statusCard = document.getElementById("supabaseStatusCard");
+  const statusDot = document.getElementById("supabaseStatusDot");
+  const statusTitle = document.getElementById("supabaseStatusTitle");
+  const statusDesc = document.getElementById("supabaseStatusDesc");
+
+  const SQL_SCRIPT = `-- 1. Buat Tabel products untuk Mi Instan LezatMU
+CREATE TABLE IF NOT EXISTS products (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  category TEXT NOT NULL DEFAULT 'utama',
+  category_label TEXT,
+  image TEXT,
+  taste_description TEXT,
+  full_story TEXT,
+  main_ingredients JSONB DEFAULT '[]'::JSONB,
+  spice_level INT DEFAULT 0,
+  sweet_level INT DEFAULT 0,
+  serving_suggestion TEXT,
+  allergens TEXT,
+  is_best_seller BOOLEAN DEFAULT FALSE,
+  badge TEXT,
+  portions_sold TEXT DEFAULT '100+',
+  rating NUMERIC DEFAULT 4.9,
+  review_count INT DEFAULT 10,
+  why_favorite TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::TEXT, NOW()),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::TEXT, NOW())
+);
+
+-- 2. Aktifkan Row Level Security (RLS)
+ALTER TABLE products ENABLE ROW LEVEL SECURITY;
+
+-- 3. Kebijakan: Semua orang / HP B bisa melihat menu (SELECT)
+CREATE POLICY "Public Read Access" 
+ON products FOR SELECT 
+USING (true);
+
+-- 4. Kebijakan: Mode Admin bisa menambah menu (INSERT)
+CREATE POLICY "Public Insert Access" 
+ON products FOR INSERT 
+WITH CHECK (true);
+
+-- 5. Kebijakan: Mode Admin bisa mengedit menu (UPDATE)
+CREATE POLICY "Public Update Access" 
+ON products FOR UPDATE 
+USING (true);
+
+-- 6. Kebijakan: Mode Admin bisa menghapus menu (DELETE)
+CREATE POLICY "Public Delete Access" 
+ON products FOR DELETE 
+USING (true);`;
+
+  if (sqlScriptText) {
+    sqlScriptText.value = SQL_SCRIPT;
+  }
+
+  const updateStatusUI = () => {
+    const configured = typeof isSupabaseConfigured === "function" && isSupabaseConfigured();
+    const currentUrl = localStorage.getItem("lezatmu_supabase_url") || "";
+
+    if (configured) {
+      if (statusCard) {
+        statusCard.className = "p-4 rounded-2xl border flex items-center justify-between text-xs transition bg-emerald-50 border-emerald-300 text-emerald-950";
+      }
+      if (statusDot) {
+        statusDot.className = "w-3 h-3 rounded-full bg-emerald-500";
+      }
+      if (statusTitle) statusTitle.textContent = "Status: Terhubung ke Supabase Cloud";
+      if (statusDesc) statusDesc.textContent = `Project URL: ${currentUrl.substring(0, 32)}... (Data tersinkron otomatis ke semua HP)`;
+    } else {
+      if (statusCard) {
+        statusCard.className = "p-4 rounded-2xl border flex items-center justify-between text-xs transition bg-amber-50 border-amber-200 text-amber-950";
+      }
+      if (statusDot) {
+        statusDot.className = "w-3 h-3 rounded-full bg-amber-500 animate-pulse";
+      }
+      if (statusTitle) statusTitle.textContent = "Status: Belum Terhubung (Mode Lokal)";
+      if (statusDesc) statusDesc.textContent = "Masukkan Project URL & Anon Key di bawah ini agar tersinkron ke semua perangkat.";
+    }
+  };
+
+  if (openBtn) {
+    openBtn.addEventListener("click", () => {
+      if (!isAdminMode) {
+        showToast("Akses ditolak: Masuk Mode Admin dengan PIN 2026 terlebih dahulu.", "warning");
+        return;
+      }
+      if (urlInput) urlInput.value = localStorage.getItem("lezatmu_supabase_url") || "";
+      if (keyInput) keyInput.value = localStorage.getItem("lezatmu_supabase_anon_key") || "";
+      updateStatusUI();
+      if (modal) {
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+        document.body.style.overflow = "hidden";
+      }
+      initLucide();
+    });
+  }
+
+  const closeModal = () => {
+    if (modal) {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      document.body.style.overflow = "";
+    }
+  };
+
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+  }
+
+  if (saveBtn) {
+    saveBtn.addEventListener("click", async () => {
+      const url = urlInput ? urlInput.value.trim() : "";
+      const key = keyInput ? keyInput.value.trim() : "";
+
+      if (!url || !key) {
+        showToast("Mohon masukkan Project URL dan Anon Key Supabase yang lengkap.", "warning");
+        return;
+      }
+
+      if (typeof saveSupabaseCredentials === "function") {
+        saveSupabaseCredentials(url, key);
+      }
+      updateStatusUI();
+      showToast("Kredensial Supabase berhasil disimpan! Sedang menguji koneksi...", "info");
+      await fetchProductsFromSupabase(true);
+    });
+  }
+
+  if (fetchBtn) {
+    fetchBtn.addEventListener("click", async () => {
+      await fetchProductsFromSupabase(true);
+    });
+  }
+
+  if (quickTestBtn) {
+    quickTestBtn.addEventListener("click", async () => {
+      await fetchProductsFromSupabase(true);
+      updateStatusUI();
+    });
+  }
+
+  if (seedBtn) {
+    seedBtn.addEventListener("click", () => {
+      if (confirm("Unggah 3 varian menu resmi bawaan LezatMU ke tabel database Supabase sekarang?")) {
+        seedDefaultProductsToSupabase();
+      }
+    });
+  }
+
+  if (copySqlBtn && sqlScriptText) {
+    copySqlBtn.addEventListener("click", () => {
+      sqlScriptText.select();
+      navigator.clipboard.writeText(SQL_SCRIPT).then(() => {
+        showToast("Skrip SQL berhasil disalin! Buka menu SQL Editor di Supabase lalu klik Run.", "success");
+      }).catch(() => {
+        document.execCommand("copy");
+        showToast("Skrip SQL berhasil disalin!", "success");
+      });
+    });
+  }
+}
+
+// Helper: Seed Default Products to Supabase
+async function seedDefaultProductsToSupabase() {
+  if (typeof getSupabaseClient !== "function") return;
+  const sb = getSupabaseClient();
+  if (!sb) {
+    showToast("Supabase belum terhubung. Simpan Project URL dan Anon Key terlebih dahulu.", "warning");
+    return;
+  }
+
+  showToast("Sedang mengunggah 3 menu resmi LezatMU ke Supabase...", "info");
+  try {
+    const payloads = culinaryData.products.map(formatProductForDb);
+    const { error } = await sb.from("products").upsert(payloads, { onConflict: "id" });
+    if (error) throw error;
+    showToast("3 menu resmi berhasil diunggah ke database online Supabase!", "success");
+    await fetchProductsFromSupabase(true);
+  } catch (err) {
+    console.error("Gagal seed Supabase:", err);
+    showToast("Gagal mengunggah menu awal: " + err.message, "error");
   }
 }

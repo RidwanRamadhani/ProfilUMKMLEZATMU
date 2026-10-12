@@ -667,26 +667,37 @@
                   <span>+ Tambah Menu Baru</span>
                 </button>
 
-                <!-- Tombol Sinkronisasi Antar HP / Cloud -->
+                <!-- Tombol Supabase Database Cloud -->
+                <button 
+                  id="openSupabaseModalBtn" 
+                  type="button"
+                  class="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-md transition hover:scale-105"
+                  title="Pengaturan koneksi Supabase agar menu tersinkron otomatis di HP A dan HP B"
+                >
+                  <i data-lucide="database" class="w-3.5 h-3.5 text-emerald-300"></i>
+                  <span>⚡ Database Supabase</span>
+                </button>
+
+                <!-- Tombol Sinkronisasi Antar HP / Cadangan -->
                 <button 
                   id="openSyncModalBtn" 
                   type="button"
-                  class="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md transition hover:scale-105"
-                  title="Sinkronisasi menu antar HP (HP A ke HP B) atau hubungkan Cloud Database"
+                  class="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md transition hover:scale-105"
+                  title="Sinkronisasi manual atau kirim kode menu ke HP B"
                 >
                   <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
-                  <span>Sinkronisasi Antar HP</span>
+                  <span>Transfer Manual Antar HP</span>
                 </button>
 
                 <!-- Tombol Ekspor Kode data.js Permanen -->
                 <button 
                   id="openExportDataBtn" 
                   type="button"
-                  class="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-md transition hover:scale-105"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-brand-brown-dark hover:bg-brand-brown text-white text-xs font-bold shadow-md transition hover:scale-105"
                   title="Simpan menu secara permanen ke server / unduh data.js"
                 >
-                  <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                  <span>Simpan Permanen ke Server</span>
+                  <i data-lucide="download" class="w-3.5 h-3.5 text-brand-gold"></i>
+                  <span>Simpan Permanen data.js</span>
                 </button>
               </div>
 
@@ -1613,6 +1624,108 @@
     </div>
   </div>
 
+  <!-- MODAL INTEGRASI SUPABASE CLOUD DATABASE -->
+  <div id="supabaseModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-7 border-2 border-emerald-500 shadow-2xl relative animate-scale-up space-y-5 my-6 max-h-[90vh] overflow-y-auto">
+      
+      <!-- Close Button -->
+      <button id="closeSupabaseModalBtn" type="button" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-brand-brown-dark flex items-center justify-center transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+          <i data-lucide="database" class="w-6 h-6 text-emerald-600"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-xl text-brand-brown-dark">Integrasi Supabase Database</h3>
+          <p class="text-xs text-brand-brown-light">Database cloud terpusat agar menu langsung sinkron di HP A, HP B &amp; semua pengunjung.</p>
+        </div>
+      </div>
+
+      <!-- Status Bar -->
+      <div id="supabaseStatusCard" class="p-4 rounded-2xl border flex items-center justify-between text-xs transition bg-amber-50 border-amber-200 text-amber-950">
+        <div class="flex items-center gap-2.5">
+          <span id="supabaseStatusDot" class="w-3 h-3 rounded-full bg-amber-500 animate-pulse"></span>
+          <div>
+            <strong id="supabaseStatusTitle" class="block font-bold">Status: Belum Terhubung</strong>
+            <span id="supabaseStatusDesc" class="text-[11px] text-amber-800">Saat ini menu masih disimpan di penyimpanan lokal browser.</span>
+          </div>
+        </div>
+        <button id="quickTestSupabaseBtn" type="button" class="px-3 py-1.5 rounded-lg bg-white border border-amber-300 font-bold text-[11px] hover:bg-amber-100 transition shadow-sm">
+          Cek Koneksi
+        </button>
+      </div>
+
+      <!-- Credential Form -->
+      <div class="space-y-3.5 bg-brand-cream-soft/60 p-4 rounded-2xl border border-brand-gold-light/60">
+        <h4 class="font-heading font-bold text-xs uppercase tracking-wider text-brand-brown-dark flex items-center gap-1.5">
+          <i data-lucide="key" class="w-4 h-4 text-emerald-600"></i>
+          <span>Kredensial API Supabase Proyek Anda</span>
+        </h4>
+
+        <div>
+          <label for="sbUrlInput" class="block text-xs font-bold text-brand-brown-dark mb-1">
+            Project URL (https://xxxx.supabase.co) <span class="text-brand-accent">*</span>
+          </label>
+          <input 
+            type="url" 
+            id="sbUrlInput" 
+            placeholder="Contoh: https://xyzcompany.supabase.co" 
+            class="w-full px-3.5 py-2.5 rounded-xl border border-brand-gold/50 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white font-mono"
+          >
+        </div>
+
+        <div>
+          <label for="sbKeyInput" class="block text-xs font-bold text-brand-brown-dark mb-1">
+            API Anon Public Key (eyJhbGci...) <span class="text-brand-accent">*</span>
+          </label>
+          <input 
+            type="password" 
+            id="sbKeyInput" 
+            placeholder="Tempelkan Anon / Public Key Supabase di sini" 
+            class="w-full px-3.5 py-2.5 rounded-xl border border-brand-gold/50 text-xs focus:ring-2 focus:ring-emerald-500 focus:outline-none bg-white font-mono"
+          >
+          <p class="text-[10px] text-brand-brown-light mt-1">Ditemukan di Supabase: <em>Project Settings &rarr; Data API &rarr; Project API keys (anon public)</em>.</p>
+        </div>
+
+        <div class="flex flex-wrap gap-2 pt-1">
+          <button id="saveSupabaseCredentialsBtn" type="button" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5">
+            <i data-lucide="save" class="w-4 h-4"></i>
+            <span>Simpan &amp; Hubungkan</span>
+          </button>
+          <button id="fetchFromSupabaseBtn" type="button" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5">
+            <i data-lucide="download-cloud" class="w-4 h-4"></i>
+            <span>Tarik Menu Supabase</span>
+          </button>
+          <button id="seedSupabaseBtn" type="button" class="px-3.5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-md transition flex items-center gap-1.5" title="Kirim 3 menu bawaan LezatMU ke tabel Supabase jika masih kosong">
+            <i data-lucide="upload-cloud" class="w-4 h-4"></i>
+            <span>Isi Menu Awal (Seed)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SQL Guide & Quick Script -->
+      <div class="p-4 bg-gray-50 rounded-2xl border border-gray-200 text-xs space-y-2.5">
+        <div class="flex items-center justify-between">
+          <span class="font-bold text-gray-800 flex items-center gap-1.5">
+            <i data-lucide="code" class="w-4 h-4 text-emerald-600"></i>
+            <span>Skrip SQL Tabel `products` Supabase:</span>
+          </span>
+          <button id="copySqlScriptBtn" type="button" class="text-emerald-700 hover:text-emerald-900 font-bold flex items-center gap-1 text-[11px]">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+            <span>Salin SQL</span>
+          </button>
+        </div>
+        <p class="text-[11px] text-gray-600 leading-relaxed">
+          Buka menu <strong>SQL Editor</strong> di dashboard Supabase Anda, tempelkan skrip ini lalu klik <strong>Run</strong> untuk membuat tabel dan mengaktifkan akses publik:
+        </p>
+        <textarea id="sqlScriptText" readonly rows="4" class="w-full p-2.5 font-mono text-[10px] bg-white border border-gray-300 rounded-lg text-gray-700 select-all"></textarea>
+      </div>
+
+    </div>
+  </div>
+
   <!-- MODAL SINKRONISASI ANTAR HP & CLOUD DATABASE -->
   <div id="syncModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
     <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-7 border-2 border-brand-gold shadow-2xl relative animate-scale-up space-y-5 my-6 max-h-[90vh] overflow-y-auto">
@@ -1807,7 +1920,9 @@
   </div>
 
   <!-- JavaScript Scripts -->
-  <script src="js/data.js?v=20261013a"></script>
-  <script src="js/app.js?v=20261013a"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-config.js?v=20261013b"></script>
+  <script src="js/data.js?v=20261013b"></script>
+  <script src="js/app.js?v=20261013b"></script>
 </body>
 </html>
