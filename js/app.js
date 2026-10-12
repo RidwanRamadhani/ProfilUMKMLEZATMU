@@ -33,9 +33,13 @@ function initLucide() {
 }
 
 // 0. Data Initialization with LocalStorage Persistence
+const CURRENT_CATALOG_VERSION = "lezatmu_v3_official";
+
 function initProductData() {
-  const stored = localStorage.getItem("lezatmu_products_data");
-  if (stored) {
+  const version = localStorage.getItem("lezatmu_catalog_ver");
+  const stored = localStorage.getItem("lezatmu_products_data_v3");
+  
+  if (version === CURRENT_CATALOG_VERSION && stored) {
     try {
       productsList = JSON.parse(stored);
     } catch (e) {
@@ -43,13 +47,16 @@ function initProductData() {
       productsList = [...culinaryData.products];
     }
   } else {
+    // Otomatis bersihkan data lama dan pasang 3 menu resmi terbaru
+    localStorage.removeItem("lezatmu_products_data");
     productsList = [...culinaryData.products];
+    localStorage.setItem("lezatmu_catalog_ver", CURRENT_CATALOG_VERSION);
     saveProductsToStorage();
   }
 }
 
 function saveProductsToStorage() {
-  localStorage.setItem("lezatmu_products_data", JSON.stringify(productsList));
+  localStorage.setItem("lezatmu_products_data_v3", JSON.stringify(productsList));
 }
 
 // Helper: Toast Notifications
