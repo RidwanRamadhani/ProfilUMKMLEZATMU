@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderArticles();
   initCatalog();
   initProductFormManagement();
+  initSyncManagement();
   initModals();
   initConsultationForm();
   initScrollSpy();
@@ -33,8 +34,9 @@ function initLucide() {
   }
 }
 
-// 0. Data Initialization with LocalStorage Persistence
+// 0. Data Initialization with LocalStorage Persistence & Cloud Sync
 const CURRENT_CATALOG_VERSION = "lezatmu_v3_official";
+const CLOUD_DB_KEY = "lezatmu_cloud_db_url_v1";
 
 function initProductData() {
   const version = localStorage.getItem("lezatmu_catalog_ver");
@@ -48,16 +50,74 @@ function initProductData() {
       productsList = [...culinaryData.products];
     }
   } else {
-    // Otomatis bersihkan data lama dan pasang 3 menu resmi terbaru
+    // Otomatis bersihkan data lama dan pasang menu resmi terbaru
     localStorage.removeItem("lezatmu_products_data");
     productsList = [...culinaryData.products];
     localStorage.setItem("lezatmu_catalog_ver", CURRENT_CATALOG_VERSION);
-    saveProductsToStorage();
+    saveProductsToStorage(false);
+  }
+
+  // Cek apakah ada Cloud Database URL terhubung untuk sinkronisasi otomatis
+  checkAndSyncFromCloud(true);
+}
+
+function saveProductsToStorage(syncCloud = true) {
+  localStorage.setItem("lezatmu_products_data_v3", JSON.stringify(productsList));
+  if (syncCloud) {
+    syncToCloudDb(productsList);
   }
 }
 
-function saveProductsToStorage() {
-  localStorage.setItem("lezatmu_products_data_v3", JSON.stringify(productsList));
+// Helper: Sync from Cloud Database
+async function checkAndSyncFromCloud(silent = true) {
+  const cloudUrl = localStorage.getItem(CLOUD_DB_KEY);
+  if (!cloudUrl) return;
+
+  try {
+    const resp = await fetch(cloudUrl, { cache: "no-store" });
+    if (!resp.ok) throw new Error(`Status ${resp.status}`);
+    const data = await resp.json();
+    let remoteProducts = null;
+
+    if (Array.isArray(data)) {
+      remoteProducts = data;
+    } else if (data && Array.isArray(data.products)) {
+      remoteProducts = data.products;
+    } else if (data && typeof data === "object") {
+      const vals = Object.values(data).filter(item => item && item.id && item.name);
+      if (vals.length > 0) remoteProducts = vals;
+    }
+
+    if (remoteProducts && remoteProducts.length > 0) {
+      productsList = remoteProducts;
+      localStorage.setItem("lezatmu_products_data_v3", JSON.stringify(productsList));
+      renderCatalogGrid();
+      renderBestSellers();
+      if (!silent) showToast("Katalog menu berhasil disinkronkan dari Cloud Database!", "success");
+    }
+  } catch (e) {
+    console.warn("Cloud sync check failed:", e);
+    if (!silent) showToast("Gagal menyinkronkan dari Cloud: " + e.message, "error");
+  }
+}
+
+// Helper: Sync to Cloud Database
+async function syncToCloudDb(products) {
+  const cloudUrl = localStorage.getItem(CLOUD_DB_KEY);
+  if (!cloudUrl) return;
+
+  try {
+    const resp = await fetch(cloudUrl, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(products)
+    });
+    if (resp.ok) {
+      showToast("Data menu berhasil disinkronkan ke Cloud Database!", "success");
+    }
+  } catch (e) {
+    console.warn("Gagal simpan ke Cloud Database:", e);
+  }
 }
 
 // Helper: Toast Notifications
@@ -1472,4 +1532,319 @@ function initScrollSpy() {
       }
     });
   });
+}
+
+// 10. Cross-Device Synchronization & Server Export Management
+function initSyncManagement() {
+  const openSyncBtn = document.getElementById("openSyncModalBtn");
+  const syncModal = document.getElementById("syncModal");
+  const closeSyncBtn = document.getElementById("closeSyncModalBtn");
+
+  const tabExportBtn = document.getElementById("syncTabExportBtn");
+  const tabImportBtn = document.getElementById("syncTabImportBtn");
+  const tabCloudBtn = document.getElementById("syncTabCloudBtn");
+
+  const tabExport = document.getElementById("syncTabExport");
+  const tabImport = document.getElementById("syncTabImport");
+  const tabCloud = document.getElementById("syncTabCloud");
+
+  const syncExportCode = document.getElementById("syncExportCode");
+  const syncExportCount = document.getElementById("syncExportCount");
+  const copySyncCodeBtn = document.getElementById("copySyncCodeBtn");
+  const shareSyncWaBtn = document.getElementById("shareSyncWaBtn");
+
+  const syncImportInput = document.getElementById("syncImportInput");
+  const applySyncImportBtn = document.getElementById("applySyncImportBtn");
+
+  const cloudDbUrlInput = document.getElementById("cloudDbUrlInput");
+  const cloudDbStatusText = document.getElementById("cloudDbStatusText");
+  const saveCloudDbBtn = document.getElementById("saveCloudDbBtn");
+  const testCloudDbBtn = document.getElementById("testCloudDbBtn");
+  const resetCloudDbBtn = document.getElementById("resetCloudDbBtn");
+
+  // Export Data Modal Elements
+  const openExportBtn = document.getElementById("openExportDataBtn");
+  const exportDataModal = document.getElementById("exportDataModal");
+  const closeExportBtn = document.getElementById("closeExportDataModalBtn");
+  const exportDataJsCode = document.getElementById("exportDataJsCode");
+  const copyDataJsBtn = document.getElementById("copyDataJsBtn");
+  const downloadDataJsBtn = document.getElementById("downloadDataJsBtn");
+
+  // Helper to switch tabs
+  const setTab = (activeTab) => {
+    [tabExport, tabImport, tabCloud].forEach(el => {
+      if (el) el.classList.add("hidden");
+    });
+    [tabExportBtn, tabImportBtn, tabCloudBtn].forEach(btn => {
+      if (btn) {
+        btn.classList.remove("border-blue-600", "text-blue-700", "font-bold");
+        btn.classList.add("border-transparent", "text-gray-500", "font-semibold");
+      }
+    });
+
+    if (activeTab === "export" && tabExport && tabExportBtn) {
+      tabExport.classList.remove("hidden");
+      tabExportBtn.classList.add("border-blue-600", "text-blue-700", "font-bold");
+      tabExportBtn.classList.remove("border-transparent", "text-gray-500");
+    } else if (activeTab === "import" && tabImport && tabImportBtn) {
+      tabImport.classList.remove("hidden");
+      tabImportBtn.classList.add("border-blue-600", "text-blue-700", "font-bold");
+      tabImportBtn.classList.remove("border-transparent", "text-gray-500");
+    } else if (activeTab === "cloud" && tabCloud && tabCloudBtn) {
+      tabCloud.classList.remove("hidden");
+      tabCloudBtn.classList.add("border-blue-600", "text-blue-700", "font-bold");
+      tabCloudBtn.classList.remove("border-transparent", "text-gray-500");
+    }
+  };
+
+  if (tabExportBtn) tabExportBtn.addEventListener("click", () => setTab("export"));
+  if (tabImportBtn) tabImportBtn.addEventListener("click", () => setTab("import"));
+  if (tabCloudBtn) tabCloudBtn.addEventListener("click", () => setTab("cloud"));
+
+  // Helper to generate sync payload
+  const generateSyncPayload = () => {
+    try {
+      const jsonStr = JSON.stringify(productsList);
+      const b64 = btoa(unescape(encodeURIComponent(jsonStr)));
+      return `lezatmu_sync_v1:${b64}`;
+    } catch (e) {
+      return JSON.stringify(productsList);
+    }
+  };
+
+  // Helper to update sync export text
+  const refreshSyncExportText = () => {
+    if (syncExportCount) syncExportCount.textContent = productsList.length;
+    if (syncExportCode) syncExportCode.value = generateSyncPayload();
+  };
+
+  // Open & Close Sync Modal
+  if (openSyncBtn) {
+    openSyncBtn.addEventListener("click", () => {
+      if (!isAdminMode) {
+        showToast("Akses ditolak: Silakan masuk Mode Admin dengan PIN 2026 terlebih dahulu.", "warning");
+        return;
+      }
+      refreshSyncExportText();
+      const currentUrl = localStorage.getItem(CLOUD_DB_KEY) || "";
+      if (cloudDbUrlInput) cloudDbUrlInput.value = currentUrl;
+      if (cloudDbStatusText) {
+        if (currentUrl) {
+          cloudDbStatusText.textContent = `Terhubung: ${currentUrl.substring(0, 35)}...`;
+          cloudDbStatusText.className = "font-bold text-emerald-700";
+        } else {
+          cloudDbStatusText.textContent = "Mode Lokal (Memori Browser)";
+          cloudDbStatusText.className = "font-bold text-amber-700";
+        }
+      }
+      setTab("export");
+      if (syncModal) {
+        syncModal.classList.remove("hidden");
+        syncModal.classList.add("flex");
+        document.body.style.overflow = "hidden";
+      }
+      initLucide();
+    });
+  }
+
+  const closeSync = () => {
+    if (syncModal) {
+      syncModal.classList.add("hidden");
+      syncModal.classList.remove("flex");
+      document.body.style.overflow = "";
+    }
+  };
+
+  if (closeSyncBtn) closeSyncBtn.addEventListener("click", closeSync);
+  if (syncModal) {
+    syncModal.addEventListener("click", (e) => {
+      if (e.target === syncModal) closeSync();
+    });
+  }
+
+  // Copy Sync Code
+  if (copySyncCodeBtn && syncExportCode) {
+    copySyncCodeBtn.addEventListener("click", () => {
+      syncExportCode.select();
+      navigator.clipboard.writeText(syncExportCode.value).then(() => {
+        showToast("Kode sinkronisasi berhasil disalin ke clipboard! Kirimkan ke HP B.", "success");
+      }).catch(() => {
+        document.execCommand("copy");
+        showToast("Kode sinkronisasi berhasil disalin!", "success");
+      });
+    });
+  }
+
+  // Share via WhatsApp
+  if (shareSyncWaBtn && syncExportCode) {
+    shareSyncWaBtn.addEventListener("click", () => {
+      const code = syncExportCode.value;
+      const count = productsList.length;
+      const waMsg = `*KODE SINKRONISASI MENU LEZATMU (${count} MENU)*\n\nSalin kode di bawah ini, buka web LezatMU di HP B, masuk Mode Admin (PIN 2026), lalu pilih *Sinkronisasi Antar HP* -> *2. Pasang di HP B*:\n\n${code}`;
+      const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(waMsg)}`;
+      window.open(waUrl, "_blank");
+    });
+  }
+
+  // Apply Imported Code on HP B
+  if (applySyncImportBtn && syncImportInput) {
+    applySyncImportBtn.addEventListener("click", () => {
+      const raw = syncImportInput.value.trim();
+      if (!raw) {
+        showToast("Silakan tempelkan kode sinkronisasi terlebih dahulu.", "warning");
+        return;
+      }
+
+      let parsed = null;
+      try {
+        if (raw.startsWith("lezatmu_sync_v1:")) {
+          const b64 = raw.replace("lezatmu_sync_v1:", "");
+          const decoded = decodeURIComponent(escape(atob(b64)));
+          parsed = JSON.parse(decoded);
+        } else {
+          parsed = JSON.parse(raw);
+        }
+      } catch (e) {
+        showToast("Kode sinkronisasi tidak valid. Mohon salin ulang dari HP A.", "error");
+        return;
+      }
+
+      if (!Array.isArray(parsed) || parsed.length === 0) {
+        showToast("Format data menu tidak sesuai.", "error");
+        return;
+      }
+
+      // Update product list
+      productsList = parsed;
+      saveProductsToStorage(true);
+      renderCatalogGrid();
+      renderBestSellers();
+      showToast(`Berhasil! ${parsed.length} menu berhasil dipasang dan tersimpan di HP ini.`, "success");
+      syncImportInput.value = "";
+      closeSync();
+    });
+  }
+
+  // Cloud DB handlers
+  if (saveCloudDbBtn && cloudDbUrlInput) {
+    saveCloudDbBtn.addEventListener("click", () => {
+      const url = cloudDbUrlInput.value.trim();
+      if (!url) {
+        showToast("Masukkan URL Cloud Database yang valid.", "warning");
+        return;
+      }
+      localStorage.setItem(CLOUD_DB_KEY, url);
+      if (cloudDbStatusText) {
+        cloudDbStatusText.textContent = `Terhubung: ${url.substring(0, 35)}...`;
+        cloudDbStatusText.className = "font-bold text-emerald-700";
+      }
+      showToast("URL Cloud Database berhasil disimpan!", "success");
+      syncToCloudDb(productsList);
+    });
+  }
+
+  if (testCloudDbBtn) {
+    testCloudDbBtn.addEventListener("click", async () => {
+      showToast("Sedang mencoba menyinkronkan dengan Cloud...", "info");
+      await checkAndSyncFromCloud(false);
+    });
+  }
+
+  if (resetCloudDbBtn && cloudDbUrlInput) {
+    resetCloudDbBtn.addEventListener("click", () => {
+      localStorage.removeItem(CLOUD_DB_KEY);
+      cloudDbUrlInput.value = "";
+      if (cloudDbStatusText) {
+        cloudDbStatusText.textContent = "Mode Lokal (Memori Browser)";
+        cloudDbStatusText.className = "font-bold text-amber-700";
+      }
+      showToast("URL Cloud Database telah dihapus. Kembali ke Mode Lokal.", "info");
+    });
+  }
+
+  // Export data.js handlers
+  const generateDataJsContent = () => {
+    const productsJson = JSON.stringify(productsList, null, 2);
+    const testimonialsJson = JSON.stringify(culinaryData.testimonials, null, 2);
+    const articlesJson = JSON.stringify(culinaryData.articles, null, 2);
+
+    return `/**
+ * Database Data for PT Azzam Tawaqal Berkemajuan (LEZATMU)
+ * BUMM PCM Serpong Utara, Kota Tangerang Selatan, Banten
+ * Produk Resmi: Mi Instan LezatMU Sehat Berbahan Mocaf & Kunyit Alami
+ * Terakhir Diperbarui: ${new Date().toLocaleDateString('id-ID', { dateStyle: 'full' })}
+ */
+
+const culinaryData = {
+  products: ${productsJson},
+
+  testimonials: ${testimonialsJson},
+
+  articles: ${articlesJson}
+};
+`;
+  };
+
+  if (openExportBtn) {
+    openExportBtn.addEventListener("click", () => {
+      if (!isAdminMode) {
+        showToast("Akses ditolak: Silakan masuk Mode Admin dengan PIN 2026 terlebih dahulu.", "warning");
+        return;
+      }
+      if (exportDataJsCode) {
+        exportDataJsCode.value = generateDataJsContent();
+      }
+      if (exportDataModal) {
+        exportDataModal.classList.remove("hidden");
+        exportDataModal.classList.add("flex");
+        document.body.style.overflow = "hidden";
+      }
+      initLucide();
+    });
+  }
+
+  const closeExport = () => {
+    if (exportDataModal) {
+      exportDataModal.classList.add("hidden");
+      exportDataModal.classList.remove("flex");
+      document.body.style.overflow = "";
+    }
+  };
+
+  if (closeExportBtn) closeExportBtn.addEventListener("click", closeExport);
+  if (exportDataModal) {
+    exportDataModal.addEventListener("click", (e) => {
+      if (e.target === exportDataModal) closeExport();
+    });
+  }
+
+  // Copy data.js
+  if (copyDataJsBtn && exportDataJsCode) {
+    copyDataJsBtn.addEventListener("click", () => {
+      exportDataJsCode.select();
+      navigator.clipboard.writeText(exportDataJsCode.value).then(() => {
+        showToast("Kode berkas data.js berhasil disalin! Tinggal ditempel ke file js/data.js.", "success");
+      }).catch(() => {
+        document.execCommand("copy");
+        showToast("Kode berkas data.js berhasil disalin!", "success");
+      });
+    });
+  }
+
+  // Download data.js
+  if (downloadDataJsBtn && exportDataJsCode) {
+    downloadDataJsBtn.addEventListener("click", () => {
+      const content = exportDataJsCode.value;
+      const blob = new Blob([content], { type: "application/javascript;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "data.js";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast("Berkas data.js berhasil diunduh!", "success");
+    });
+  }
 }

@@ -651,7 +651,7 @@
           <!-- Admin-Only Dedicated Management Bar (HANYA MUNCUL DI DALAM KETIKA ADMIN BERHASIL MASUK DENGAN PIN 2026) -->
           <div id="adminDedicatedPanel" class="hidden mt-4 pt-4 border-t-2 border-dashed border-amber-300 bg-amber-50/70 -mx-4 -mb-4 sm:-mx-6 sm:-mb-6 p-4 rounded-b-2xl">
             <div class="flex flex-wrap items-center justify-between gap-3">
-              <div class="flex items-center gap-3">
+              <div class="flex flex-wrap items-center gap-2 sm:gap-3">
                 <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-200 text-amber-900 font-bold text-xs border border-amber-400 shadow-sm">
                   <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-800"></i>
                   <span>Panel Pengelola (Admin Aktif)</span>
@@ -661,22 +661,44 @@
                 <button 
                   id="openAddProductBtn" 
                   type="button"
-                  class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-accent hover:bg-brand-accent-hover text-white text-xs font-bold shadow-md transition hover:scale-105"
+                  class="inline-flex items-center gap-1.5 px-3.5 py-1.5 sm:px-4 sm:py-2 rounded-xl bg-brand-accent hover:bg-brand-accent-hover text-white text-xs font-bold shadow-md transition hover:scale-105"
                 >
                   <i data-lucide="plus-circle" class="w-4 h-4"></i>
                   <span>+ Tambah Menu Baru</span>
                 </button>
+
+                <!-- Tombol Sinkronisasi Antar HP / Cloud -->
+                <button 
+                  id="openSyncModalBtn" 
+                  type="button"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold shadow-md transition hover:scale-105"
+                  title="Sinkronisasi menu antar HP (HP A ke HP B) atau hubungkan Cloud Database"
+                >
+                  <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+                  <span>Sinkronisasi Antar HP</span>
+                </button>
+
+                <!-- Tombol Ekspor Kode data.js Permanen -->
+                <button 
+                  id="openExportDataBtn" 
+                  type="button"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold shadow-md transition hover:scale-105"
+                  title="Simpan menu secara permanen ke server / unduh data.js"
+                >
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                  <span>Simpan Permanen ke Server</span>
+                </button>
               </div>
 
-              <div class="flex items-center gap-2.5">
+              <div class="flex items-center gap-2">
                 <button 
                   id="resetDefaultDataBtn" 
                   type="button"
-                  class="text-xs text-amber-900 hover:text-red-700 bg-white/80 hover:bg-white px-3 py-1.5 rounded-lg border border-amber-300 font-semibold transition flex items-center gap-1 shadow-sm"
+                  class="text-xs text-amber-900 hover:text-red-700 bg-white/80 hover:bg-white px-2.5 py-1.5 rounded-lg border border-amber-300 font-semibold transition flex items-center gap-1 shadow-sm"
                   title="Kembalikan daftar menu ke versi awal bawaan"
                 >
                   <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                  <span>Reset Menu Bawaan</span>
+                  <span>Reset Bawaan</span>
                 </button>
 
                 <!-- Tombol Keluar Admin di Panel -->
@@ -1591,13 +1613,201 @@
     </div>
   </div>
 
+  <!-- MODAL SINKRONISASI ANTAR HP & CLOUD DATABASE -->
+  <div id="syncModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-7 border-2 border-brand-gold shadow-2xl relative animate-scale-up space-y-5 my-6 max-h-[90vh] overflow-y-auto">
+      
+      <!-- Close Button -->
+      <button id="closeSyncModalBtn" type="button" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-brand-brown-dark flex items-center justify-center transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-2xl bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
+          <i data-lucide="refresh-cw" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-xl text-brand-brown-dark">Sinkronisasi Menu Antar HP</h3>
+          <p class="text-xs text-brand-brown-light">Kirim menu dari HP A ke HP B atau hubungkan Cloud Database terpusat.</p>
+        </div>
+      </div>
+
+      <!-- Tab Buttons -->
+      <div class="flex border-b border-gray-200 gap-2">
+        <button id="syncTabExportBtn" type="button" class="px-3.5 py-2 font-bold text-xs border-b-2 border-blue-600 text-blue-700 transition flex items-center gap-1.5">
+          <i data-lucide="send" class="w-3.5 h-3.5"></i>
+          <span>1. Kirim dari HP A</span>
+        </button>
+        <button id="syncTabImportBtn" type="button" class="px-3.5 py-2 font-semibold text-xs border-b-2 border-transparent text-gray-500 hover:text-brand-brown transition flex items-center gap-1.5">
+          <i data-lucide="download" class="w-3.5 h-3.5"></i>
+          <span>2. Pasang di HP B</span>
+        </button>
+        <button id="syncTabCloudBtn" type="button" class="px-3.5 py-2 font-semibold text-xs border-b-2 border-transparent text-gray-500 hover:text-brand-brown transition flex items-center gap-1.5">
+          <i data-lucide="cloud" class="w-3.5 h-3.5"></i>
+          <span>3. Cloud Database</span>
+        </button>
+      </div>
+
+      <!-- Tab 1: Export from HP A -->
+      <div id="syncTabExport" class="space-y-4">
+        <div class="p-4 bg-blue-50/70 rounded-2xl border border-blue-200/80 text-xs text-blue-950 space-y-2">
+          <div class="font-bold flex items-center gap-1.5 text-blue-900">
+            <i data-lucide="info" class="w-4 h-4 text-blue-600"></i>
+            <span>Cara Mentransfer Menu Tambahan ke HP B:</span>
+          </div>
+          <p class="leading-relaxed">
+            Klik tombol <strong>"Salin Kode Sinkronisasi"</strong> di bawah ini, lalu kirimkan kodenya (misal via WhatsApp) ke HP B. Di HP B, buka web ini, masuk Mode Admin (PIN 2026), buka tab <strong>"2. Pasang di HP B"</strong> dan tempel kodenya.
+          </p>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between text-xs font-bold text-brand-brown-dark mb-1">
+            <span>Kode Sinkronisasi Data Menu (<span id="syncExportCount">0</span> Menu):</span>
+            <span class="text-[11px] text-emerald-700 font-semibold" id="syncExportStatus">Siap disalin</span>
+          </div>
+          <textarea id="syncExportCode" readonly rows="4" class="w-full p-3 font-mono text-[11px] bg-gray-50 border border-brand-gold/40 rounded-xl focus:outline-none select-all text-gray-700"></textarea>
+        </div>
+
+        <div class="flex flex-wrap gap-2 pt-1">
+          <button id="copySyncCodeBtn" type="button" class="px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-md transition flex items-center gap-2">
+            <i data-lucide="copy" class="w-4 h-4"></i>
+            <span>Salin Kode Sinkronisasi</span>
+          </button>
+          <button id="shareSyncWaBtn" type="button" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition flex items-center gap-2">
+            <svg class="w-4 h-4 fill-current text-white" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+            <span>Kirim Kode via WhatsApp</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tab 2: Import on HP B -->
+      <div id="syncTabImport" class="hidden space-y-4">
+        <div class="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-200/80 text-xs text-emerald-950 space-y-2">
+          <div class="font-bold flex items-center gap-1.5 text-emerald-900">
+            <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+            <span>Penerimaan Data di HP B:</span>
+          </div>
+          <p class="leading-relaxed">
+            Tempelkan kode yang Anda terima dari HP A ke dalam kotak di bawah ini, lalu klik tombol <strong>"Terapkan Menu ke HP Ini"</strong>. Seluruh menu akan langsung muncul di katalog HP B!
+          </p>
+        </div>
+
+        <div>
+          <label for="syncImportInput" class="block text-xs font-bold text-brand-brown-dark mb-1">
+            Tempelkan Kode Sinkronisasi dari HP A:
+          </label>
+          <textarea id="syncImportInput" rows="4" placeholder="Tempel kode di sini (diawali dengan lezatmu_sync_...)" class="w-full p-3 font-mono text-[11px] bg-white border border-brand-gold/50 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"></textarea>
+        </div>
+
+        <button id="applySyncImportBtn" type="button" class="w-full py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition flex items-center justify-center gap-2">
+          <i data-lucide="check" class="w-4 h-4"></i>
+          <span>Terapkan Menu ke HP Ini</span>
+        </button>
+      </div>
+
+      <!-- Tab 3: Cloud Database (Firebase) -->
+      <div id="syncTabCloud" class="hidden space-y-4">
+        <div class="p-4 bg-amber-50/80 rounded-2xl border border-amber-200/80 text-xs text-amber-950 space-y-2">
+          <div class="font-bold flex items-center gap-1.5 text-amber-900">
+            <i data-lucide="cloud-lightning" class="w-4 h-4 text-amber-700"></i>
+            <span>Sinkronisasi Otomatis Realtime (Cloud Database):</span>
+          </div>
+          <p class="leading-relaxed">
+            Ingin agar setiap kali HP A menambah/mengedit menu, HP B otomatis langsung terupdate tanpa perlu salin-tempel kode? Anda dapat menghubungkan <strong>Google Firebase Realtime Database (100% Gratis)</strong>.
+          </p>
+        </div>
+
+        <div>
+          <label for="cloudDbUrlInput" class="block text-xs font-bold text-brand-brown-dark mb-1">
+            URL Cloud Database (Firebase / REST Endpoint):
+          </label>
+          <input 
+            type="url" 
+            id="cloudDbUrlInput" 
+            placeholder="https://project-id-default-rtdb.firebaseio.com/products.json" 
+            class="w-full px-3.5 py-2.5 rounded-xl border border-brand-gold/50 text-xs focus:ring-2 focus:ring-blue-500 focus:outline-none bg-brand-cream-soft/40"
+          >
+          <p class="text-[11px] text-brand-brown-light mt-1">
+            Status koneksi: <span id="cloudDbStatusText" class="font-bold text-amber-700">Mode Lokal (Memori Browser)</span>
+          </p>
+        </div>
+
+        <div class="flex flex-wrap gap-2">
+          <button id="saveCloudDbBtn" type="button" class="px-4 py-2 rounded-xl bg-brand-brown-dark hover:bg-brand-brown text-white font-bold text-xs shadow-sm transition flex items-center gap-1.5">
+            <i data-lucide="save" class="w-3.5 h-3.5"></i>
+            <span>Simpan URL Database</span>
+          </button>
+          <button id="testCloudDbBtn" type="button" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-sm transition flex items-center gap-1.5">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5"></i>
+            <span>Sinkronkan Sekarang</span>
+          </button>
+          <button id="resetCloudDbBtn" type="button" class="px-3 py-2 rounded-xl bg-gray-100 hover:bg-red-50 hover:text-red-700 text-gray-700 font-bold text-xs transition">
+            Hapus URL
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL SIMPAN PERMANEN KE SERVER (data.js) -->
+  <div id="exportDataModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-2xl w-full p-6 sm:p-7 border-2 border-brand-gold shadow-2xl relative animate-scale-up space-y-5 my-6 max-h-[90vh] overflow-y-auto">
+      
+      <!-- Close Button -->
+      <button id="closeExportDataModalBtn" type="button" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-brand-brown-dark flex items-center justify-center transition">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="flex items-center gap-3">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+          <i data-lucide="database" class="w-6 h-6"></i>
+        </div>
+        <div>
+          <h3 class="font-heading font-bold text-xl text-brand-brown-dark">Simpan Menu Permanen ke Server</h3>
+          <p class="text-xs text-brand-brown-light">Jadikan menu baru tampil permanen untuk semua pengunjung di seluruh dunia.</p>
+        </div>
+      </div>
+
+      <div class="p-4 bg-emerald-50/80 rounded-2xl border border-emerald-200/80 text-xs text-emerald-950 space-y-2 leading-relaxed">
+        <div class="font-bold flex items-center gap-1.5 text-emerald-900">
+          <i data-lucide="sparkles" class="w-4 h-4 text-emerald-700"></i>
+          <span>Mengapa Menyimpan Permanen ke Server?</span>
+        </div>
+        <p>
+          Website LezatMU berjalan di <strong>Vercel &amp; GitHub</strong>. Ketika file <code>js/data.js</code> diperbarui dengan menu-menu baru di bawah ini, Vercel akan otomatis menayangkan menu tersebut ke <strong>seluruh pengguna di seluruh dunia (HP A, HP B, laptop, pelanggan)</strong> tanpa perlu setting database apapun!
+        </p>
+      </div>
+
+      <div>
+        <div class="flex items-center justify-between text-xs font-bold text-brand-brown-dark mb-1">
+          <span>Kode File data.js Lengkap:</span>
+          <span class="text-[11px] text-brand-brown-light">Format resmi JavaScript</span>
+        </div>
+        <textarea id="exportDataJsCode" readonly rows="8" class="w-full p-3 font-mono text-[11px] bg-gray-50 border border-brand-gold/40 rounded-xl focus:outline-none select-all text-gray-700"></textarea>
+      </div>
+
+      <div class="flex flex-wrap gap-2.5 pt-1">
+        <button id="copyDataJsBtn" type="button" class="px-5 py-2.5 rounded-xl bg-brand-brown-dark hover:bg-brand-brown text-white font-bold text-xs shadow-md transition flex items-center gap-2">
+          <i data-lucide="copy" class="w-4 h-4 text-brand-gold"></i>
+          <span>Salin Kode data.js</span>
+        </button>
+        <button id="downloadDataJsBtn" type="button" class="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition flex items-center gap-2">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Unduh Berkas data.js</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- TOAST NOTIFICATION CONTAINER -->
   <div id="toastContainer" class="fixed top-24 right-6 z-50 space-y-2 pointer-events-none">
     <!-- Dynamic Toasts injected here -->
   </div>
 
   <!-- JavaScript Scripts -->
-  <script src="js/data.js?v=20261012e"></script>
-  <script src="js/app.js?v=20261012e"></script>
+  <script src="js/data.js?v=20261013a"></script>
+  <script src="js/app.js?v=20261013a"></script>
 </body>
 </html>
