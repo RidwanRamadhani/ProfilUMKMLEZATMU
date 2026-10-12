@@ -13,15 +13,18 @@
 1. **Tambah Menu Produk Baru**:
    - Form interaktif untuk menambahkan barang baru secara langsung ke katalog.
    - Input: Nama Barang, Kategori Menu (Mie Utama, Camilan, Minuman), Upload Foto Barang (File lokal dari HP/Laptop dengan konversi Base64 atau URL tautan gambar), Deskripsi Rasa, Cerita Lengkap, Komposisi Bahan Utama, Slider Tingkat Pedas (0-5) & Tingkat Manis (0-5), Saran Penyajian, Info Higienis/Alergen, serta opsi menandai sebagai *Best Seller*.
-2. **Edit Menu Produk**:
-   - Kemampuan mengubah nama, foto hidangan, deskripsi rasa, tingkat kepedasan/kemanisan, dan bahan utama pada produk yang sudah ada.
-   - Tombol edit dapat diakses langsung dari kartu menu (melalui Mode Edit) maupun dari dalam jendela *Modal Detail Menu*.
-3. **Hapus Menu Produk**:
-   - Dialog konfirmasi hapus barang dari katalog secara aman.
-4. **Penyimpanan Lokal (LocalStorage Persistence)**:
+2. **Mode Admin & Proteksi Keamanan PIN**:
+   - Fitur "+ Tambah Menu Baru", tombol Edit, tombol Hapus, dan tombol Reset Menu Bawaan dikunci khusus untuk pengelola/admin.
+   - Akses Mode Admin mewajibkan input **PIN 4 Digit (2026)**.
+   - Tidak ada petunjuk atau bocoran contoh PIN pada tampilan form/notifikasi untuk mencegah akses pengunjung umum.
+3. **Edit Menu Produk**:
+   - Kemampuan mengubah nama, foto hidangan, deskripsi rasa, tingkat kepedasan/kemanisan, dan bahan utama pada produk yang sudah ada (hanya saat Mode Admin aktif).
+4. **Hapus Menu Produk**:
+   - Dialog konfirmasi hapus barang dari katalog secara aman (khusus admin).
+5. **Penyimpanan Lokal (LocalStorage Persistence)**:
    - Seluruh penambahan, pengeditan, atau penghapusan produk tersimpan otomatis di *browser storage* pengguna sehingga data tidak hilang saat halaman di-*refresh*.
-   - Dilengkapi tombol *Reset Menu Bawaan* untuk mengembalikan daftar menu ke setelan standar PT Azzam Tawaqal Berkemajuan kapan saja.
-5. **Notifikasi Toast Interaktif**:
+   - Dilengkapi tombol *Reset Menu Bawaan* (khusus admin) untuk mengembalikan daftar menu ke 3 varian resmi bawaan kapan saja.
+6. **Notifikasi Toast Interaktif**:
    - Menampilkan umpan balik visual saat menu berhasil ditambahkan, diperbarui, dihapus, atau di-reset.
 
 ---

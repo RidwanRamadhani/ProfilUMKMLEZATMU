@@ -341,29 +341,118 @@ function initCatalog() {
     });
   }
 
-  // Admin Mode Toggle
+  // Admin Mode Toggle with PIN 2026 Protection
+  const adminPinModal = document.getElementById("adminPinModal");
+  const adminPinForm = document.getElementById("adminPinForm");
+  const adminPinInput = document.getElementById("adminPinInput");
+  const adminPinError = document.getElementById("adminPinError");
+  const closeAdminPinBtn = document.getElementById("closeAdminPinBtn");
+  const cancelAdminPinBtn = document.getElementById("cancelAdminPinBtn");
+  const openAddBtn = document.getElementById("openAddProductBtn");
+  const adminLockIcon = document.getElementById("adminLockIcon");
+
+  function closeAdminPinModal() {
+    if (adminPinModal) {
+      adminPinModal.classList.add("hidden");
+      adminPinModal.classList.remove("flex");
+      document.body.style.overflow = "";
+    }
+    if (adminPinInput) adminPinInput.value = "";
+    if (adminPinError) adminPinError.classList.add("hidden");
+  }
+
+  function openAdminPinModal() {
+    if (adminPinModal) {
+      adminPinModal.classList.remove("hidden");
+      adminPinModal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+      if (adminPinError) adminPinError.classList.add("hidden");
+      if (adminPinInput) {
+        adminPinInput.value = "";
+        setTimeout(() => adminPinInput.focus(), 100);
+      }
+    }
+  }
+
+  function updateAdminModeUI() {
+    const label = document.getElementById("adminToggleLabel");
+    const badge = document.getElementById("adminModeActiveBadge");
+
+    if (isAdminMode) {
+      toggleAdminBtn.classList.add("bg-emerald-100", "border-emerald-400", "text-emerald-900");
+      toggleAdminBtn.classList.remove("bg-brand-cream-soft", "text-brand-brown");
+      if (label) label.textContent = "Keluar Mode Admin";
+      if (adminLockIcon) adminLockIcon.setAttribute("data-lucide", "lock-open");
+      if (badge) badge.classList.remove("hidden");
+      if (openAddBtn) {
+        openAddBtn.classList.remove("hidden");
+        openAddBtn.classList.add("inline-flex");
+      }
+      if (resetDefaultDataBtn) {
+        resetDefaultDataBtn.classList.remove("hidden");
+        resetDefaultDataBtn.classList.add("inline-flex");
+      }
+    } else {
+      toggleAdminBtn.classList.remove("bg-emerald-100", "border-emerald-400", "text-emerald-900");
+      toggleAdminBtn.classList.add("bg-brand-cream-soft", "text-brand-brown");
+      if (label) label.textContent = "Mode Admin";
+      if (adminLockIcon) adminLockIcon.setAttribute("data-lucide", "lock");
+      if (badge) badge.classList.add("hidden");
+      if (openAddBtn) {
+        openAddBtn.classList.add("hidden");
+        openAddBtn.classList.remove("inline-flex");
+      }
+      if (resetDefaultDataBtn) {
+        resetDefaultDataBtn.classList.add("hidden");
+        resetDefaultDataBtn.classList.remove("inline-flex");
+      }
+    }
+
+    initLucide();
+    renderCatalogGrid();
+    renderBestSellers();
+  }
+
   if (toggleAdminBtn) {
     toggleAdminBtn.addEventListener("click", () => {
-      isAdminMode = !isAdminMode;
-      const label = document.getElementById("adminToggleLabel");
-      const badge = document.getElementById("adminModeActiveBadge");
-
       if (isAdminMode) {
-        toggleAdminBtn.classList.add("bg-amber-100", "border-amber-400", "text-amber-900");
-        toggleAdminBtn.classList.remove("bg-brand-cream-soft");
-        if (label) label.textContent = "Matikan Mode Edit";
-        if (badge) badge.classList.remove("hidden");
-        showToast("Mode Edit Aktif: Tombol Edit & Hapus muncul di setiap kartu menu.", "info");
+        // Logout langsung tanpa perlu PIN
+        isAdminMode = false;
+        updateAdminModeUI();
+        showToast("Mode Admin telah dinonaktifkan.", "info");
       } else {
-        toggleAdminBtn.classList.remove("bg-amber-100", "border-amber-400", "text-amber-900");
-        toggleAdminBtn.classList.add("bg-brand-cream-soft");
-        if (label) label.textContent = "Aktifkan Mode Edit";
-        if (badge) badge.classList.add("hidden");
-        showToast("Mode Edit Dinonaktifkan.", "info");
+        // Meminta PIN 2026 tanpa bocoran contoh
+        openAdminPinModal();
       }
+    });
+  }
 
-      renderCatalogGrid();
-      renderBestSellers();
+  if (closeAdminPinBtn) closeAdminPinBtn.addEventListener("click", closeAdminPinModal);
+  if (cancelAdminPinBtn) cancelAdminPinBtn.addEventListener("click", closeAdminPinModal);
+  if (adminPinModal) {
+    adminPinModal.addEventListener("click", (e) => {
+      if (e.target === adminPinModal) closeAdminPinModal();
+    });
+  }
+
+  if (adminPinForm) {
+    adminPinForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const enteredPin = (adminPinInput ? adminPinInput.value : "").trim();
+      
+      // Validasi PIN 2026
+      if (enteredPin === "2026") {
+        isAdminMode = true;
+        closeAdminPinModal();
+        updateAdminModeUI();
+        showToast("Mode Admin aktif. Anda dapat menambah dan mengedit menu produk.", "success");
+      } else {
+        if (adminPinError) adminPinError.classList.remove("hidden");
+        if (adminPinInput) {
+          adminPinInput.value = "";
+          adminPinInput.focus();
+        }
+      }
     });
   }
 
@@ -797,6 +886,11 @@ function initProductFormManagement() {
 
 // Open Add Product Modal Function
 window.openAddProductModal = function() {
+  if (!isAdminMode) {
+    showToast("Akses ditolak: Silakan masuk ke Mode Admin dengan PIN terlebih dahulu.", "warning");
+    return;
+  }
+
   const formModal = document.getElementById("productFormModal");
   const title = document.getElementById("productFormTitle");
   const subtitle = document.getElementById("productFormSubtitle");
@@ -832,6 +926,11 @@ window.openAddProductModal = function() {
 
 // Open Edit Product Modal Function
 window.openEditProductModal = function(productId) {
+  if (!isAdminMode) {
+    showToast("Akses ditolak: Hanya admin yang dapat mengedit menu.", "warning");
+    return;
+  }
+
   const item = productsList.find(p => p.id === productId);
   if (!item) return;
 
@@ -896,6 +995,11 @@ window.openEditProductModal = function(productId) {
 
 // Trigger Delete Confirmation Modal
 window.triggerDeleteProduct = function(productId) {
+  if (!isAdminMode) {
+    showToast("Akses ditolak: Hanya admin yang dapat menghapus menu.", "warning");
+    return;
+  }
+
   const item = productsList.find(p => p.id === productId);
   if (!item) return;
 
@@ -1015,16 +1119,18 @@ window.openProductModal = function(productId) {
       >
       <div class="absolute inset-0 bg-gradient-to-t from-brand-brown-dark/90 via-black/30 to-transparent"></div>
       
-      <div class="absolute top-4 left-6 z-10 flex items-center gap-2">
-        <button 
-          onclick="openEditProductModal('${item.id}')" 
-          class="px-3 py-1.5 rounded-xl bg-white/95 hover:bg-white text-brand-brown-dark text-xs font-bold shadow-md flex items-center gap-1.5 transition"
-          title="Edit Data Menu Ini"
-        >
-          <i data-lucide="edit-2" class="w-3.5 h-3.5 text-brand-accent"></i>
-          <span>Edit Menu</span>
-        </button>
-      </div>
+      ${isAdminMode ? `
+        <div class="absolute top-4 left-6 z-10 flex items-center gap-2">
+          <button 
+            onclick="openEditProductModal('${item.id}')" 
+            class="px-3 py-1.5 rounded-xl bg-white/95 hover:bg-white text-brand-brown-dark text-xs font-bold shadow-md flex items-center gap-1.5 transition"
+            title="Edit Data Menu Ini"
+          >
+            <i data-lucide="edit-2" class="w-3.5 h-3.5 text-brand-accent"></i>
+            <span>Edit Menu</span>
+          </button>
+        </div>
+      ` : ''}
 
       <div class="absolute bottom-4 left-6 right-6 text-white">
         <div class="flex items-center gap-2 mb-1">
