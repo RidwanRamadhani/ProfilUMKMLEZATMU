@@ -102,6 +102,8 @@ const culinaryData = {
     "article-1": {
       title: "Menghadirkan Kehangatan Klasik yang Menyehatkan dengan Mi Instan LezatMU Rasa Ayam Bawang",
       category: "Varian Ayam Bawang",
+      badge: "Ayam Bawang",
+      excerpt: "Perpaduan klasik kaldu ayam dan keharuman bawang dengan inovasi tepung mocaf kaya serat serta pewarna alami ekstrak kunyit murni tanpa pengawet.",
       date: "12 Oktober 2026",
       readTime: "4 Menit",
       image: "images/mi-ayam-bawang.jpg",
@@ -132,6 +134,8 @@ const culinaryData = {
     "article-2": {
       title: "Nikmatnya Mi Goreng Tanpa Rasa Bersalah Bersama Mi Instan LezatMU Mi Goreng",
       category: "Varian Mi Goreng",
+      badge: "Mi Goreng",
+      excerpt: "Pilihan istimewa mi goreng kenyal berpadu bumbu rempah nusantara otentik, diproduksi menggunakan bahan alami tepung mocaf dan ekstrak kunyit.",
       date: "12 Oktober 2026",
       readTime: "5 Menit",
       image: "images/mi-goreng.jpg",
@@ -162,6 +166,8 @@ const culinaryData = {
     "article-3": {
       title: "Kesegaran Rempah Tradisional Nusantara dalam Semangkuk Mi Instan LezatMU Kuah Rasa Soto",
       category: "Varian Kuah Soto",
+      badge: "Kuah Soto",
+      excerpt: "Sensasi kesegaran kuah soto kaya rempah serai dan daun jeruk berpadu dengan formulasi mi mocaf sehat bebas pewarna sintetis.",
       date: "12 Oktober 2026",
       readTime: "4 Menit",
       image: "images/mi-kuah-soto.jpg",

@@ -18,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initMobileMenu();
   renderBestSellers();
   renderTestimonials();
+  renderArticles();
   initCatalog();
   initProductFormManagement();
   initModals();
@@ -1309,6 +1310,64 @@ window.openArticleModal = function(articleId) {
   modal.classList.remove("hidden");
   modal.classList.add("flex");
   document.body.style.overflow = "hidden";
+  initLucide();
+};
+
+// Render Articles Grid dynamically from culinaryData.articles
+window.renderArticles = function() {
+  const grid = document.getElementById("articlesGrid");
+  if (!grid || !window.culinaryData || !window.culinaryData.articles) return;
+
+  const entries = Object.entries(window.culinaryData.articles);
+  if (entries.length === 0) return;
+
+  grid.innerHTML = entries.map(([id, article], idx) => {
+    const badgeColor = id === "article-1" 
+      ? "bg-brand-brown-dark/80 backdrop-blur-sm text-brand-gold-light" 
+      : id === "article-2" 
+        ? "bg-brand-accent text-white" 
+        : "bg-emerald-700 text-white";
+    const badgeText = article.badge || (article.category ? article.category.replace("Varian ", "") : "LezatMU");
+    const excerpt = article.excerpt || "Nikmati inovasi mie instan sehat berbahan mocaf dan kunyit alami dari PT Azam Tawaqal Berkemajuan.";
+
+    return `
+      <article class="bg-brand-cream-soft rounded-3xl overflow-hidden border border-brand-gold-light hover:shadow-warm transition-all duration-300 flex flex-col group">
+        <div class="relative h-48 overflow-hidden bg-brand-cream">
+          <img 
+            src="${article.image}?v=2" 
+            alt="${article.title}" 
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            loading="lazy"
+            onerror="this.src='${article.image}'"
+          >
+          <span class="absolute top-3 left-3 ${badgeColor} text-xs font-bold px-3 py-1 rounded-full shadow-sm">
+            ${badgeText}
+          </span>
+        </div>
+        <div class="p-6 flex-1 flex flex-col justify-between">
+          <div>
+            <div class="text-xs text-brand-brown-light mb-2 flex items-center gap-2">
+              <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+              <span>${article.date || '12 Oktober 2026'}</span>
+              <span>&bull;</span>
+              <span>Baca ${article.readTime || '4 Menit'}</span>
+            </div>
+            <h3 class="font-serif font-bold text-lg text-brand-brown-dark group-hover:text-brand-accent transition mb-2">
+              ${article.title}
+            </h3>
+            <p class="text-xs sm:text-sm text-brand-brown-light leading-relaxed line-clamp-3">
+              ${excerpt}
+            </p>
+          </div>
+          <button onclick="openArticleModal('${id}')" class="mt-4 text-xs font-bold text-brand-accent inline-flex items-center gap-1 hover:gap-2 transition-all cursor-pointer">
+            <span>Baca Selengkapnya</span>
+            <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </article>
+    `;
+  }).join("");
+
   initLucide();
 };
 
