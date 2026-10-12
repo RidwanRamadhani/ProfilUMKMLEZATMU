@@ -8,8 +8,8 @@
 const STORAGE_SUPABASE_URL = "lezatmu_supabase_url";
 const STORAGE_SUPABASE_KEY = "lezatmu_supabase_anon_key";
 
-// Default credentials (bisa diisi langsung di sini atau via Panel Admin di website)
-const DEFAULT_SUPABASE_URL = "";
+// Default credentials dari proyek Supabase Anda
+const DEFAULT_SUPABASE_URL = "https://gmygounnfiedcyrhtduo.supabase.co";
 const DEFAULT_SUPABASE_KEY = "";
 
 let cachedSupabaseClient = null;
@@ -24,7 +24,7 @@ function getSupabaseClient() {
   const key = (localStorage.getItem(STORAGE_SUPABASE_KEY) || DEFAULT_SUPABASE_KEY || "").trim();
 
   // Validasi format minimal URL dan key
-  if (url && key && url.startsWith("https://") && url.includes(".supabase.co") && key.length > 20) {
+  if (url && key && url.startsWith("https://") && url.includes(".supabase.co") && key.length > 10) {
     try {
       if (window.supabase && typeof window.supabase.createClient === "function") {
         cachedSupabaseClient = window.supabase.createClient(url, key, {
@@ -49,7 +49,7 @@ function getSupabaseClient() {
 function isSupabaseConfigured() {
   const url = (localStorage.getItem(STORAGE_SUPABASE_URL) || DEFAULT_SUPABASE_URL || "").trim();
   const key = (localStorage.getItem(STORAGE_SUPABASE_KEY) || DEFAULT_SUPABASE_KEY || "").trim();
-  return Boolean(url && key && url.startsWith("https://") && url.includes(".supabase.co") && key.length > 20);
+  return Boolean(url && key && url.startsWith("https://") && url.includes(".supabase.co") && key.length > 10);
 }
 
 /**
