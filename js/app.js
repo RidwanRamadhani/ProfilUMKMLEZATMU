@@ -228,15 +228,13 @@ function renderBestSellers() {
               <i data-lucide="eye" class="w-3.5 h-3.5"></i>
               <span>Lihat Detail Menu</span>
             </button>
-            <a 
-              href="https://wa.me/6289668251739?text=${encodeURIComponent(`Halo Admin PT Azzam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya ingin bertanya tentang menu mie terlaris: ${item.name}`)}" 
-              target="_blank" 
-              rel="noopener noreferrer"
+            <button 
+              onclick="openWaChooser('Halo Admin PT Azzam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya ingin bertanya tentang menu mie terlaris: ${item.name}.')" 
               class="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition flex items-center justify-center shrink-0"
-              title="Tanya Menu via WhatsApp"
+              title="Tanya Menu via WhatsApp Pilihan"
             >
               <i data-lucide="message-circle" class="w-4 h-4"></i>
-            </a>
+            </button>
           </div>
 
         </div>
@@ -1133,8 +1131,6 @@ window.openProductModal = function(productId) {
   }).join("");
 
   const ingredientsArr = Array.isArray(item.mainIngredients) ? item.mainIngredients : [];
-  const waMessage = `Halo Admin PT Azzam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya tertarik dengan menu: *${item.name}* (${item.categoryLabel || "Menu Mie"}). Mohon informasi rekomendasi porsi dan pemesanan.`;
-  const waUrl = `https://wa.me/6289668251739?text=${encodeURIComponent(waMessage)}`;
 
   content.innerHTML = `
     <div class="relative h-64 sm:h-72 overflow-hidden rounded-t-3xl bg-brand-cream-soft">
@@ -1243,15 +1239,13 @@ window.openProductModal = function(productId) {
           <span>Pemesanan porsi harian, takeaway, dan katering mie dilayani langsung melalui WhatsApp resmi PT Azzam Tawaqal Berkemajuan Serpong Utara.</span>
         </div>
 
-        <a 
-          href="${waUrl}" 
-          target="_blank" 
-          rel="noopener noreferrer" 
+        <button 
+          onclick="openWaChooser('Halo Admin PT Azzam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya tertarik dengan menu: *${item.name}* (${item.categoryLabel || 'Menu Mie'}). Mohon informasi rekomendasi porsi dan pemesanan.')" 
           class="w-full py-3.5 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-md hover:shadow-lg transition"
         >
           <i data-lucide="message-circle" class="w-5 h-5"></i>
           <span>Tanya Menu Ini via WhatsApp Admin Serpong Utara</span>
-        </a>
+        </button>
       </div>
 
     </div>
@@ -1294,15 +1288,13 @@ window.openArticleModal = function(articleId) {
 
       <div class="pt-6 border-t border-brand-gold-light flex items-center justify-between">
         <span class="text-xs text-brand-brown-light">PT Azzam Tawaqal Berkemajuan &bull; Serpong Utara</span>
-        <a 
-          href="https://wa.me/6289668251739?text=${encodeURIComponent(`Halo Admin PT Azzam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya baru membaca artikel '${article.title}' dan ingin berdiskusi lebih lanjut.`)}" 
-          target="_blank" 
-          rel="noopener noreferrer"
+        <button 
+          onclick="openWaChooser('Halo Admin PT Azzam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya baru membaca artikel \\'${article.title}\\' dan ingin berdiskusi lebih lanjut.')" 
           class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5"
         >
           <i data-lucide="message-circle" class="w-4 h-4"></i>
           <span>Diskusikan dengan Kami</span>
-        </a>
+        </button>
       </div>
     </div>
   `;
@@ -1378,18 +1370,83 @@ function initConsultationForm() {
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
+    const adminTarget = document.getElementById("consultAdminTarget") ? document.getElementById("consultAdminTarget").value : "rahmat";
     const name = document.getElementById("consultName").value.trim();
     const topic = document.getElementById("consultTopic").value;
     const message = document.getElementById("consultMessage").value.trim();
 
-    const formattedMessage = `Halo Admin PT Azzam Tawaqal Berkemajuan (LEZATMU) Serpong Utara,\n\nPerkenalkan saya *${name}*.\n*Topik Keperluan:* ${topic}\n*Pesan / Detail:* ${message || 'Saya ingin berkonsultasi mengenai menu mie dan layanan katering LEZATMU di Tangerang Selatan.'}\n\nTerima kasih.`;
-    const waUrl = `https://wa.me/6289668251739?text=${encodeURIComponent(formattedMessage)}`;
+    const targetName = adminTarget === "meiva" ? "Kak Meiva" : "Pak Rahmat";
+    const targetPhone = adminTarget === "meiva" ? "6289528870832" : "6281314505175";
+
+    const formattedMessage = `Halo ${targetName} (Admin PT Azzam Tawaqal Berkemajuan - LEZATMU Serpong Utara),\n\nPerkenalkan saya *${name}*.\n*Topik Keperluan:* ${topic}\n*Pesan / Detail:* ${message || 'Saya ingin berkonsultasi mengenai menu mie dan pemesanan LEZATMU di Tangerang Selatan.'}\n\nTerima kasih.`;
+    const waUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(formattedMessage)}`;
 
     window.open(waUrl, "_blank");
   });
 }
 
-// 8. ScrollSpy & Navigation Active Link Indicator
+// 8. WhatsApp Dual-Admin Contact Chooser System (Pak Rahmat & Kak Meiva)
+let currentWaPendingMessage = "Halo Admin PT Azzam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya ingin tanya informasi produk.";
+
+const WA_CONTACTS = {
+  rahmat: {
+    name: "Pak Rahmat",
+    phone: "6281314505175",
+    role: "Admin Pengelola & Kemitraan"
+  },
+  meiva: {
+    name: "Kak Meiva",
+    phone: "6289528870832",
+    role: "Customer Care & Info Produk"
+  }
+};
+
+function openWaChooser(customMessage, preselectedAdmin = null) {
+  if (customMessage) {
+    currentWaPendingMessage = customMessage;
+  }
+  
+  if (preselectedAdmin && WA_CONTACTS[preselectedAdmin]) {
+    proceedToWa(preselectedAdmin);
+    return;
+  }
+
+  const modal = document.getElementById("waChooserModal");
+  const preview = document.getElementById("waChooserMessagePreview");
+  if (preview) {
+    preview.textContent = `"${currentWaPendingMessage}"`;
+  }
+  
+  if (modal) {
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+  }
+  initLucide();
+}
+
+function closeWaChooser() {
+  const modal = document.getElementById("waChooserModal");
+  if (modal) {
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+  }
+}
+
+function proceedToWa(adminKey) {
+  const contact = WA_CONTACTS[adminKey] || WA_CONTACTS.rahmat;
+  let finalMessage = currentWaPendingMessage;
+  
+  // Format message jika belum memiliki greeting admin spesifik
+  if (!finalMessage.includes("Pak Rahmat") && !finalMessage.includes("Kak Meiva")) {
+    finalMessage = finalMessage.replace(/Halo Admin PT Azzam Tawaqal Berkemajuan/g, `Halo ${contact.name} (Admin PT Azzam Tawaqal Berkemajuan)`);
+  }
+
+  const waUrl = `https://wa.me/${contact.phone}?text=${encodeURIComponent(finalMessage)}`;
+  window.open(waUrl, "_blank");
+  closeWaChooser();
+}
+
+// 9. ScrollSpy & Navigation Active Link Indicator
 function initScrollSpy() {
   const sections = document.querySelectorAll("section[id]");
   const navLinks = document.querySelectorAll(".nav-link");
