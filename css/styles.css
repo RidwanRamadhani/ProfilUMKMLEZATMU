@@ -208,3 +208,10 @@ input[type=range] {
 .shadow-warm-lg {
   box-shadow: 0 20px 40px -15px rgba(74, 53, 37, 0.2);
 }
+
+/* WhatsApp Icon SVG Styling */
+.icon-whatsapp {
+  display: inline-block;
+  vertical-align: middle;
+  fill: currentColor;
+}
