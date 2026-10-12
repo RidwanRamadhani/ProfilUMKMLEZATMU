@@ -10,7 +10,7 @@ const STORAGE_SUPABASE_KEY = "lezatmu_supabase_anon_key";
 
 // Default credentials dari proyek Supabase Anda
 const DEFAULT_SUPABASE_URL = "https://gmygounnfiedcyrhtduo.supabase.co";
-const DEFAULT_SUPABASE_KEY = "";
+const DEFAULT_SUPABASE_KEY = "sb_publishable_dYW1bXp1BJI39KcYPlnI9w_2KMwJB2S";
 
 let cachedSupabaseClient = null;
 
