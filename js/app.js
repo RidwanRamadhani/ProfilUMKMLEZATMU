@@ -25,6 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
   initCatalog();
   initProductFormManagement();
   initTestimonialsManagement();
+  initRealtimeTestimonials();
+  initAutoSyncListeners();
   initSupabaseManagement();
   initSyncManagement();
   initModals();
@@ -244,7 +246,7 @@ async function initTestimonialsData() {
   await fetchTestimonialsFromSupabase(false);
 }
 
-// Fetch ulasan testimoni langsung dari tabel Supabase
+// Fetch ulasan testimoni langsung dari tabel Supabase dengan sinkronisasi multi-perangkat
 async function fetchTestimonialsFromSupabase(showToastOnSuccess = false) {
   if (typeof getSupabaseClient !== "function") return;
   const sb = getSupabaseClient();
@@ -262,8 +264,10 @@ async function fetchTestimonialsFromSupabase(showToastOnSuccess = false) {
       return;
     }
 
+    const baseline = getBaselineTestimonials();
+
     if (data && data.length > 0) {
-      testimonialsList = data.map(item => ({
+      const remoteItems = data.map(item => ({
         id: String(item.id),
         name: item.name || "Pelanggan",
         role: item.role || "Pelanggan Setia LezatMU",
@@ -274,14 +278,28 @@ async function fetchTestimonialsFromSupabase(showToastOnSuccess = false) {
         createdAt: item.created_at || item.createdAt || new Date().toISOString()
       }));
 
+      // Cek apakah data dari database sudah mencakup ulasan resmi awal
+      const hasBaselineInRemote = remoteItems.some(r => r.id.startsWith("testi-default-"));
+      
+      if (hasBaselineInRemote) {
+        testimonialsList = remoteItems;
+      } else {
+        // Gabungkan ulasan baru dari pengunjung dengan testimoni resmi bawaan
+        testimonialsList = [...remoteItems, ...baseline];
+      }
+
       localStorage.setItem(TESTIMONIALS_STORAGE_KEY, JSON.stringify(testimonialsList));
       renderTestimonials();
 
       if (showToastOnSuccess) {
-        showToast(`Berhasil mengambil ${data.length} ulasan testimoni dari Supabase Cloud!`, "success");
+        showToast(`Berhasil menyinkronkan ${testimonialsList.length} ulasan dari database cloud!`, "success");
       }
     } else if (data && data.length === 0) {
-      console.log("Tabel testimonials di Supabase masih kosong.");
+      // PENTING UNTUK HP B: Jika ulasan di database telah dihapus admin,
+      // bersihkan cache lokal dan kembalikan ke testimoni resmi bawaan LezatMU!
+      testimonialsList = baseline;
+      localStorage.setItem(TESTIMONIALS_STORAGE_KEY, JSON.stringify(testimonialsList));
+      renderTestimonials();
     }
   } catch (err) {
     console.warn("Koneksi Supabase error saat mengambil testimoni:", err);
@@ -1600,7 +1618,7 @@ function initTestimonialsManagement() {
 }
 
 // Global Trigger Delete Testimonial (Admin Mode Only)
-function triggerDeleteTestimonial(id) {
+async function triggerDeleteTestimonial(id) {
   if (!isAdminMode) {
     showToast("Akses ditolak: Masuk Mode Admin dengan PIN 2026 terlebih dahulu.", "warning");
     return;
@@ -1609,25 +1627,103 @@ function triggerDeleteTestimonial(id) {
   const item = testimonialsList.find(t => t.id === id);
   const authorName = item ? item.name : "ulasan ini";
 
-  if (!confirm(`Hapus ulasan testimoni dari "${authorName}"? Tindakan ini tidak dapat dibatalkan.`)) {
+  if (!confirm(`Hapus ulasan testimoni dari "${authorName}"? Tindakan ini akan menghapus ulasan di semua perangkat (HP A & HP B).`)) {
     return;
   }
 
-  testimonialsList = testimonialsList.filter(t => t.id !== id);
-  localStorage.setItem(TESTIMONIALS_STORAGE_KEY, JSON.stringify(testimonialsList));
-  renderTestimonials();
-  showToast(`Ulasan dari "${authorName}" berhasil dihapus.`, "info");
+  showToast(`Sedang menghapus ulasan "${authorName}" dari database cloud...`, "info");
 
+  // 1. Hapus dari database cloud Supabase
+  let cloudDeleted = false;
   if (typeof getSupabaseClient === "function") {
     const sb = getSupabaseClient();
     if (sb) {
-      sb.from("testimonials").delete().eq("id", id).then(({ error }) => {
-        if (error) console.warn("Supabase delete testimonial notice:", error.message);
-      }).catch(err => console.warn("Supabase delete testimonial error:", err));
+      try {
+        const { error } = await sb.from("testimonials").delete().eq("id", id);
+        if (error) {
+          console.error("Gagal menghapus testimoni di Supabase:", error);
+          showToast(`Peringatan cloud: ${error.message}`, "warning");
+        } else {
+          cloudDeleted = true;
+        }
+      } catch (err) {
+        console.error("Koneksi Supabase error saat hapus:", err);
+      }
     }
+  }
+
+  // 2. Hapus dari state lokal & LocalStorage
+  testimonialsList = testimonialsList.filter(t => t.id !== id);
+  if (testimonialsList.length === 0) {
+    testimonialsList = getBaselineTestimonials();
+  }
+  localStorage.setItem(TESTIMONIALS_STORAGE_KEY, JSON.stringify(testimonialsList));
+  renderTestimonials();
+
+  if (cloudDeleted) {
+    showToast(`Ulasan dari "${authorName}" berhasil dihapus dari cloud & semua HP!`, "success");
+  } else {
+    showToast(`Ulasan dari "${authorName}" telah dihapus.`, "info");
   }
 }
 window.triggerDeleteTestimonial = triggerDeleteTestimonial;
+
+// Realtime Listener untuk Sinkronisasi Lintas Perangkat (HP A & HP B)
+function initRealtimeTestimonials() {
+  if (typeof getSupabaseClient !== "function") return;
+  const sb = getSupabaseClient();
+  if (!sb || typeof sb.channel !== "function") return;
+
+  try {
+    sb.channel("lezatmu_live_sync_channel")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "testimonials" },
+        (payload) => {
+          console.log("Realtime event testimonials:", payload.eventType);
+          fetchTestimonialsFromSupabase(false);
+        }
+      )
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "products" },
+        (payload) => {
+          console.log("Realtime event products:", payload.eventType);
+          fetchProductsFromSupabase(false);
+        }
+      )
+      .subscribe((status) => {
+        if (status === "SUBSCRIBED") {
+          console.log("Supabase Realtime Channel aktif: perubahan di HP A langsung tampil di HP B.");
+        }
+      });
+  } catch (err) {
+    console.warn("Realtime Supabase subscription error:", err);
+  }
+}
+
+// Auto-sync saat layar HP dibuka kembali / window fokus / interval berkala
+function initAutoSyncListeners() {
+  // 1. Saat pengguna beralih atau membuka kembali tab browser di HP
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
+      fetchTestimonialsFromSupabase(false);
+      fetchProductsFromSupabase(false);
+    }
+  });
+
+  window.addEventListener("focus", () => {
+    fetchTestimonialsFromSupabase(false);
+    fetchProductsFromSupabase(false);
+  });
+
+  // 2. Polling otomatis berkala setiap 8 detik agar HP lain yang diletakkan tetap sinkron tanpa perlu refresh
+  setInterval(() => {
+    if (!document.hidden) {
+      fetchTestimonialsFromSupabase(false);
+    }
+  }, 8000);
+}
 
 // 6. Product Detail Modal & Article Modal
 function initModals() {
