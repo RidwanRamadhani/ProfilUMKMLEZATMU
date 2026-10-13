@@ -271,3 +271,20 @@ input[type=range] {
 .animate-shimmer {
   animation: shimmerGlow 2.5s infinite;
 }
+
+/* Star Rating Picker Interactive Buttons */
+.star-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 4px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.star-btn:hover {
+  transform: scale(1.25);
+}
+.star-btn:active {
+  transform: scale(0.95);
+}
+

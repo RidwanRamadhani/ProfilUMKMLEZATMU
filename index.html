@@ -558,13 +558,37 @@
 
         <!-- Social Proof & Customer Reviews -->
         <div data-aos="fade-up" data-aos-duration="800" class="bg-brand-cream-soft rounded-3xl p-8 lg:p-12 border border-brand-gold-light shadow-warm">
-          <div class="text-center max-w-2xl mx-auto mb-10 space-y-2">
-            <span class="text-brand-accent uppercase font-bold text-xs tracking-widest">Testimoni Konsumen</span>
+          <div class="text-center max-w-2xl mx-auto mb-10 space-y-3">
+            <span class="text-brand-accent uppercase font-bold text-xs tracking-widest">Testimoni &amp; Rating Konsumen</span>
             <h3 class="font-heading text-2xl sm:text-3xl font-bold text-brand-brown-dark">Apa Kata Mereka Tentang Mie LEZATMU?</h3>
-            <p class="text-xs sm:text-sm text-brand-brown-light">Ulasan otentik dari penikmat mie di Serpong Utara, Tangerang Selatan, dan sekitarnya.</p>
+            <p class="text-xs sm:text-sm text-brand-brown-light">Ulasan otentik dan penilaian rasa dari para penikmat mie di Serpong Utara, Tangerang Selatan, dan sekitarnya.</p>
+            
+            <!-- Rating Stats & Call-To-Action Button -->
+            <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+              <div class="inline-flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-brand-gold/40 shadow-sm text-xs font-semibold text-brand-brown-dark">
+                <div class="flex items-center text-amber-400 gap-0.5">
+                  <i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>
+                  <i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>
+                  <i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>
+                  <i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>
+                  <i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>
+                </div>
+                <span class="font-bold text-brand-brown-dark text-sm" id="testimonialAverageRating">5.0</span>
+                <span class="text-brand-brown-light font-normal" id="testimonialTotalReviews">(3 Ulasan)</span>
+              </div>
+
+              <button 
+                type="button" 
+                id="openAddTestimonialBtn" 
+                class="px-5 py-2.5 rounded-full bg-brand-accent hover:bg-brand-accent-hover text-white font-bold text-xs sm:text-sm shadow-warm hover:shadow-warm-lg hover:scale-105 transition-all duration-300 flex items-center gap-2 border border-amber-400/40 cursor-pointer"
+              >
+                <i data-lucide="message-square-plus" class="w-4 h-4"></i>
+                <span>Tulis Ulasan &amp; Beri Rating</span>
+              </button>
+            </div>
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="testimonialsContainer">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="testimonialsContainer">
             <!-- Dynamic Testimonials injected by JS -->
           </div>
         </div>
@@ -1439,6 +1463,158 @@
         </form>
 
       </div>
+    </div>
+  </div>
+
+  <!-- MODAL TULIS ULASAN & RATING TESTIMONI KONSUMEN -->
+  <div id="testimonialModal" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-lg w-full max-h-[92vh] overflow-y-auto border-2 border-brand-gold shadow-2xl relative animate-scale-up" id="testimonialModalCard">
+      
+      <!-- Close Button -->
+      <button id="closeTestimonialModalBtn" type="button" class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-brand-cream-soft hover:bg-brand-gold-light text-brand-brown flex items-center justify-center transition border border-brand-gold/40">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="p-6 sm:p-7 space-y-5">
+        <!-- Header -->
+        <div class="flex items-center gap-3 border-b border-brand-gold-light/80 pb-4">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold shrink-0">
+            <i data-lucide="star" class="w-6 h-6 fill-amber-500 text-amber-500"></i>
+          </div>
+          <div>
+            <h3 class="font-heading font-bold text-xl text-brand-brown-dark">
+              Beri Rating &amp; Ulasan Anda
+            </h3>
+            <p class="text-xs text-brand-brown-light">
+              Bagikan pengalaman Anda menikmati inovasi mi sehat LezatMU.
+            </p>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <form id="testimonialForm" class="space-y-4">
+          
+          <!-- Rating Star Picker -->
+          <div class="p-3.5 bg-amber-50/70 rounded-2xl border border-amber-200/80 text-center space-y-2">
+            <label class="block text-xs font-bold text-brand-brown-dark">
+              Berapa Bintang Penilaian Anda? <span class="text-brand-accent">*</span>
+            </label>
+            <div class="flex items-center justify-center gap-2" id="starPicker">
+              <button type="button" data-star="1" class="star-btn p-1 text-amber-400 hover:scale-125 transition-transform focus:outline-none">
+                <i data-lucide="star" class="w-7 h-7 fill-amber-400"></i>
+              </button>
+              <button type="button" data-star="2" class="star-btn p-1 text-amber-400 hover:scale-125 transition-transform focus:outline-none">
+                <i data-lucide="star" class="w-7 h-7 fill-amber-400"></i>
+              </button>
+              <button type="button" data-star="3" class="star-btn p-1 text-amber-400 hover:scale-125 transition-transform focus:outline-none">
+                <i data-lucide="star" class="w-7 h-7 fill-amber-400"></i>
+              </button>
+              <button type="button" data-star="4" class="star-btn p-1 text-amber-400 hover:scale-125 transition-transform focus:outline-none">
+                <i data-lucide="star" class="w-7 h-7 fill-amber-400"></i>
+              </button>
+              <button type="button" data-star="5" class="star-btn p-1 text-amber-400 hover:scale-125 transition-transform focus:outline-none">
+                <i data-lucide="star" class="w-7 h-7 fill-amber-400"></i>
+              </button>
+            </div>
+            <input type="hidden" id="selectedRatingInput" value="5">
+            <div id="starRatingLabel" class="text-xs font-bold text-amber-800">
+              ⭐⭐⭐⭐⭐ 5 / 5 - Sangat Puas &amp; Sangat Lezat!
+            </div>
+          </div>
+
+          <!-- Input Nama -->
+          <div>
+            <label for="reviewAuthorName" class="block text-xs font-bold text-brand-brown-dark mb-1">
+              Nama Lengkap / Panggilan <span class="text-brand-accent">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="reviewAuthorName" 
+              required 
+              placeholder="Contoh: Ahmad Fauzi / Ibu Dewi" 
+              class="w-full px-3.5 py-2.5 rounded-xl border border-brand-gold/50 text-sm focus:ring-2 focus:ring-brand-gold outline-none bg-brand-cream-soft/40 font-medium"
+            >
+          </div>
+
+          <!-- Row: Domisili & Peran -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label for="reviewCity" class="block text-xs font-bold text-brand-brown-dark mb-1">
+                Domisili / Kota Asal <span class="text-brand-accent">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="reviewCity" 
+                required
+                placeholder="Contoh: Serpong Utara, Tangsel" 
+                class="w-full px-3.5 py-2.5 rounded-xl border border-brand-gold/50 text-xs focus:ring-2 focus:ring-brand-gold outline-none bg-brand-cream-soft/40"
+              >
+            </div>
+            <div>
+              <label for="reviewRole" class="block text-xs font-bold text-brand-brown-dark mb-1">
+                Profesi / Status (Opsional)
+              </label>
+              <input 
+                type="text" 
+                id="reviewRole" 
+                placeholder="Contoh: Penikmat Mie Sehat" 
+                class="w-full px-3.5 py-2.5 rounded-xl border border-brand-gold/50 text-xs focus:ring-2 focus:ring-brand-gold outline-none bg-brand-cream-soft/40"
+              >
+            </div>
+          </div>
+
+          <!-- Menu Favorit -->
+          <div>
+            <label for="reviewMenuEnjoyed" class="block text-xs font-bold text-brand-brown-dark mb-1">
+              Menu Mie yang Dinikmati / Paling Disukai
+            </label>
+            <select 
+              id="reviewMenuEnjoyed" 
+              class="w-full px-3.5 py-2.5 rounded-xl border border-brand-gold/50 text-xs focus:ring-2 focus:ring-brand-gold outline-none bg-brand-cream-soft/40 font-medium"
+            >
+              <option value="Mi Instan LezatMU Rasa Ayam Bawang">Mi Instan LezatMU Rasa Ayam Bawang</option>
+              <option value="Mi Instan LezatMU Mi Goreng">Mi Instan LezatMU Mi Goreng</option>
+              <option value="Mi Instan LezatMU Kuah Rasa Soto">Mi Instan LezatMU Kuah Rasa Soto</option>
+              <option value="Semua Varian Mi LezatMU">Semua Varian Mi LezatMU</option>
+            </select>
+          </div>
+
+          <!-- Isi Ulasan -->
+          <div>
+            <label for="reviewComment" class="block text-xs font-bold text-brand-brown-dark mb-1">
+              Ulasan / Komentar Testimoni Anda <span class="text-brand-accent">*</span>
+            </label>
+            <textarea 
+              id="reviewComment" 
+              required 
+              rows="3" 
+              placeholder="Ceritakan kesan rasa, kenyalnya mi mocaf, aroma bumbu gurih, atau kepuasan Anda menikmati sajian LezatMU..." 
+              class="w-full px-3.5 py-2.5 rounded-xl border border-brand-gold/50 text-xs focus:ring-2 focus:ring-brand-gold outline-none bg-brand-cream-soft/40 leading-relaxed"
+            ></textarea>
+          </div>
+
+          <!-- Actions -->
+          <div class="pt-3 border-t border-brand-gold-light/60 flex items-center justify-end gap-2.5">
+            <button 
+              type="button" 
+              id="cancelTestimonialBtn" 
+              class="px-4 py-2.5 rounded-xl bg-gray-100 hover:bg-gray-200 text-brand-brown text-xs font-bold transition cursor-pointer"
+            >
+              Batal
+            </button>
+            <button 
+              type="submit" 
+              id="submitTestimonialBtn" 
+              class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md hover:shadow-lg transition flex items-center gap-2 cursor-pointer"
+            >
+              <i data-lucide="send" class="w-4 h-4"></i>
+              <span>Kirim Ulasan &amp; Rating</span>
+            </button>
+          </div>
+
+        </form>
+      </div>
+
     </div>
   </div>
 

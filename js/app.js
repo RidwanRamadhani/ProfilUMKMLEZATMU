@@ -6,6 +6,7 @@
 
 // Global State
 let productsList = [];
+let testimonialsList = [];
 let currentCategory = "all";
 let currentSearchQuery = "";
 let isAdminMode = false;
@@ -15,6 +16,7 @@ let currentFormImageBase64 = "";
 document.addEventListener("DOMContentLoaded", () => {
   initAOS();
   initProductData();
+  initTestimonialsData();
   initLucide();
   initMobileMenu();
   renderBestSellers();
@@ -22,6 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderArticles();
   initCatalog();
   initProductFormManagement();
+  initTestimonialsManagement();
   initSupabaseManagement();
   initSyncManagement();
   initModals();
@@ -55,6 +58,17 @@ function initLucide() {
   if (window.lucide) {
     window.lucide.createIcons();
   }
+}
+
+// Helper: Escape HTML to prevent XSS
+function escapeHtml(str) {
+  if (str === null || str === undefined) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 // 0. Data Initialization with Supabase Realtime Fetch & LocalStorage Fallback
@@ -187,6 +201,90 @@ async function syncToCloudDb(products) {
     }
   } catch (e) {
     console.warn("Gagal simpan ke Cloud Database:", e);
+  }
+}
+
+// Testimonials Data Initialization with Supabase Realtime Fetch & LocalStorage Fallback
+const TESTIMONIALS_STORAGE_KEY = "lezatmu_testimonials_v2";
+
+function getBaselineTestimonials() {
+  if (typeof culinaryData !== "undefined" && Array.isArray(culinaryData.testimonials)) {
+    return culinaryData.testimonials.map((t, idx) => ({
+      id: "testi-default-" + (idx + 1),
+      name: t.name || "Pelanggan",
+      role: t.role || "Pelanggan Setia LezatMU",
+      city: t.city || "Tangerang Selatan",
+      rating: Number(t.rating) || 5,
+      comment: t.comment || "",
+      menuEnjoyed: t.menuEnjoyed || "Mi Instan LezatMU",
+      createdAt: new Date(Date.now() - (idx + 1) * 86400000 * 3).toISOString()
+    }));
+  }
+  return [];
+}
+
+async function initTestimonialsData() {
+  const stored = localStorage.getItem(TESTIMONIALS_STORAGE_KEY);
+  if (stored) {
+    try {
+      testimonialsList = JSON.parse(stored);
+    } catch (e) {
+      console.error("Gagal memuat testimoni dari localStorage, menggunakan baseline:", e);
+      testimonialsList = getBaselineTestimonials();
+    }
+  } else {
+    testimonialsList = getBaselineTestimonials();
+    localStorage.setItem(TESTIMONIALS_STORAGE_KEY, JSON.stringify(testimonialsList));
+  }
+
+  // Render tampilan awal dari cache
+  renderTestimonials();
+
+  // Fetch data terbaru dari Supabase Cloud (jika tabel sudah dibuat)
+  await fetchTestimonialsFromSupabase(false);
+}
+
+// Fetch ulasan testimoni langsung dari tabel Supabase
+async function fetchTestimonialsFromSupabase(showToastOnSuccess = false) {
+  if (typeof getSupabaseClient !== "function") return;
+  const sb = getSupabaseClient();
+  if (!sb) return;
+
+  try {
+    const { data, error } = await sb
+      .from("testimonials")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.warn("Supabase fetch testimonials notice:", error.message);
+      if (showToastOnSuccess) showToast("Info Testimoni: " + error.message, "info");
+      return;
+    }
+
+    if (data && data.length > 0) {
+      testimonialsList = data.map(item => ({
+        id: String(item.id),
+        name: item.name || "Pelanggan",
+        role: item.role || "Pelanggan Setia LezatMU",
+        city: item.city || "Tangerang Selatan",
+        rating: Number(item.rating) || 5,
+        comment: item.comment || "",
+        menuEnjoyed: item.menu_enjoyed || item.menuEnjoyed || "Mi Instan LezatMU",
+        createdAt: item.created_at || item.createdAt || new Date().toISOString()
+      }));
+
+      localStorage.setItem(TESTIMONIALS_STORAGE_KEY, JSON.stringify(testimonialsList));
+      renderTestimonials();
+
+      if (showToastOnSuccess) {
+        showToast(`Berhasil mengambil ${data.length} ulasan testimoni dari Supabase Cloud!`, "success");
+      }
+    } else if (data && data.length === 0) {
+      console.log("Tabel testimonials di Supabase masih kosong.");
+    }
+  } catch (err) {
+    console.warn("Koneksi Supabase error saat mengambil testimoni:", err);
   }
 }
 
@@ -377,27 +475,103 @@ function renderBestSellers() {
   refreshAOS();
 }
 
-// 3. Render Testimonials
+// 3. Render Testimonials & Rating Statistics
 function renderTestimonials() {
   const container = document.getElementById("testimonialsContainer");
+  const avgRatingEl = document.getElementById("testimonialAverageRating");
+  const totalReviewsEl = document.getElementById("testimonialTotalReviews");
   if (!container) return;
 
-  container.innerHTML = culinaryData.testimonials.map((t, idx) => {
+  const totalCount = testimonialsList.length;
+  if (totalCount > 0) {
+    const sum = testimonialsList.reduce((acc, curr) => acc + (Number(curr.rating) || 5), 0);
+    const avg = (sum / totalCount).toFixed(1);
+    if (avgRatingEl) avgRatingEl.textContent = avg;
+    if (totalReviewsEl) totalReviewsEl.textContent = `(${totalCount} Ulasan)`;
+  } else {
+    if (avgRatingEl) avgRatingEl.textContent = "5.0";
+    if (totalReviewsEl) totalReviewsEl.textContent = "(0 Ulasan)";
+  }
+
+  if (totalCount === 0) {
+    container.innerHTML = `
+      <div class="col-span-full bg-white p-8 rounded-3xl border border-brand-gold-light text-center space-y-4">
+        <div class="w-16 h-16 mx-auto rounded-full bg-amber-50 text-amber-500 flex items-center justify-center">
+          <i data-lucide="message-square" class="w-8 h-8"></i>
+        </div>
+        <div class="space-y-1">
+          <h4 class="font-bold text-lg text-brand-brown-dark">Belum Ada Ulasan</h4>
+          <p class="text-xs sm:text-sm text-brand-brown-light max-w-md mx-auto">
+            Jadilah yang pertama memberikan ulasan dan rating rasa untuk Mi Instan LezatMU!
+          </p>
+        </div>
+        <button 
+          type="button" 
+          onclick="document.getElementById('openAddTestimonialBtn')?.click()"
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-brand-accent hover:bg-brand-accent-hover text-white text-xs font-bold transition shadow-md"
+        >
+          <i data-lucide="star" class="w-4 h-4 fill-white"></i>
+          <span>Tulis Ulasan Pertama</span>
+        </button>
+      </div>
+    `;
+    initLucide();
+    return;
+  }
+
+  container.innerHTML = testimonialsList.map((t, idx) => {
+    const ratingNum = Math.min(5, Math.max(1, Number(t.rating) || 5));
+    const filledStars = Array(ratingNum)
+      .fill('<i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>')
+      .join("");
+    const emptyStars = Array(5 - ratingNum)
+      .fill('<i data-lucide="star" class="w-4 h-4 text-gray-300"></i>')
+      .join("");
+
+    let dateStr = "";
+    if (t.createdAt) {
+      try {
+        const d = new Date(t.createdAt);
+        if (!isNaN(d.getTime())) {
+          dateStr = d.toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" });
+        }
+      } catch (e) {}
+    }
+
     return `
-      <div data-aos="fade-up" data-aos-duration="750" data-aos-delay="${idx * 120}" class="bg-white p-6 rounded-2xl border border-brand-gold-light shadow-sm flex flex-col justify-between space-y-4 hover:border-brand-gold hover-lift transition-all duration-300">
+      <div data-aos="fade-up" data-aos-duration="750" data-aos-delay="${idx * 80}" class="bg-white p-6 rounded-2xl border border-brand-gold-light shadow-sm flex flex-col justify-between space-y-4 hover:border-brand-gold hover-lift transition-all duration-300 relative group">
         <div class="space-y-3">
-          <div class="flex items-center gap-1 text-amber-500">
-            ${Array(t.rating).fill('<i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>').join("")}
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-1 text-amber-500">
+              ${filledStars}
+              ${emptyStars}
+            </div>
+
+            <div class="flex items-center gap-2">
+              ${dateStr ? `<span class="text-[11px] text-brand-brown-light/70 font-medium">${dateStr}</span>` : ""}
+              ${isAdminMode ? `
+                <button 
+                  type="button" 
+                  onclick="triggerDeleteTestimonial('${t.id}')" 
+                  title="Hapus Ulasan (Khusus Mode Admin)"
+                  class="px-2.5 py-1 rounded-lg bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 text-xs font-semibold flex items-center gap-1 transition cursor-pointer"
+                >
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                  <span>Hapus</span>
+                </button>
+              ` : ""}
+            </div>
           </div>
+
           <p class="text-xs sm:text-sm text-brand-brown-light italic leading-relaxed">
-            &ldquo;${t.comment}&rdquo;
+            &ldquo;${escapeHtml(t.comment || "")}&rdquo;
           </p>
         </div>
 
         <div class="pt-3 border-t border-brand-gold-light/50">
-          <div class="font-bold text-sm text-brand-brown-dark">${t.name}</div>
-          <div class="text-xs text-brand-brown-light">${t.role} &bull; <span class="text-brand-accent">${t.city}</span></div>
-          <div class="text-[11px] text-brand-gold-dark mt-1 font-medium">Menu Favorit: ${t.menuEnjoyed}</div>
+          <div class="font-bold text-sm text-brand-brown-dark">${escapeHtml(t.name || "")}</div>
+          <div class="text-xs text-brand-brown-light">${escapeHtml(t.role || "Pelanggan")} &bull; <span class="text-brand-accent">${escapeHtml(t.city || "")}</span></div>
+          <div class="text-[11px] text-brand-gold-dark mt-1 font-medium">Menu Dinikmati: ${escapeHtml(t.menuEnjoyed || "Mi Instan LezatMU")}</div>
         </div>
       </div>
     `;
@@ -563,6 +737,7 @@ function initCatalog() {
     initLucide();
     renderCatalogGrid();
     renderBestSellers();
+    renderTestimonials();
   }
 
   // Handler Klik Tombol Mode Admin (Navbar Desktop & Mobile)
@@ -1227,6 +1402,233 @@ window.triggerDeleteProduct = function(productId) {
   initLucide();
 };
 
+// 5b. Interactive Testimonials & Customer Rating Management
+function initTestimonialsManagement() {
+  const openBtn = document.getElementById("openAddTestimonialBtn");
+  const modal = document.getElementById("testimonialModal");
+  const closeBtn = document.getElementById("closeTestimonialModalBtn");
+  const cancelBtn = document.getElementById("cancelTestimonialBtn");
+  const form = document.getElementById("testimonialForm");
+  const starBtns = document.querySelectorAll("#starPicker .star-btn");
+  const ratingInput = document.getElementById("selectedRatingInput");
+  const ratingLabel = document.getElementById("starRatingLabel");
+  const authorNameInput = document.getElementById("reviewAuthorName");
+  const authorCityInput = document.getElementById("reviewCity");
+  const authorRoleInput = document.getElementById("reviewRole");
+  const menuSelect = document.getElementById("reviewMenuEnjoyed");
+  const commentInput = document.getElementById("reviewComment");
+  const submitBtn = document.getElementById("submitTestimonialBtn");
+
+  const ratingDescriptions = {
+    1: "⭐ 1 / 5 - Kecewa / Perlu Ditingkatkan",
+    2: "⭐⭐ 2 / 5 - Kurang Memuaskan",
+    3: "⭐⭐⭐ 3 / 5 - Cukup Enak & Standar",
+    4: "⭐⭐⭐⭐ 4 / 5 - Puas & Enak Sekali",
+    5: "⭐⭐⭐⭐⭐ 5 / 5 - Sangat Puas & Sangat Lezat!"
+  };
+
+  const updateStarPickerUI = (val) => {
+    const rating = Math.min(5, Math.max(1, parseInt(val, 10) || 5));
+    if (ratingInput) ratingInput.value = rating;
+    if (ratingLabel) ratingLabel.textContent = ratingDescriptions[rating] || `${rating} / 5 Bintang`;
+
+    starBtns.forEach(btn => {
+      const star = parseInt(btn.getAttribute("data-star"), 10);
+      const icon = btn.querySelector("i");
+      if (icon) {
+        if (star <= rating) {
+          icon.setAttribute("class", "w-7 h-7 fill-amber-400 text-amber-400");
+        } else {
+          icon.setAttribute("class", "w-7 h-7 fill-none text-gray-300");
+        }
+      }
+    });
+    initLucide();
+  };
+
+  // Bind klik tombol rating bintang
+  starBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const star = parseInt(btn.getAttribute("data-star"), 10);
+      updateStarPickerUI(star);
+    });
+  });
+
+  // Isi dropdown pilihan menu secara dinamis dari produk katalog
+  const populateMenuDropdown = () => {
+    if (!menuSelect) return;
+    const currentVal = menuSelect.value;
+    const defaultMenus = [
+      "Mi Instan LezatMU Rasa Ayam Bawang",
+      "Mi Instan LezatMU Mi Goreng",
+      "Mi Instan LezatMU Kuah Rasa Soto",
+      "Semua Varian Mi LezatMU"
+    ];
+
+    const uniqueMenus = new Set(defaultMenus);
+    if (Array.isArray(productsList)) {
+      productsList.forEach(p => {
+        if (p && p.name) uniqueMenus.add(p.name);
+      });
+    }
+
+    menuSelect.innerHTML = Array.from(uniqueMenus).map(m => `
+      <option value="${escapeHtml(m)}">${escapeHtml(m)}</option>
+    `).join("");
+
+    if (currentVal && uniqueMenus.has(currentVal)) {
+      menuSelect.value = currentVal;
+    }
+  };
+
+  const openModal = () => {
+    if (form) form.reset();
+    updateStarPickerUI(5);
+    populateMenuDropdown();
+    if (modal) {
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      document.body.style.overflow = "hidden";
+      if (authorNameInput) setTimeout(() => authorNameInput.focus(), 120);
+    }
+    initLucide();
+  };
+
+  const closeModal = () => {
+    if (modal) {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      document.body.style.overflow = "";
+    }
+  };
+
+  if (openBtn) openBtn.addEventListener("click", openModal);
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+  if (cancelBtn) cancelBtn.addEventListener("click", closeModal);
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+  }
+
+  // Submit Testimoni Baru
+  if (form) {
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const name = authorNameInput ? authorNameInput.value.trim() : "";
+      const city = authorCityInput ? authorCityInput.value.trim() : "";
+      const role = authorRoleInput ? authorRoleInput.value.trim() : "";
+      const menu = menuSelect ? menuSelect.value.trim() : "Mi Instan LezatMU";
+      const comment = commentInput ? commentInput.value.trim() : "";
+      const rating = ratingInput ? (parseInt(ratingInput.value, 10) || 5) : 5;
+
+      if (!name || !city || !comment) {
+        showToast("Mohon isi Nama, Domisili, dan Komentar ulasan Anda.", "warning");
+        return;
+      }
+
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = `
+          <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+          <span>Mengirim Ulasan...</span>
+        `;
+      }
+
+      const newTestimonial = {
+        id: "testi-" + Date.now() + "-" + Math.random().toString(36).substring(2, 7),
+        name: name,
+        role: role || "Pelanggan Setia LezatMU",
+        city: city,
+        rating: rating,
+        comment: comment,
+        menuEnjoyed: menu,
+        createdAt: new Date().toISOString()
+      };
+
+      // 1. Simpan ke local state & LocalStorage agar langsung tampil
+      testimonialsList.unshift(newTestimonial);
+      localStorage.setItem(TESTIMONIALS_STORAGE_KEY, JSON.stringify(testimonialsList));
+      renderTestimonials();
+
+      // 2. Kirim ke Supabase Cloud Database (async)
+      try {
+        if (typeof getSupabaseClient === "function") {
+          const sb = getSupabaseClient();
+          if (sb) {
+            const { error } = await sb.from("testimonials").insert([{
+              id: newTestimonial.id,
+              name: newTestimonial.name,
+              role: newTestimonial.role,
+              city: newTestimonial.city,
+              rating: newTestimonial.rating,
+              comment: newTestimonial.comment,
+              menu_enjoyed: newTestimonial.menuEnjoyed,
+              created_at: newTestimonial.createdAt
+            }]);
+
+            if (error) {
+              console.warn("Gagal simpan testimoni ke Supabase:", error.message);
+            } else {
+              console.log("Testimoni berhasil tersimpan ke Supabase Cloud!");
+            }
+          }
+        }
+      } catch (err) {
+        console.warn("Koneksi Supabase error saat kirim ulasan:", err);
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = `
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>Kirim Ulasan &amp; Rating</span>
+          `;
+          initLucide();
+        }
+      }
+
+      closeModal();
+      showToast("Terima kasih! Ulasan & rating bintang Anda berhasil dipublikasikan.", "success");
+
+      const testimonialsSection = document.getElementById("testimonialsContainer");
+      if (testimonialsSection) {
+        testimonialsSection.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      }
+    });
+  }
+}
+
+// Global Trigger Delete Testimonial (Admin Mode Only)
+function triggerDeleteTestimonial(id) {
+  if (!isAdminMode) {
+    showToast("Akses ditolak: Masuk Mode Admin dengan PIN 2026 terlebih dahulu.", "warning");
+    return;
+  }
+
+  const item = testimonialsList.find(t => t.id === id);
+  const authorName = item ? item.name : "ulasan ini";
+
+  if (!confirm(`Hapus ulasan testimoni dari "${authorName}"? Tindakan ini tidak dapat dibatalkan.`)) {
+    return;
+  }
+
+  testimonialsList = testimonialsList.filter(t => t.id !== id);
+  localStorage.setItem(TESTIMONIALS_STORAGE_KEY, JSON.stringify(testimonialsList));
+  renderTestimonials();
+  showToast(`Ulasan dari "${authorName}" berhasil dihapus.`, "info");
+
+  if (typeof getSupabaseClient === "function") {
+    const sb = getSupabaseClient();
+    if (sb) {
+      sb.from("testimonials").delete().eq("id", id).then(({ error }) => {
+        if (error) console.warn("Supabase delete testimonial notice:", error.message);
+      }).catch(err => console.warn("Supabase delete testimonial error:", err));
+    }
+  }
+}
+window.triggerDeleteTestimonial = triggerDeleteTestimonial;
+
 // 6. Product Detail Modal & Article Modal
 function initModals() {
   const productModal = document.getElementById("productModal");
@@ -1290,6 +1692,12 @@ function initModals() {
       if (articleModal && !articleModal.classList.contains("hidden")) {
         articleModal.classList.add("hidden");
         articleModal.classList.remove("flex");
+        document.body.style.overflow = "";
+      }
+      const testimonialModal = document.getElementById("testimonialModal");
+      if (testimonialModal && !testimonialModal.classList.contains("hidden")) {
+        testimonialModal.classList.add("hidden");
+        testimonialModal.classList.remove("flex");
         document.body.style.overflow = "";
       }
     }
@@ -2042,6 +2450,34 @@ USING (true);
 -- 6. Kebijakan: Mode Admin bisa menghapus menu (DELETE)
 CREATE POLICY "Public Delete Access" 
 ON products FOR DELETE 
+USING (true);
+
+-- 7. Buat Tabel testimonials untuk Rating & Ulasan Konsumen
+CREATE TABLE IF NOT EXISTS testimonials (
+  id TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  role TEXT DEFAULT 'Pelanggan Setia LezatMU',
+  city TEXT DEFAULT 'Tangerang Selatan',
+  rating INT DEFAULT 5,
+  comment TEXT NOT NULL,
+  menu_enjoyed TEXT DEFAULT 'Mi Instan LezatMU',
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::TEXT, NOW())
+);
+
+-- 8. Aktifkan Row Level Security (RLS) Testimonials
+ALTER TABLE testimonials ENABLE ROW LEVEL SECURITY;
+
+-- 9. Kebijakan Akses Testimonials
+CREATE POLICY "Public Read Testimonials" 
+ON testimonials FOR SELECT 
+USING (true);
+
+CREATE POLICY "Public Insert Testimonials" 
+ON testimonials FOR INSERT 
+WITH CHECK (true);
+
+CREATE POLICY "Public Delete Testimonials" 
+ON testimonials FOR DELETE 
 USING (true);`;
 
   if (sqlScriptText) {
@@ -2122,25 +2558,28 @@ USING (true);`;
       updateStatusUI();
       showToast("Kredensial Supabase berhasil disimpan! Sedang menguji koneksi...", "info");
       await fetchProductsFromSupabase(true);
+      await fetchTestimonialsFromSupabase(false);
     });
   }
 
   if (fetchBtn) {
     fetchBtn.addEventListener("click", async () => {
       await fetchProductsFromSupabase(true);
+      await fetchTestimonialsFromSupabase(true);
     });
   }
 
   if (quickTestBtn) {
     quickTestBtn.addEventListener("click", async () => {
       await fetchProductsFromSupabase(true);
+      await fetchTestimonialsFromSupabase(false);
       updateStatusUI();
     });
   }
 
   if (seedBtn) {
     seedBtn.addEventListener("click", () => {
-      if (confirm("Unggah 3 varian menu resmi bawaan LezatMU ke tabel database Supabase sekarang?")) {
+      if (confirm("Unggah 3 varian menu resmi & ulasan awal LezatMU ke tabel database Supabase sekarang?")) {
         seedDefaultProductsToSupabase();
       }
     });
@@ -2159,7 +2598,7 @@ USING (true);`;
   }
 }
 
-// Helper: Seed Default Products to Supabase
+// Helper: Seed Default Products & Testimonials to Supabase
 async function seedDefaultProductsToSupabase() {
   if (typeof getSupabaseClient !== "function") return;
   const sb = getSupabaseClient();
@@ -2168,13 +2607,32 @@ async function seedDefaultProductsToSupabase() {
     return;
   }
 
-  showToast("Sedang mengunggah 3 menu resmi LezatMU ke Supabase...", "info");
+  showToast("Sedang mengunggah 3 menu resmi & ulasan awal LezatMU ke Supabase...", "info");
   try {
     const payloads = culinaryData.products.map(formatProductForDb);
-    const { error } = await sb.from("products").upsert(payloads, { onConflict: "id" });
-    if (error) throw error;
-    showToast("3 menu resmi berhasil diunggah ke database online Supabase!", "success");
+    const { error: prodError } = await sb.from("products").upsert(payloads, { onConflict: "id" });
+    if (prodError) throw prodError;
+
+    // Unggah ulasan bawaan jika tabel testimonials sudah dibuat
+    try {
+      const defaultTestimonials = getBaselineTestimonials().map(t => ({
+        id: t.id,
+        name: t.name,
+        role: t.role,
+        city: t.city,
+        rating: t.rating,
+        comment: t.comment,
+        menu_enjoyed: t.menuEnjoyed,
+        created_at: t.createdAt
+      }));
+      await sb.from("testimonials").upsert(defaultTestimonials, { onConflict: "id" });
+    } catch (testiErr) {
+      console.warn("Notice: Unggah testimoni awal ke Supabase:", testiErr);
+    }
+
+    showToast("3 menu resmi & testimoni berhasil diunggah ke database online Supabase!", "success");
     await fetchProductsFromSupabase(true);
+    await fetchTestimonialsFromSupabase(false);
   } catch (err) {
     console.error("Gagal seed Supabase:", err);
     showToast("Gagal mengunggah menu awal: " + err.message, "error");
