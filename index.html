@@ -62,7 +62,9 @@
     }
   </script>
 
-  <link rel="stylesheet" href="css/styles.css?v=20261012-font2">
+  <!-- AOS (Animate On Scroll) CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="css/styles.css?v=20261013-anim">
 </head>
 <body class="bg-brand-cream-soft text-brand-brown-dark font-sans antialiased selection:bg-brand-gold selection:text-white">
 
@@ -172,12 +174,12 @@
           
           <!-- Hero Text (Fully Transparent, No Blocking Box) -->
           <div class="lg:col-span-7 space-y-6 text-center lg:text-left text-white">
-            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-accent/80 backdrop-blur-sm text-white font-bold text-xs sm:text-sm border border-brand-gold/40 shadow-sm animate-pulse">
+            <div data-aos="fade-down" data-aos-duration="600" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-accent/80 backdrop-blur-sm text-white font-bold text-xs sm:text-sm border border-brand-gold/40 shadow-sm animate-pulse">
               <i data-lucide="sparkles" class="w-4 h-4 text-amber-300"></i>
               <span>BUMM PCM Serpong Utara &bull; Pelopor Inovasi Mie Sehat</span>
             </div>
 
-            <h1 style="font-family: 'Plus Jakarta Sans', sans-serif !important;" class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-heading font-extrabold text-white leading-tight drop-shadow-md">
+            <h1 data-aos="fade-up" data-aos-duration="800" data-aos-delay="100" style="font-family: 'Plus Jakarta Sans', sans-serif !important;" class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-heading font-extrabold text-white leading-tight drop-shadow-md">
               PT Azzam Tawaqal Berkemajuan: <br>
               <span style="font-family: 'Plus Jakarta Sans', sans-serif !important;" class="text-amber-400 font-heading italic drop-shadow">
                 Inovasi Mie Sehat LEZATMU
@@ -187,21 +189,13 @@
               </span>
             </h1>
 
-            <p class="text-base sm:text-lg text-brand-gold-light/90 leading-relaxed max-w-2xl mx-auto lg:mx-0 drop-shadow">
+            <p data-aos="fade-up" data-aos-duration="800" data-aos-delay="200" class="text-base sm:text-lg text-brand-gold-light/90 leading-relaxed max-w-2xl mx-auto lg:mx-0 drop-shadow">
               Unit usaha kebanggaan binaan Pimpinan Cabang Muhammadiyah (PCM) Serpong Utara. Memproduksi olahan mie sehat berbahan tepung mocaf &amp; gandum segar alami tanpa pewarna sintetis dan tanpa bahan pengawet berbahaya.
             </p>
 
-            <!-- Transparent Notice Badge -->
-            <div class="p-3.5 rounded-2xl bg-black/40 backdrop-blur-md border border-amber-400/40 text-amber-200 text-xs sm:text-sm flex items-start gap-3 text-left">
-              <i data-lucide="info" class="w-5 h-5 text-amber-400 shrink-0 mt-0.5"></i>
-              <div class="text-white/90">
-                <strong class="text-amber-300">Profil &amp; Katalog Usaha Resmi:</strong> Pemesanan porsi santap, takeaway, maupun katering mie dilayani langsung via <strong class="text-white">WhatsApp Resmi Admin Serpong Utara</strong>.
-              </div>
-            </div>
-
             <!-- CTA Actions -->
-            <div class="flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
-              <a href="#katalog" class="px-7 py-3.5 rounded-full bg-brand-accent hover:bg-brand-accent-hover text-white font-bold text-sm sm:text-base shadow-warm hover:shadow-warm-lg hover:scale-105 transition-all duration-300 flex items-center gap-2 border border-amber-400/40">
+            <div data-aos="fade-up" data-aos-duration="800" data-aos-delay="300" class="flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
+              <a href="#katalog" class="px-7 py-3.5 rounded-full bg-brand-accent hover:bg-brand-accent-hover text-white font-bold text-sm sm:text-base shadow-warm hover:shadow-warm-lg hover:scale-105 transition-all duration-300 flex items-center gap-2 border border-amber-400/40 animate-shimmer">
                 <span>Jelajahi Menu Mie</span>
                 <i data-lucide="arrow-down" class="w-4 h-4 text-amber-300"></i>
               </a>
@@ -216,7 +210,7 @@
             </div>
 
             <!-- Quick Metrics (Transparent border & text) -->
-            <div class="grid grid-cols-3 gap-4 pt-6 border-t border-white/20 text-center">
+            <div data-aos="fade-up" data-aos-duration="800" data-aos-delay="400" class="grid grid-cols-3 gap-4 pt-6 border-t border-white/20 text-center">
               <div class="p-2">
                 <div class="font-heading font-bold text-2xl sm:text-3xl text-amber-400">100%</div>
                 <div class="text-xs text-brand-gold-light font-medium">Bahan Sehat &amp; Halal</div>
@@ -233,7 +227,7 @@
           </div>
 
           <!-- Hero Image (Solid Clean Card Showcase - Ukuran Proporsional & Rapi) -->
-          <div class="lg:col-span-5 relative flex justify-center items-center">
+          <div data-aos="zoom-in" data-aos-duration="900" data-aos-delay="200" class="lg:col-span-5 relative flex justify-center items-center">
             <div class="relative w-full max-w-[340px] sm:max-w-[370px] lg:max-w-[390px] mx-auto">
               
               <!-- Solid Clean Card (Non-Transparan) -->
@@ -249,7 +243,7 @@
               </div>
 
               <!-- Floating Badge 1: 100% Halal & Alami -->
-              <div class="absolute -top-3.5 -left-3.5 sm:-top-4 sm:-left-4 bg-brand-brown-dark/95 px-3 py-2 rounded-2xl shadow-xl border border-brand-gold/40 flex items-center gap-2.5 text-white animate-bounce-slow">
+              <div data-aos="fade-up" data-aos-delay="400" class="absolute -top-3.5 -left-3.5 sm:-top-4 sm:-left-4 bg-brand-brown-dark/95 px-3 py-2 rounded-2xl shadow-xl border border-brand-gold/40 flex items-center gap-2.5 text-white animate-bounce-slow">
                 <div class="w-8 h-8 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 border border-emerald-400/30 shrink-0">
                   <i data-lucide="shield-check" class="w-4 h-4"></i>
                 </div>
@@ -260,7 +254,7 @@
               </div>
 
               <!-- Floating Badge 2: Inovasi Mi Sehat BUMM -->
-              <div class="absolute -bottom-4 -right-3.5 sm:-bottom-4 sm:-right-4 bg-brand-brown-dark/95 px-3 py-2 rounded-2xl shadow-xl border border-brand-gold/40 flex items-center gap-2.5 text-white">
+              <div data-aos="fade-up" data-aos-delay="500" class="absolute -bottom-4 -right-3.5 sm:-bottom-4 sm:-right-4 bg-brand-brown-dark/95 px-3 py-2 rounded-2xl shadow-xl border border-brand-gold/40 flex items-center gap-2.5 text-white">
                 <div class="w-8 h-8 rounded-xl bg-amber-500/20 flex items-center justify-center text-amber-400 border border-amber-400/30 shrink-0">
                   <i data-lucide="sparkles" class="w-4 h-4"></i>
                 </div>
@@ -282,7 +276,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <!-- Sekapur Sirih Section -->
-        <div class="max-w-4xl mx-auto text-center space-y-4 mb-16">
+        <div data-aos="fade-up" data-aos-duration="800" class="max-w-4xl mx-auto text-center space-y-4 mb-16">
           <span class="text-brand-accent uppercase font-bold text-xs tracking-widest">Dedikasi BUMM Berkemajuan</span>
           <h2 class="font-heading text-3xl sm:text-4xl font-bold text-brand-brown-dark">Sekapur Sirih dari PT Azzam Tawaqal Berkemajuan</h2>
           <div class="w-20 h-1 bg-brand-gold mx-auto rounded-full"></div>
@@ -297,7 +291,7 @@
         <!-- 4 Quick Values Khusus Mie UMKM -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           
-          <div class="bg-brand-cream-soft p-6 rounded-2xl border border-brand-gold-light hover:border-brand-gold hover:shadow-warm transition-all duration-300 group">
+          <div data-aos="fade-up" data-aos-duration="700" data-aos-delay="100" class="bg-brand-cream-soft p-6 rounded-2xl border border-brand-gold-light hover:border-brand-gold hover-lift transition-all duration-300 group">
             <div class="w-12 h-12 rounded-xl bg-brand-gold/20 flex items-center justify-center text-brand-brown group-hover:bg-brand-brown group-hover:text-brand-gold transition duration-300 mb-4">
               <i data-lucide="leaf" class="w-6 h-6"></i>
             </div>
@@ -307,7 +301,7 @@
             </p>
           </div>
 
-          <div class="bg-brand-cream-soft p-6 rounded-2xl border border-brand-gold-light hover:border-brand-gold hover:shadow-warm transition-all duration-300 group">
+          <div data-aos="fade-up" data-aos-duration="700" data-aos-delay="200" class="bg-brand-cream-soft p-6 rounded-2xl border border-brand-gold-light hover:border-brand-gold hover-lift transition-all duration-300 group">
             <div class="w-12 h-12 rounded-xl bg-brand-gold/20 flex items-center justify-center text-brand-brown group-hover:bg-brand-brown group-hover:text-brand-gold transition duration-300 mb-4">
               <i data-lucide="sparkles" class="w-6 h-6"></i>
             </div>
@@ -317,7 +311,7 @@
             </p>
           </div>
 
-          <div class="bg-brand-cream-soft p-6 rounded-2xl border border-brand-gold-light hover:border-brand-gold hover:shadow-warm transition-all duration-300 group">
+          <div data-aos="fade-up" data-aos-duration="700" data-aos-delay="300" class="bg-brand-cream-soft p-6 rounded-2xl border border-brand-gold-light hover:border-brand-gold hover-lift transition-all duration-300 group">
             <div class="w-12 h-12 rounded-xl bg-brand-gold/20 flex items-center justify-center text-brand-brown group-hover:bg-brand-brown group-hover:text-brand-gold transition duration-300 mb-4">
               <i data-lucide="utensils" class="w-6 h-6"></i>
             </div>
@@ -327,7 +321,7 @@
             </p>
           </div>
 
-          <div class="bg-brand-cream-soft p-6 rounded-2xl border border-brand-gold-light hover:border-brand-gold hover:shadow-warm transition-all duration-300 group">
+          <div data-aos="fade-up" data-aos-duration="700" data-aos-delay="400" class="bg-brand-cream-soft p-6 rounded-2xl border border-brand-gold-light hover:border-brand-gold hover-lift transition-all duration-300 group">
             <div class="w-12 h-12 rounded-xl bg-brand-gold/20 flex items-center justify-center text-brand-brown group-hover:bg-brand-brown group-hover:text-brand-gold transition duration-300 mb-4">
               <i data-lucide="shield-check" class="w-6 h-6"></i>
             </div>
@@ -345,7 +339,7 @@
     <section id="tentang-kami" class="py-20 bg-brand-cream-soft">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <div data-aos="fade-up" class="text-center max-w-3xl mx-auto mb-16 space-y-3">
           <span class="text-brand-accent uppercase font-bold text-xs tracking-widest">Profil Badan Usaha</span>
           <h2 class="font-heading text-3xl sm:text-4xl font-bold text-brand-brown-dark">PT Azzam Tawaqal Berkemajuan (Serpong Utara)</h2>
           <div class="w-20 h-1 bg-brand-gold mx-auto rounded-full"></div>
@@ -357,7 +351,7 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center mb-16">
           
           <!-- Sejarah & Narasi UMKM Mie -->
-          <div class="lg:col-span-6 space-y-6">
+          <div data-aos="fade-right" data-aos-duration="800" class="lg:col-span-6 space-y-6">
             <h3 class="font-heading text-2xl font-bold text-brand-brown-dark">
               Pilar Ekonomi Berkemajuan dari Serpong Utara untuk Nusantara
             </h3>
@@ -369,15 +363,15 @@
             </p>
 
             <!-- Legalitas & Sertifikasi Badges -->
-            <div class="grid grid-cols-2 gap-4 pt-2">
-              <div class="p-4 bg-white rounded-xl border border-brand-gold-light shadow-sm">
+            <div data-aos="fade-up" data-aos-delay="200" class="grid grid-cols-2 gap-4 pt-2">
+              <div class="p-4 bg-white rounded-xl border border-brand-gold-light shadow-sm hover-lift">
                 <div class="flex items-center gap-2 text-brand-brown-dark font-bold text-sm">
                   <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-600"></i>
                   <span>Badan Hukum Resmi &amp; BUMM</span>
                 </div>
                 <p class="text-xs text-brand-brown-light mt-1">Binaan PCM Serpong Utara, Tangsel &bull; NIB Terdaftar</p>
               </div>
-              <div class="p-4 bg-white rounded-xl border border-brand-gold-light shadow-sm">
+              <div class="p-4 bg-white rounded-xl border border-brand-gold-light shadow-sm hover-lift">
                 <div class="flex items-center gap-2 text-brand-brown-dark font-bold text-sm">
                   <i data-lucide="shield-alert" class="w-4 h-4 text-brand-gold-dark"></i>
                   <span>Sertifikasi Halal BPJPH</span>
@@ -392,7 +386,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
               
               <!-- Gambar 1: Ready Stock Pesan Sekarang -->
-              <div class="rounded-3xl overflow-hidden shadow-warm border border-brand-gold-light/80 group relative bg-white flex flex-col hover:shadow-xl transition-all duration-300">
+              <div data-aos="fade-left" data-aos-duration="800" class="rounded-3xl overflow-hidden shadow-warm border border-brand-gold-light/80 group relative bg-white flex flex-col hover-lift transition-all duration-300">
                 <div class="relative overflow-hidden h-80 sm:h-96 lg:h-[430px] bg-brand-cream-soft">
                   <img 
                     src="images/ready-stock-mi-lezatmu.jpg?v=2" 
@@ -415,7 +409,7 @@
               </div>
 
               <!-- Gambar 2: Edukasi & Keunggulan Produk -->
-              <div class="rounded-3xl overflow-hidden shadow-warm border border-brand-gold-light/80 group relative bg-white flex flex-col hover:shadow-xl transition-all duration-300 sm:mt-6">
+              <div data-aos="fade-left" data-aos-duration="800" data-aos-delay="150" class="rounded-3xl overflow-hidden shadow-warm border border-brand-gold-light/80 group relative bg-white flex flex-col hover-lift transition-all duration-300 sm:mt-6">
                 <div class="relative overflow-hidden h-80 sm:h-96 lg:h-[430px] bg-brand-cream-soft">
                   <img 
                     src="images/keunggulan-mie-lezatmu.jpg?v=2" 
@@ -446,7 +440,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           
           <!-- Visi & Misi Card -->
-          <div class="bg-white p-8 rounded-3xl border border-brand-gold-light shadow-warm space-y-6">
+          <div data-aos="fade-up" data-aos-duration="800" class="bg-white p-8 rounded-3xl border border-brand-gold-light shadow-warm space-y-6 hover-lift">
             <div class="flex items-center gap-3">
               <div class="w-12 h-12 rounded-2xl bg-brand-gold/20 text-brand-brown-dark flex items-center justify-center font-bold">
                 <i data-lucide="compass" class="w-6 h-6"></i>
@@ -484,7 +478,7 @@
           </div>
 
           <!-- Nilai Inti (Core Values) 4K -->
-          <div class="bg-gradient-to-br from-brand-brown-dark to-brand-brown text-white p-8 rounded-3xl shadow-warm space-y-6">
+          <div data-aos="fade-up" data-aos-duration="800" data-aos-delay="150" class="bg-gradient-to-br from-brand-brown-dark to-brand-brown text-white p-8 rounded-3xl shadow-warm space-y-6 hover-lift">
             <div class="flex items-center gap-3">
               <div class="w-12 h-12 rounded-2xl bg-brand-gold/20 text-brand-gold flex items-center justify-center font-bold">
                 <i data-lucide="gem" class="w-6 h-6"></i>
@@ -545,7 +539,7 @@
     <section id="best-seller" class="py-20 bg-white border-t border-brand-gold-light/60">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <div data-aos="fade-up" class="text-center max-w-3xl mx-auto mb-16 space-y-3">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-bold uppercase tracking-wider">
             <i data-lucide="star" class="w-3.5 h-3.5 fill-amber-500 text-amber-500"></i>
             <span>The Most Wanted Noodle Collection</span>
@@ -563,7 +557,7 @@
         </div>
 
         <!-- Social Proof & Customer Reviews -->
-        <div class="bg-brand-cream-soft rounded-3xl p-8 lg:p-12 border border-brand-gold-light shadow-warm">
+        <div data-aos="fade-up" data-aos-duration="800" class="bg-brand-cream-soft rounded-3xl p-8 lg:p-12 border border-brand-gold-light shadow-warm">
           <div class="text-center max-w-2xl mx-auto mb-10 space-y-2">
             <span class="text-brand-accent uppercase font-bold text-xs tracking-widest">Testimoni Konsumen</span>
             <h3 class="font-heading text-2xl sm:text-3xl font-bold text-brand-brown-dark">Apa Kata Mereka Tentang Mie LEZATMU?</h3>
@@ -583,7 +577,7 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <!-- Header Katalog -->
-        <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+        <div data-aos="fade-up" class="text-center max-w-3xl mx-auto mb-12 space-y-3">
           <span class="text-brand-accent uppercase font-bold text-xs tracking-widest">Eksplorasi Varian Mie</span>
           <h2 class="font-heading text-3xl sm:text-4xl font-bold text-brand-brown-dark">Katalog Aneka Mie &amp; Menu Pendamping</h2>
           <div class="w-20 h-1 bg-brand-gold mx-auto rounded-full"></div>
@@ -593,7 +587,7 @@
         </div>
 
         <!-- Search & Filter Controls -->
-        <div class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-brand-gold-light/80 mb-10">
+        <div data-aos="fade-up" data-aos-duration="700" class="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-brand-gold-light/80 mb-10">
           <div class="flex flex-col md:flex-row gap-4 items-center justify-between">
             
             <!-- Category Tabs -->
@@ -744,7 +738,7 @@
     <section id="cerita-kuliner" class="py-20 bg-white border-t border-brand-gold-light/60">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <div data-aos="fade-up" class="text-center max-w-3xl mx-auto mb-16 space-y-3">
           <span class="text-brand-accent uppercase font-bold text-xs tracking-widest">Wawasan &amp; Cerita Mie</span>
           <h2 class="font-heading text-3xl sm:text-4xl font-bold text-brand-brown-dark">Artikel &amp; Edukasi Mie Sehat</h2>
           <div class="w-20 h-1 bg-brand-gold mx-auto rounded-full"></div>
@@ -757,7 +751,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="articlesGrid">
           
           <!-- Article 1 -->
-          <article class="bg-brand-cream-soft rounded-3xl overflow-hidden border border-brand-gold-light hover:shadow-warm transition-all duration-300 flex flex-col group">
+          <article data-aos="fade-up" data-aos-duration="700" data-aos-delay="100" class="bg-brand-cream-soft rounded-3xl overflow-hidden border border-brand-gold-light hover:shadow-warm hover-lift transition-all duration-300 flex flex-col group">
             <div class="relative h-48 overflow-hidden bg-brand-cream">
               <img src="images/mi-ayam-bawang.jpg?v=2" alt="Mi Instan LezatMU Rasa Ayam Bawang" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
               <span class="absolute top-3 left-3 bg-brand-brown-dark/80 backdrop-blur-sm text-brand-gold-light text-xs font-bold px-3 py-1 rounded-full">
@@ -787,7 +781,7 @@
           </article>
 
           <!-- Article 2 -->
-          <article class="bg-brand-cream-soft rounded-3xl overflow-hidden border border-brand-gold-light hover:shadow-warm transition-all duration-300 flex flex-col group">
+          <article data-aos="fade-up" data-aos-duration="700" data-aos-delay="200" class="bg-brand-cream-soft rounded-3xl overflow-hidden border border-brand-gold-light hover:shadow-warm hover-lift transition-all duration-300 flex flex-col group">
             <div class="relative h-48 overflow-hidden bg-brand-cream">
               <img src="images/mi-goreng.jpg?v=2" alt="Mi Instan LezatMU Mi Goreng" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
               <span class="absolute top-3 left-3 bg-brand-accent text-white text-xs font-bold px-3 py-1 rounded-full">
@@ -817,7 +811,7 @@
           </article>
 
           <!-- Article 3 -->
-          <article class="bg-brand-cream-soft rounded-3xl overflow-hidden border border-brand-gold-light hover:shadow-warm transition-all duration-300 flex flex-col group">
+          <article data-aos="fade-up" data-aos-duration="700" data-aos-delay="300" class="bg-brand-cream-soft rounded-3xl overflow-hidden border border-brand-gold-light hover:shadow-warm hover-lift transition-all duration-300 flex flex-col group">
             <div class="relative h-48 overflow-hidden bg-brand-cream">
               <img src="images/mi-kuah-soto.jpg?v=2" alt="Mi Instan LezatMU Kuah Rasa Soto" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
               <span class="absolute top-3 left-3 bg-emerald-700 text-white text-xs font-bold px-3 py-1 rounded-full">
@@ -855,7 +849,7 @@
     <section id="lokasi" class="py-20 bg-brand-cream-soft border-t border-brand-gold-light/60">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+        <div data-aos="fade-up" class="text-center max-w-3xl mx-auto mb-16 space-y-3">
           <span class="text-brand-accent uppercase font-bold text-xs tracking-widest">Lokasi Resmi di Tangerang Selatan</span>
           <h2 class="font-heading text-3xl sm:text-4xl font-bold text-brand-brown-dark">Hubungi &amp; Kunjungi Kami di Serpong Utara</h2>
           <div class="w-20 h-1 bg-brand-gold mx-auto rounded-full"></div>
@@ -869,7 +863,7 @@
           <!-- Contact Details & Direct WA Generator -->
           <div class="lg:col-span-6 space-y-6">
             
-            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-brand-gold-light shadow-warm space-y-6">
+            <div data-aos="fade-right" data-aos-duration="800" class="bg-white p-6 sm:p-8 rounded-3xl border border-brand-gold-light shadow-warm space-y-6 hover-lift">
               <div class="flex items-center justify-between border-b border-brand-gold-light/60 pb-3">
                 <h3 class="font-heading text-2xl font-bold text-brand-brown-dark">Kantor &amp; Sentra Usaha BUMM</h3>
                 <span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 rounded-full text-xs font-bold">Serpong Utara</span>
@@ -941,7 +935,7 @@
             </div>
 
             <!-- Form Konsultasi Cepat (Otomatis Buat Pesan WhatsApp) -->
-            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-brand-gold-light shadow-warm">
+            <div data-aos="fade-right" data-aos-duration="800" data-aos-delay="150" class="bg-white p-6 sm:p-8 rounded-3xl border border-brand-gold-light shadow-warm hover-lift">
               <h4 class="font-heading text-xl font-bold text-brand-brown-dark mb-2">Kirim Pesan ke Admin Serpong Utara</h4>
               <p class="text-xs text-brand-brown-light mb-4">Isi form di bawah untuk membuat pesan WhatsApp siap kirim langsung ke admin pilihan Anda (Pak Rahmat atau Kak Meiva).</p>
               
@@ -981,7 +975,7 @@
 
           <!-- Digital Maps & Outlet Visual: Serpong Utara Tangerang Selatan -->
           <div class="lg:col-span-6 space-y-6">
-            <div class="bg-white rounded-3xl overflow-hidden border border-brand-gold-light shadow-warm p-4 space-y-4">
+            <div data-aos="fade-left" data-aos-duration="800" class="bg-white rounded-3xl overflow-hidden border border-brand-gold-light shadow-warm p-4 space-y-4 hover-lift">
               <div class="flex items-center justify-between px-2">
                 <div class="flex items-center gap-2 text-sm font-bold text-brand-brown-dark">
                   <i data-lucide="map" class="w-4 h-4 text-brand-gold-dark"></i>
@@ -1025,7 +1019,7 @@
             </div>
 
             <!-- Peluang Kemitraan & Reseller Resmi Mi Instan LezatMU -->
-            <div class="p-6 bg-gradient-to-br from-brand-brown-dark to-brand-brown text-white rounded-3xl space-y-3 shadow-warm border border-brand-gold/30">
+            <div data-aos="fade-left" data-aos-duration="800" data-aos-delay="150" class="p-6 bg-gradient-to-br from-brand-brown-dark to-brand-brown text-white rounded-3xl space-y-3 shadow-warm border border-brand-gold/30 hover-lift">
               <div class="flex items-center gap-2 text-brand-gold font-bold text-sm sm:text-base">
                 <i data-lucide="handshake" class="w-5 h-5 text-amber-400"></i>
                 <span class="font-heading">Peluang Kemitraan &amp; Reseller Resmi</span>
@@ -1050,7 +1044,7 @@
   </main>
 
   <!-- FOOTER -->
-  <footer class="bg-brand-brown-dark text-brand-gold-light border-t border-brand-brown/60 pt-16 pb-12">
+  <footer data-aos="fade-up" class="bg-brand-brown-dark text-brand-gold-light border-t border-brand-brown/60 pt-16 pb-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-white/10">
@@ -1900,9 +1894,10 @@
   </div>
 
   <!-- JavaScript Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-config.js?v=20261013d"></script>
   <script src="js/data.js?v=20261013d"></script>
-  <script src="js/app.js?v=20261013d"></script>
+  <script src="js/app.js?v=20261013e"></script>
 </body>
 </html>

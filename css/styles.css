@@ -215,3 +215,59 @@ input[type=range] {
   vertical-align: middle;
   fill: currentColor;
 }
+
+/* ==========================================================================
+   ENTRANCE & SCROLL ANIMATIONS (AOS & MICRO-INTERACTIONS)
+   ========================================================================== */
+
+/* Accessibility: Hormati prefers-reduced-motion jika diatur oleh pengguna */
+@media (prefers-reduced-motion: reduce) {
+  [data-aos] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Hover-Lift Card Animation */
+.hover-lift {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px -15px rgba(74, 53, 37, 0.22) !important;
+}
+
+/* Smooth Image Scale on Hover */
+.group:hover img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Subtle Floating Animation */
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+.animate-float-gentle {
+  animation: floatGentle 4s ease-in-out infinite;
+}
+
+/* Shimmer Highlight Effect on CTA */
+@keyframes shimmerGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(217, 83, 30, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 12px rgba(217, 83, 30, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(217, 83, 30, 0);
+  }
+}
+.animate-shimmer {
+  animation: shimmerGlow 2.5s infinite;
+}

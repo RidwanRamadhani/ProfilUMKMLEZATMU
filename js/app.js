@@ -13,6 +13,7 @@ let pendingDeleteProductId = null;
 let currentFormImageBase64 = "";
 
 document.addEventListener("DOMContentLoaded", () => {
+  initAOS();
   initProductData();
   initLucide();
   initMobileMenu();
@@ -27,6 +28,27 @@ document.addEventListener("DOMContentLoaded", () => {
   initConsultationForm();
   initScrollSpy();
 });
+
+// Helper: Initialize AOS (Animate On Scroll)
+function initAOS() {
+  if (typeof AOS !== "undefined") {
+    AOS.init({
+      duration: 800,
+      easing: "ease-out-cubic",
+      once: false,
+      offset: 50,
+      mirror: true
+    });
+  }
+}
+
+function refreshAOS() {
+  if (typeof AOS !== "undefined" && typeof AOS.refresh === "function") {
+    setTimeout(() => {
+      AOS.refresh();
+    }, 60);
+  }
+}
 
 // Helper: Initialize Lucide Icons
 function initLucide() {
@@ -260,7 +282,7 @@ function renderBestSellers() {
     const medalLabel = item.badge || medals[index] || "Menu Favorit";
 
     return `
-      <div class="bg-brand-cream-soft rounded-3xl overflow-hidden border border-brand-gold-light hover:border-brand-gold hover:shadow-warm-lg transition-all duration-300 flex flex-col group relative">
+      <div data-aos="fade-up" data-aos-duration="750" data-aos-delay="${index * 150}" class="bg-brand-cream-soft rounded-3xl overflow-hidden border border-brand-gold-light hover:border-brand-gold hover:shadow-warm-lg hover-lift transition-all duration-300 flex flex-col group relative">
         
         <!-- Top Badge -->
         <div class="absolute top-4 left-4 z-10">
@@ -352,6 +374,7 @@ function renderBestSellers() {
   }).join("");
 
   initLucide();
+  refreshAOS();
 }
 
 // 3. Render Testimonials
@@ -359,9 +382,9 @@ function renderTestimonials() {
   const container = document.getElementById("testimonialsContainer");
   if (!container) return;
 
-  container.innerHTML = culinaryData.testimonials.map(t => {
+  container.innerHTML = culinaryData.testimonials.map((t, idx) => {
     return `
-      <div class="bg-white p-6 rounded-2xl border border-brand-gold-light shadow-sm flex flex-col justify-between space-y-4 hover:border-brand-gold transition-all duration-300">
+      <div data-aos="fade-up" data-aos-duration="750" data-aos-delay="${idx * 120}" class="bg-white p-6 rounded-2xl border border-brand-gold-light shadow-sm flex flex-col justify-between space-y-4 hover:border-brand-gold hover-lift transition-all duration-300">
         <div class="space-y-3">
           <div class="flex items-center gap-1 text-amber-500">
             ${Array(t.rating).fill('<i data-lucide="star" class="w-4 h-4 fill-amber-400 text-amber-400"></i>').join("")}
@@ -381,6 +404,7 @@ function renderTestimonials() {
   }).join("");
 
   initLucide();
+  refreshAOS();
 }
 
 // 4. Interactive Catalog (Filter, Search, Render)
@@ -633,7 +657,7 @@ function renderCatalogGrid() {
 
   if (noResults) noResults.classList.add("hidden");
 
-  grid.innerHTML = filtered.map(item => {
+  grid.innerHTML = filtered.map((item, index) => {
     // Generate Spice meter
     const spiceFlames = Array(5).fill(0).map((_, i) => {
       const active = i < (item.spiceLevel || 0);
@@ -649,7 +673,7 @@ function renderCatalogGrid() {
     const ingredientsArr = Array.isArray(item.mainIngredients) ? item.mainIngredients : [];
 
     return `
-      <div class="bg-white rounded-3xl overflow-hidden border border-brand-gold-light/80 hover:border-brand-gold hover:shadow-warm transition-all duration-300 flex flex-col group relative">
+      <div data-aos="fade-up" data-aos-duration="700" data-aos-delay="${Math.min((index % 6) * 100, 500)}" class="bg-white rounded-3xl overflow-hidden border border-brand-gold-light/80 hover:border-brand-gold hover:shadow-warm hover-lift transition-all duration-300 flex flex-col group relative">
         
         <!-- Image & Tags -->
         <div class="relative h-52 overflow-hidden bg-brand-cream-soft">
@@ -777,6 +801,7 @@ function renderCatalogGrid() {
   }).join("");
 
   initLucide();
+  refreshAOS();
 }
 
 // 5. Product Form Modal Logic (Tambah Produk & Edit Produk)
@@ -1485,7 +1510,7 @@ window.renderArticles = function() {
     const excerpt = article.excerpt || "Nikmati inovasi mie instan sehat berbahan mocaf dan kunyit alami dari PT Azam Tawaqal Berkemajuan.";
 
     return `
-      <article class="bg-brand-cream-soft rounded-3xl overflow-hidden border border-brand-gold-light hover:shadow-warm transition-all duration-300 flex flex-col group">
+      <article data-aos="fade-up" data-aos-duration="750" data-aos-delay="${idx * 150}" class="bg-brand-cream-soft rounded-3xl overflow-hidden border border-brand-gold-light hover:shadow-warm hover-lift transition-all duration-300 flex flex-col group">
         <div class="relative h-48 overflow-hidden bg-brand-cream">
           <img 
             src="${article.image}?v=2" 
@@ -1523,6 +1548,7 @@ window.renderArticles = function() {
   }).join("");
 
   initLucide();
+  refreshAOS();
 };
 
 // 7. Fast Consultation Form
