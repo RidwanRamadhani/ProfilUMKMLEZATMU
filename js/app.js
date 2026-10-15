@@ -2220,34 +2220,39 @@ function initConsultationForm() {
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const adminTarget = document.getElementById("consultAdminTarget") ? document.getElementById("consultAdminTarget").value : "rahmat";
     const name = document.getElementById("consultName").value.trim();
     const topic = document.getElementById("consultTopic").value;
     const message = document.getElementById("consultMessage").value.trim();
 
-    const targetName = adminTarget === "meiva" ? "Kak Meiva" : "Pak Rahmat";
-    const targetPhone = adminTarget === "meiva" ? "6289528870832" : "6281314505175";
+    const targetName = "Contact Admin";
+    const targetPhone = "6281336693332";
 
-    const formattedMessage = `Halo ${targetName} (Admin PT Azam Tawaqal Berkemajuan - LEZATMU Serpong Utara),\n\nPerkenalkan saya *${name}*.\n*Topik Keperluan:* ${topic}\n*Pesan / Detail:* ${message || 'Saya ingin berkonsultasi mengenai menu mie dan pemesanan LEZATMU di Tangerang Selatan.'}\n\nTerima kasih.`;
+    const formattedMessage = `Halo ${targetName} (PT Azam Tawaqal Berkemajuan - LEZATMU Serpong Utara),\n\nPerkenalkan saya *${name}*.\n*Topik Keperluan:* ${topic}\n*Pesan / Detail:* ${message || 'Saya ingin berkonsultasi mengenai menu mie dan pemesanan LEZATMU di Tangerang Selatan.'}\n\nTerima kasih.`;
     const waUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(formattedMessage)}`;
 
     window.open(waUrl, "_blank");
   });
 }
 
-// 8. WhatsApp Dual-Admin Contact Chooser System (Pak Rahmat & Kak Meiva)
-let currentWaPendingMessage = "Halo Admin PT Azam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya ingin tanya informasi produk.";
+// 8. WhatsApp Single Contact System (Contact Admin: +62 813-3669-3332)
+let currentWaPendingMessage = "Halo Contact Admin PT Azam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya ingin tanya informasi produk.";
 
 const WA_CONTACTS = {
+  admin: {
+    name: "Contact Admin",
+    phone: "6281336693332",
+    role: "Layanan Resmi PT Azam Tawaqal Berkemajuan"
+  },
+  // Backward-compatibility aliases
   rahmat: {
-    name: "Pak Rahmat",
-    phone: "6281314505175",
-    role: "Admin Pengelola & Kemitraan"
+    name: "Contact Admin",
+    phone: "6281336693332",
+    role: "Layanan Resmi PT Azam Tawaqal Berkemajuan"
   },
   meiva: {
-    name: "Kak Meiva",
-    phone: "6289528870832",
-    role: "Customer Care & Info Produk"
+    name: "Contact Admin",
+    phone: "6281336693332",
+    role: "Layanan Resmi PT Azam Tawaqal Berkemajuan"
   }
 };
 
@@ -2256,22 +2261,8 @@ function openWaChooser(customMessage, preselectedAdmin = null) {
     currentWaPendingMessage = customMessage;
   }
   
-  if (preselectedAdmin && WA_CONTACTS[preselectedAdmin]) {
-    proceedToWa(preselectedAdmin);
-    return;
-  }
-
-  const modal = document.getElementById("waChooserModal");
-  const preview = document.getElementById("waChooserMessagePreview");
-  if (preview) {
-    preview.textContent = `"${currentWaPendingMessage}"`;
-  }
-  
-  if (modal) {
-    modal.classList.remove("hidden");
-    modal.classList.add("flex");
-  }
-  initLucide();
+  // Karena nomor kontak disatukan menjadi 1 (Contact Admin), langsung buka chat WhatsApp secara instan
+  proceedToWa('admin');
 }
 
 function closeWaChooser() {
@@ -2283,13 +2274,14 @@ function closeWaChooser() {
 }
 
 function proceedToWa(adminKey) {
-  const contact = WA_CONTACTS[adminKey] || WA_CONTACTS.rahmat;
+  const contact = WA_CONTACTS[adminKey] || WA_CONTACTS.admin;
   let finalMessage = currentWaPendingMessage;
   
-  // Format message jika belum memiliki greeting admin spesifik
-  if (!finalMessage.includes("Pak Rahmat") && !finalMessage.includes("Kak Meiva")) {
-    finalMessage = finalMessage.replace(/Halo Admin PT Azam Tawaqal Berkemajuan/g, `Halo ${contact.name} (Admin PT Azam Tawaqal Berkemajuan)`);
-  }
+  // Format dan normalisasi greeting agar selalu rapi mengarah ke Contact Admin
+  finalMessage = finalMessage
+    .replace(/Halo Pak Rahmat \/ Admin PT Azam Tawaqal Berkemajuan/g, `Halo ${contact.name} PT Azam Tawaqal Berkemajuan`)
+    .replace(/Halo Pak Rahmat/g, `Halo ${contact.name}`)
+    .replace(/Halo Kak Meiva/g, `Halo ${contact.name}`);
 
   const waUrl = `https://wa.me/${contact.phone}?text=${encodeURIComponent(finalMessage)}`;
   window.open(waUrl, "_blank");

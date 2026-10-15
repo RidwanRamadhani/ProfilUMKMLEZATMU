@@ -1197,11 +1197,9 @@
                   </div>
                   <div class="space-y-1">
                     <strong class="text-brand-brown-dark block font-semibold">Telepon &amp; WhatsApp Resmi Pengelola:</strong>
-                    <div class="text-xs sm:text-sm text-brand-brown">
-                      <span class="font-semibold text-emerald-700">&bull; Pak Rahmat:</span> <a href="javascript:void(0)" onclick="openWaChooser('Halo Pak Rahmat, saya ingin konsultasi mengenai produk Mi Instan LezatMU Serpong Utara.', 'rahmat')" class="hover:underline font-bold text-brand-brown-dark">+62 813-1450-5175</a>
-                    </div>
-                    <div class="text-xs sm:text-sm text-brand-brown">
-                      <span class="font-semibold text-emerald-700">&bull; Kak Meiva:</span> <a href="javascript:void(0)" onclick="openWaChooser('Halo Kak Meiva, saya ingin konsultasi mengenai produk Mi Instan LezatMU Serpong Utara.', 'meiva')" class="hover:underline font-bold text-brand-brown-dark">+62 895-2887-0832</a>
+                    <div class="text-xs sm:text-sm text-brand-brown flex items-center gap-2">
+                      <span class="font-semibold text-emerald-700">&bull; Contact Admin:</span>
+                      <a href="javascript:void(0)" onclick="openWaChooser('Halo Contact Admin PT Azam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya ingin konsultasi mengenai produk Mi Instan LezatMU.')" class="hover:underline font-bold text-brand-brown-dark text-sm sm:text-base text-emerald-700 hover:text-emerald-800 transition">+62 813-3669-3332</a>
                     </div>
                   </div>
                 </div>
@@ -1262,15 +1260,17 @@
             <!-- Form Konsultasi Cepat (Otomatis Buat Pesan WhatsApp) -->
             <div data-aos="fade-right" data-aos-duration="800" data-aos-delay="150" class="bg-white p-6 sm:p-8 rounded-3xl border border-brand-gold-light shadow-warm hover-lift">
               <h4 class="font-heading text-xl font-bold text-brand-brown-dark mb-2">Kirim Pesan ke Admin Serpong Utara</h4>
-              <p class="text-xs text-brand-brown-light mb-4">Isi form di bawah untuk membuat pesan WhatsApp siap kirim langsung ke admin pilihan Anda (Pak Rahmat atau Kak Meiva).</p>
+              <p class="text-xs text-brand-brown-light mb-4">Isi form di bawah untuk membuat pesan WhatsApp siap kirim langsung ke Contact Admin resmi LEZATMU.</p>
               
               <form id="waConsultationForm" class="space-y-3">
-                <div>
-                  <label for="consultAdminTarget" class="block text-xs font-bold text-brand-brown-dark mb-1">Pilih Admin Tujuan WhatsApp</label>
-                  <select id="consultAdminTarget" class="w-full px-3.5 py-2 rounded-xl border border-brand-gold/40 text-sm focus:ring-2 focus:ring-brand-gold outline-none bg-brand-cream-soft/40 font-semibold text-brand-brown-dark">
-                    <option value="rahmat">Pak Rahmat (+62 813-1450-5175)</option>
-                    <option value="meiva">Kak Meiva (+62 895-2887-0832)</option>
-                  </select>
+                <div class="p-3 bg-brand-cream-soft rounded-xl border border-brand-gold-light flex items-center gap-2.5 text-xs text-brand-brown-dark font-medium">
+                  <div class="w-7 h-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+                    <i data-lucide="phone-call" class="w-4 h-4"></i>
+                  </div>
+                  <div>
+                    <span class="block text-[11px] text-brand-brown-light">Nomor WhatsApp Resmi:</span>
+                    <strong class="text-brand-brown-dark font-bold text-sm text-emerald-700">Contact Admin (+62 813-3669-3332)</strong>
+                  </div>
                 </div>
                 <div>
                   <label for="consultName" class="block text-xs font-bold text-brand-brown-dark mb-1">Nama Lengkap</label>
@@ -1291,7 +1291,7 @@
                 </div>
                 <button type="submit" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md transition">
                   <svg class="w-4 h-4 fill-current text-white" viewBox="0 0 24 24" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                  <span>Kirim via WhatsApp Pilihan</span>
+                  <span>Kirim via WhatsApp</span>
                 </button>
               </form>
             </div>
@@ -1353,7 +1353,7 @@
                 "Mari bergabung bersama jaringan distribusi Mi Instan LezatMU. Terbuka kesempatan emas bagi warung, toko kelontong, majelis, dan agen untuk menjadi mitra resmi mi sehat bermocaf di wilayah Anda."
               </p>
               <div class="pt-2">
-                <button onclick="openWaChooser('Halo Pak Rahmat / Admin PT Azam Tawaqal Berkemajuan, saya berminat untuk mendaftar sebagai mitra / agen reseller resmi Mi Instan LezatMU di wilayah saya. Mohon informasi syarat dan ketentuannya.', 'rahmat')" class="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-brand-gold hover:text-white transition group">
+                <button onclick="openWaChooser('Halo Contact Admin PT Azam Tawaqal Berkemajuan, saya berminat untuk mendaftar sebagai mitra / agen reseller resmi Mi Instan LezatMU di wilayah saya. Mohon informasi syarat dan ketentuannya.')" class="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-brand-gold hover:text-white transition group">
                   <span class="group-hover:underline">Daftar Jadi Mitra / Agen</span>
                   <i data-lucide="arrow-right" class="w-4 h-4 text-amber-400 group-hover:translate-x-1 transition-transform"></i>
                 </button>
@@ -2022,7 +2022,7 @@
     </div>
   </div>
 
-  <!-- WHATSAPP CONTACT CHOOSER MODAL (2 OPSI: PAK RAHMAT & KAK MEIVA) -->
+  <!-- WHATSAPP CONTACT CHOOSER MODAL (CONTACT ADMIN: +62 813-3669-3332) -->
   <div id="waChooserModal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 border-2 border-brand-gold shadow-2xl relative animate-scale-up" id="waChooserCard">
       <!-- Close Button -->
@@ -2034,62 +2034,39 @@
         <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center mb-3 shadow-inner">
           <svg class="w-8 h-8 fill-current text-emerald-600" viewBox="0 0 24 24" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
         </div>
-        <h4 class="font-heading font-bold text-xl text-brand-brown-dark">Pilih Kontak WhatsApp Admin</h4>
+        <h4 class="font-heading font-bold text-xl text-brand-brown-dark">Hubungi Contact Admin</h4>
         <p class="text-xs text-brand-brown-light mt-1">
-          Silakan pilih admin resmi PT Azam Tawaqal Berkemajuan (LEZATMU) Serpong Utara untuk konsultasi atau pemesanan:
+          Layanan Resmi PT Azam Tawaqal Berkemajuan (LEZATMU) Serpong Utara untuk konsultasi atau pemesanan:
         </p>
       </div>
 
       <!-- Preview Pesan / Keperluan -->
       <div id="waChooserPreviewBox" class="p-3 bg-brand-cream-soft rounded-2xl border border-brand-gold-light mb-4 text-xs text-brand-brown-dark">
-        <span class="text-[10px] uppercase font-bold text-brand-gold-dark block mb-0.5">Topik Konsultasi:</span>
-        <p id="waChooserMessagePreview" class="italic line-clamp-2 text-brand-brown-light">"Halo Admin, saya ingin konsultasi produk mie."</p>
+        <span class="text-[10px] uppercase font-bold text-brand-gold-dark block mb-0.5">Topik Pesan:</span>
+        <p id="waChooserMessagePreview" class="italic line-clamp-2 text-brand-brown-light">"Halo Contact Admin, saya ingin konsultasi produk mie."</p>
       </div>
 
-      <!-- 2 Options: Pak Rahmat & Kak Meiva -->
+      <!-- Single Option: Contact Admin -->
       <div class="space-y-3">
-        <!-- Opsi 1: Pak Rahmat -->
         <button 
           type="button"
-          onclick="proceedToWa('rahmat')" 
-          class="w-full p-4 rounded-2xl border-2 border-emerald-500/30 hover:border-emerald-600 bg-emerald-50/50 hover:bg-emerald-50 transition-all flex items-center justify-between group shadow-sm text-left"
+          onclick="proceedToWa('admin')" 
+          class="w-full p-4 rounded-2xl border-2 border-emerald-500 hover:border-emerald-600 bg-emerald-50/70 hover:bg-emerald-100/60 transition-all flex items-center justify-between group shadow-sm text-left"
         >
           <div class="flex items-center gap-3.5">
-            <div class="w-11 h-11 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-base shadow group-hover:scale-105 transition-transform shrink-0">
-              PR
+            <div class="w-12 h-12 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold text-lg shadow group-hover:scale-105 transition-transform shrink-0">
+              <i data-lucide="phone-call" class="w-6 h-6"></i>
             </div>
             <div>
               <div class="font-heading font-bold text-sm text-brand-brown-dark flex items-center gap-1.5">
-                <span>Pak Rahmat</span>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-600 text-white">Admin Pengelola</span>
+                <span>Contact Admin</span>
+                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-600 text-white">Resmi</span>
               </div>
-              <div class="text-xs font-semibold text-emerald-700 mt-0.5">+62 813-1450-5175</div>
-              <div class="text-[11px] text-brand-brown-light mt-0.5">Konsultasi menu, pemesanan besar, katering &amp; kemitraan</div>
+              <div class="text-sm font-bold text-emerald-700 mt-0.5">+62 813-3669-3332</div>
+              <div class="text-[11px] text-brand-brown-light mt-0.5">Layanan Pemesanan, Katering &amp; Kemitraan Reseller</div>
             </div>
           </div>
           <i data-lucide="arrow-right" class="w-5 h-5 text-emerald-600 group-hover:translate-x-1 transition-transform shrink-0 ml-2"></i>
-        </button>
-
-        <!-- Opsi 2: Kak Meiva -->
-        <button 
-          type="button"
-          onclick="proceedToWa('meiva')" 
-          class="w-full p-4 rounded-2xl border-2 border-amber-500/30 hover:border-amber-600 bg-amber-50/50 hover:bg-amber-50 transition-all flex items-center justify-between group shadow-sm text-left"
-        >
-          <div class="flex items-center gap-3.5">
-            <div class="w-11 h-11 rounded-xl bg-amber-600 text-white flex items-center justify-center font-bold text-base shadow group-hover:scale-105 transition-transform shrink-0">
-              KM
-            </div>
-            <div>
-              <div class="font-heading font-bold text-sm text-brand-brown-dark flex items-center gap-1.5">
-                <span>Kak Meiva</span>
-                <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-600 text-white">Customer Care</span>
-              </div>
-              <div class="text-xs font-semibold text-amber-700 mt-0.5">+62 895-2887-0832</div>
-              <div class="text-[11px] text-brand-brown-light mt-0.5">Layanan tanya produk, konsultasi varian &amp; informasi harian</div>
-            </div>
-          </div>
-          <i data-lucide="arrow-right" class="w-5 h-5 text-amber-600 group-hover:translate-x-1 transition-transform shrink-0 ml-2"></i>
         </button>
       </div>
 
@@ -2573,6 +2550,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-config.js?v=20261013d"></script>
   <script src="js/data.js?v=20261015c"></script>
-  <script src="js/app.js?v=20261015e"></script>
+  <script src="js/app.js?v=20261015f"></script>
 </body>
 </html>
