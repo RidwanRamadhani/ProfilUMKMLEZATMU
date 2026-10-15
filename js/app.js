@@ -1,5 +1,5 @@
 /**
- * Application Logic for PT Azzam Tawaqal Berkemajuan (LEZATMU) Website
+ * Application Logic for PT Azam Tawaqal Berkemajuan (LEZATMU) Website
  * UMKM Spesialis Kuliner Mie Nusantara & Artisan Noodles
  * Including Full Dynamic Product Management (Add, Edit, Image Upload, Delete, LocalStorage)
  */
@@ -476,7 +476,7 @@ function renderBestSellers() {
               <span>Lihat Detail Menu</span>
             </button>
             <button 
-              onclick="openWaChooser('Halo Admin PT Azzam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya ingin bertanya tentang menu mie terlaris: ${item.name}.')" 
+              onclick="openWaChooser('Halo Admin PT Azam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya ingin bertanya tentang menu mie terlaris: ${item.name}.')" 
               class="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white transition flex items-center justify-center shrink-0"
               title="Tanya Menu via WhatsApp Pilihan"
             >
@@ -810,7 +810,7 @@ function initCatalog() {
   // Reset to Default Products Data
   if (resetDefaultDataBtn) {
     resetDefaultDataBtn.addEventListener("click", () => {
-      if (confirm("Kembalikan seluruh daftar menu ke data awal bawaan PT Azzam Tawaqal Berkemajuan?")) {
+      if (confirm("Kembalikan seluruh daftar menu ke data awal bawaan PT Azam Tawaqal Berkemajuan?")) {
         productsList = [...culinaryData.products];
         saveProductsToStorage();
         renderCatalogGrid();
@@ -919,7 +919,7 @@ function renderCatalogGrid() {
                 ${item.name}
               </h3>
               <p class="text-xs sm:text-sm text-brand-brown-light mt-1 line-clamp-2">
-                ${item.tasteDescription || "Sajian kuliner mie lezat berkualitas dari PT Azzam Tawaqal Berkemajuan."}
+                ${item.tasteDescription || "Sajian kuliner mie lezat berkualitas dari PT Azam Tawaqal Berkemajuan."}
               </p>
             </div>
 
@@ -1159,7 +1159,7 @@ function initProductFormManagement() {
             categoryLabel: categoryLabels[category] || "Menu Mie",
             image: imageToSave,
             tasteDescription: tasteDesc,
-            fullStory: fullStory || `Menu lezat ${name} diracik secara higienis oleh PT Azzam Tawaqal Berkemajuan Serpong Utara.`,
+            fullStory: fullStory || `Menu lezat ${name} diracik secara higienis oleh PT Azam Tawaqal Berkemajuan Serpong Utara.`,
             mainIngredients: ingredientsArray,
             spiceLevel,
             sweetLevel,
@@ -1882,7 +1882,7 @@ window.openProductModal = function(productId) {
           Profil Cita Rasa &amp; Karakteristik Olahan
         </h4>
         <p class="text-sm text-brand-brown-light leading-relaxed">
-          ${item.tasteDescription || "Sajian kuliner mie bermutu tinggi dari PT Azzam Tawaqal Berkemajuan."}
+          ${item.tasteDescription || "Sajian kuliner mie bermutu tinggi dari PT Azam Tawaqal Berkemajuan."}
         </p>
         <p class="text-xs sm:text-sm text-brand-brown-light leading-relaxed bg-brand-cream-soft p-3.5 rounded-xl border border-brand-gold-light">
           ${item.fullStory || `Menu lezat ${item.name} diproses secara higienis di sentra produksi BUMM PCM Serpong Utara, Tangerang Selatan.`}
@@ -1945,11 +1945,11 @@ window.openProductModal = function(productId) {
       <div class="pt-4 border-t border-brand-gold-light space-y-3">
         <div class="p-3 rounded-xl bg-brand-cream text-[11px] text-brand-brown-light flex items-center gap-2">
           <i data-lucide="info" class="w-4 h-4 text-brand-accent shrink-0"></i>
-          <span>Pemesanan porsi harian, takeaway, dan katering mie dilayani langsung melalui WhatsApp resmi PT Azzam Tawaqal Berkemajuan Serpong Utara.</span>
+          <span>Pemesanan porsi harian, takeaway, dan katering mie dilayani langsung melalui WhatsApp resmi PT Azam Tawaqal Berkemajuan Serpong Utara.</span>
         </div>
 
         <button 
-          onclick="openWaChooser('Halo Admin PT Azzam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya tertarik dengan menu: *${item.name}* (${item.categoryLabel || 'Menu Mie'}). Mohon informasi rekomendasi porsi dan pemesanan.')" 
+          onclick="openWaChooser('Halo Admin PT Azam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya tertarik dengan menu: *${item.name}* (${item.categoryLabel || 'Menu Mie'}). Mohon informasi rekomendasi porsi dan pemesanan.')" 
           class="w-full py-3.5 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm sm:text-base flex items-center justify-center gap-2.5 shadow-md hover:shadow-lg transition"
         >
           <svg class="w-5 h-5 fill-current text-white" viewBox="0 0 24 24" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
@@ -1996,9 +1996,9 @@ window.openArticleModal = function(articleId) {
       </div>
 
       <div class="pt-6 border-t border-brand-gold-light flex items-center justify-between">
-        <span class="text-xs text-brand-brown-light">PT Azzam Tawaqal Berkemajuan &bull; Serpong Utara</span>
+        <span class="text-xs text-brand-brown-light">PT Azam Tawaqal Berkemajuan &bull; Serpong Utara</span>
         <button 
-          onclick="openWaChooser('Halo Admin PT Azzam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya baru membaca artikel \\'${article.title}\\' dan ingin berdiskusi lebih lanjut.')" 
+          onclick="openWaChooser('Halo Admin PT Azam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya baru membaca artikel \\'${article.title}\\' dan ingin berdiskusi lebih lanjut.')" 
           class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5"
         >
           <svg class="w-4 h-4 fill-current text-white" viewBox="0 0 24 24" aria-hidden="true"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
@@ -2196,7 +2196,7 @@ function initConsultationForm() {
     const targetName = adminTarget === "meiva" ? "Kak Meiva" : "Pak Rahmat";
     const targetPhone = adminTarget === "meiva" ? "6289528870832" : "6281314505175";
 
-    const formattedMessage = `Halo ${targetName} (Admin PT Azzam Tawaqal Berkemajuan - LEZATMU Serpong Utara),\n\nPerkenalkan saya *${name}*.\n*Topik Keperluan:* ${topic}\n*Pesan / Detail:* ${message || 'Saya ingin berkonsultasi mengenai menu mie dan pemesanan LEZATMU di Tangerang Selatan.'}\n\nTerima kasih.`;
+    const formattedMessage = `Halo ${targetName} (Admin PT Azam Tawaqal Berkemajuan - LEZATMU Serpong Utara),\n\nPerkenalkan saya *${name}*.\n*Topik Keperluan:* ${topic}\n*Pesan / Detail:* ${message || 'Saya ingin berkonsultasi mengenai menu mie dan pemesanan LEZATMU di Tangerang Selatan.'}\n\nTerima kasih.`;
     const waUrl = `https://wa.me/${targetPhone}?text=${encodeURIComponent(formattedMessage)}`;
 
     window.open(waUrl, "_blank");
@@ -2204,7 +2204,7 @@ function initConsultationForm() {
 }
 
 // 8. WhatsApp Dual-Admin Contact Chooser System (Pak Rahmat & Kak Meiva)
-let currentWaPendingMessage = "Halo Admin PT Azzam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya ingin tanya informasi produk.";
+let currentWaPendingMessage = "Halo Admin PT Azam Tawaqal Berkemajuan (LEZATMU) Serpong Utara, saya ingin tanya informasi produk.";
 
 const WA_CONTACTS = {
   rahmat: {
@@ -2256,7 +2256,7 @@ function proceedToWa(adminKey) {
   
   // Format message jika belum memiliki greeting admin spesifik
   if (!finalMessage.includes("Pak Rahmat") && !finalMessage.includes("Kak Meiva")) {
-    finalMessage = finalMessage.replace(/Halo Admin PT Azzam Tawaqal Berkemajuan/g, `Halo ${contact.name} (Admin PT Azzam Tawaqal Berkemajuan)`);
+    finalMessage = finalMessage.replace(/Halo Admin PT Azam Tawaqal Berkemajuan/g, `Halo ${contact.name} (Admin PT Azam Tawaqal Berkemajuan)`);
   }
 
   const waUrl = `https://wa.me/${contact.phone}?text=${encodeURIComponent(finalMessage)}`;
@@ -2527,7 +2527,7 @@ function initSyncManagement() {
     const articlesJson = JSON.stringify(culinaryData.articles, null, 2);
 
     return `/**
- * Database Data for PT Azzam Tawaqal Berkemajuan (LEZATMU)
+ * Database Data for PT Azam Tawaqal Berkemajuan (LEZATMU)
  * BUMM PCM Serpong Utara, Kota Tangerang Selatan, Banten
  * Produk Resmi: Mi Instan LezatMU Sehat Berbahan Mocaf & Kunyit Alami
  * Terakhir Diperbarui: ${new Date().toLocaleDateString('id-ID', { dateStyle: 'full' })}

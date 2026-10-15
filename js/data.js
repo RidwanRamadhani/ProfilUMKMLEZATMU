@@ -1,5 +1,5 @@
 /**
- * Database Data for PT Azzam Tawaqal Berkemajuan (LEZATMU)
+ * Database Data for PT Azam Tawaqal Berkemajuan (LEZATMU)
  * BUMM PCM Serpong Utara, Kota Tangerang Selatan, Banten
  * Produk Resmi: Mi Instan LezatMU Sehat Berbahan Mocaf & Kunyit Alami
  */
@@ -22,7 +22,7 @@ const culinaryData = {
       sweetLevel: 1,
       mainIngredients: ["Tepung Terigu Pilihan", "Tepung Mocaf Berkualitas Tinggi", "Ekstrak Kunyit Alami", "Minyak Bawang Gurih", "Kaldu Ayam Alami", "Bawang Goreng Renyah"],
       whyFavorite: "Diolah dengan tepung mocaf kaya serat dan kunyit alami tanpa pewarna sintetis, menghadirkan kuah kaldu ayam bawang gurih yang ramah bagi lambung.",
-      fullStory: "Mi Instan LezatMU Rasa Ayam Bawang merupakan inovasi mi sehat kebanggaan PT Azzam Tawaqal Berkemajuan (BUMM PCM Serpong Utara). Diformulasikan khusus untuk menghadirkan rasa klasik ayam bawang yang familiar di lidah masyarakat, namun dengan keunggulan gizi tepung mocaf dan kunyit alami. Sangat cocok dinikmati hangat bersama telur rebus, irisan daun bawang, dan sayuran segar.",
+      fullStory: "Mi Instan LezatMU Rasa Ayam Bawang merupakan inovasi mi sehat kebanggaan PT Azam Tawaqal Berkemajuan (BUMM PCM Serpong Utara). Diformulasikan khusus untuk menghadirkan rasa klasik ayam bawang yang familiar di lidah masyarakat, namun dengan keunggulan gizi tepung mocaf dan kunyit alami. Sangat cocok dinikmati hangat bersama telur rebus, irisan daun bawang, dan sayuran segar.",
       servingSuggestion: "Rebus mi dalam 400ml air mendidih selama 3 menit. Siapkan bumbu kaldu dan minyak bawang di mangkuk, tuang mi beserta kuah panasnya, lalu sajikan hangat dengan topping telur rebus dan bawang merah iris.",
       allergens: "Mengandung gluten terigu.",
       nutritionHighlights: "Tinggi serat pangan mocaf, diperkaya antioksidan kurkumin kunyit, tanpa pewarna sintetis, tanpa pengawet berbahaya."
@@ -43,7 +43,7 @@ const culinaryData = {
       sweetLevel: 2,
       mainIngredients: ["Tepung Mocaf Pilihan", "Tepung Terigu Premium", "Kunyit Alami", "Minyak Bumbu Rempah Spesial", "Kecap Manis Gurih", "Bawang Goreng Brebes"],
       whyFavorite: "Tekstur mi kenyal alami berpadu bumbu rempah nusantara yang harum sedap, bebas rasa bersalah karena diolah tanpa proses penggorengan berlebih dan tanpa pewarna sintetis.",
-      fullStory: "Karya kuliner sehat persembahan PT Azzam Tawaqal Berkemajuan di Serpong Utara. Mi Instan LezatMU Mi Goreng menghadirkan cita rasa mi goreng nusantara yang otentik, gurih, dan menggugah selera dengan bahan dasar mocaf ramah pencernaan. Menjadi pilihan favorit keluarga untuk sarapan, makan siang, maupun camilan malam.",
+      fullStory: "Karya kuliner sehat persembahan PT Azam Tawaqal Berkemajuan di Serpong Utara. Mi Instan LezatMU Mi Goreng menghadirkan cita rasa mi goreng nusantara yang otentik, gurih, dan menggugah selera dengan bahan dasar mocaf ramah pencernaan. Menjadi pilihan favorit keluarga untuk sarapan, makan siang, maupun camilan malam.",
       servingSuggestion: "Rebus mi selama 3 menit lalu tiriskan airnya. Campurkan dengan bumbu, kecap, dan minyak rempah di piring. Aduk merata dan lengkapi dengan telur mata sapi setengah matang, tomat segar, dan cabai rawit.",
       allergens: "Mengandung gluten terigu dan kedelai.",
       nutritionHighlights: "Kaya serat pangan alami, bebas pewarna buatan, tekstur kenyal tanpa bahan pengenyal sintetis berbahaya."
@@ -64,7 +64,7 @@ const culinaryData = {
       sweetLevel: 1,
       mainIngredients: ["Tepung Mocaf Segar", "Tepung Terigu Pilihan", "Kunyit Murni & Daun Jeruk", "Bumbu Soto Rempah Tradisional", "Minyak Sayur Aromatik", "Bawang Goreng Renyah"],
       whyFavorite: "Sensasi kuah soto yang segar beraroma rempah dan jeruk nipis, dibuat dari mi sehat bermocaf dan kunyit alami yang menghangatkan tubuh.",
-      fullStory: "Perpaduan kekayaan kuliner soto nusantara dengan teknologi pengolahan mi sehat modern oleh PT Azzam Tawaqal Berkemajuan di Tangerang Selatan. Menghasilkan kuah kuning keemasan alami dari kunyit dengan keharuman serai dan daun jeruk yang menyegarkan di setiap suapan.",
+      fullStory: "Perpaduan kekayaan kuliner soto nusantara dengan teknologi pengolahan mi sehat modern oleh PT Azam Tawaqal Berkemajuan di Tangerang Selatan. Menghasilkan kuah kuning keemasan alami dari kunyit dengan keharuman serai dan daun jeruk yang menyegarkan di setiap suapan.",
       servingSuggestion: "Rebus mi hingga tingkat kematangan pas. Tuang bersama kuah kaldu soto mengepul ke dalam mangkuk, beri perasan jeruk nipis segar, irisan tomat, suwiran ayam, dan sambal rawit.",
       allergens: "Mengandung gluten terigu.",
       nutritionHighlights: "Kaya kurkumin alami penambah imunitas, serat mocaf tinggi, rendah lemak jenuh."
@@ -76,7 +76,7 @@ const culinaryData = {
       name: "Ibu Hj. Siti Masruroh",
       role: "Warga Serpong Utara & Tokoh Aisyiyah",
       city: "Serpong Utara, Tangerang Selatan",
-      comment: "Kebanggaan warga Serpong Utara memiliki produk BUMM seperti Mi Instan LezatMU dari PT Azzam Tawaqal Berkemajuan. Mienya lembut, kenyal dari tepung mocaf sehat dan kunyit alami, sangat nyaman di lambung untuk seluruh anggota keluarga.",
+      comment: "Kebanggaan warga Serpong Utara memiliki produk BUMM seperti Mi Instan LezatMU dari PT Azam Tawaqal Berkemajuan. Mienya lembut, kenyal dari tepung mocaf sehat dan kunyit alami, sangat nyaman di lambung untuk seluruh anggota keluarga.",
       rating: 5,
       menuEnjoyed: "Mi Instan LezatMU Rasa Ayam Bawang"
     },
@@ -92,7 +92,7 @@ const culinaryData = {
       name: "dr. Nurul Aini",
       role: "Praktisi Kesehatan & Pemerhati Makanan Halal",
       city: "Rawa Buntu & Serpong Utara, Tangsel",
-      comment: "Sebagai dokter, saya sangat mengapresiasi inovasi mi instan bermocaf dan kunyit alami dari PT Azzam Tawaqal Berkemajuan. Kuah sotonya segar berempah alami, kaya serat, dan bebas pewarna sintetis. Pilihan mi instan yang jauh lebih bersahabat bagi tubuh.",
+      comment: "Sebagai dokter, saya sangat mengapresiasi inovasi mi instan bermocaf dan kunyit alami dari PT Azam Tawaqal Berkemajuan. Kuah sotonya segar berempah alami, kaya serat, dan bebas pewarna sintetis. Pilihan mi instan yang jauh lebih bersahabat bagi tubuh.",
       rating: 5,
       menuEnjoyed: "Mi Instan LezatMU Kuah Rasa Soto"
     }

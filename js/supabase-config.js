@@ -1,6 +1,6 @@
 /**
  * Supabase Client Configuration & Helper Module
- * PT Azzam Tawaqal Berkemajuan (LEZATMU)
+ * PT Azam Tawaqal Berkemajuan (LEZATMU)
  * BUMM PCM Serpong Utara, Kota Tangerang Selatan, Banten
  */
 

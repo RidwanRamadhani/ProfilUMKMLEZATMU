@@ -1,7 +1,7 @@
-# DOKUMEN PERANCANGAN & PENGEMBANGAN WEBSITE: PT AZZAM TAWAQAL BERKEMAJUAN ("LEZATMU")
+# DOKUMEN PERANCANGAN & PENGEMBANGAN WEBSITE: PT Azam TAWAQAL BERKEMAJUAN ("LEZATMU")
 
 ## 1. Profil & Identitas Perusahaan
-- **Nama Badan Usaha**: PT Azzam Tawaqal Berkemajuan (PT ATB)
+- **Nama Badan Usaha**: PT Azam Tawaqal Berkemajuan (PT ATB)
 - **Afiliasi / Naungan**: Badan Usaha Milik Muhammadiyah (BUMM) binaan **Pimpinan Cabang Muhammadiyah (PCM) Serpong Utara**, Kota Tangerang Selatan, Banten.
 - **Merek Kuliner**: **LEZATMU**
 - **Jenis Website**: Company Profile & Interactive Food Catalog (Profil BUMM & Katalog Kuliner Inovasi Mie Sehat)

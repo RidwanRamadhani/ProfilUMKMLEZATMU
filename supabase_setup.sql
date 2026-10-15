@@ -1,5 +1,5 @@
 -- ====================================================================
--- SKRIP SETUP DATABASE SUPABASE UNTUK PT AZZAM TAWAQAL BERKEMAJUAN (LEZATMU)
+-- SKRIP SETUP DATABASE SUPABASE UNTUK PT Azam TAWAQAL BERKEMAJUAN (LEZATMU)
 -- BUMM PCM Serpong Utara, Kota Tangerang Selatan, Banten
 -- ====================================================================
 -- Panduan Menjalankan:
@@ -81,7 +81,7 @@ INSERT INTO products (
   1,
   '["Tepung Terigu Pilihan", "Tepung Mocaf Berkualitas Tinggi", "Ekstrak Kunyit Alami", "Minyak Bawang Gurih", "Kaldu Ayam Alami", "Bawang Goreng Renyah"]'::JSONB,
   'Diolah dengan tepung mocaf kaya serat dan kunyit alami tanpa pewarna sintetis, menghadirkan kuah kaldu ayam bawang gurih yang ramah bagi lambung.',
-  'Mi Instan LezatMU Rasa Ayam Bawang merupakan inovasi mi sehat kebanggaan PT Azzam Tawaqal Berkemajuan (BUMM PCM Serpong Utara).',
+  'Mi Instan LezatMU Rasa Ayam Bawang merupakan inovasi mi sehat kebanggaan PT Azam Tawaqal Berkemajuan (BUMM PCM Serpong Utara).',
   'Rebus mi dalam 400ml air mendidih selama 3 menit. Siapkan bumbu kaldu dan minyak bawang di mangkuk, tuang mi beserta kuah panasnya.',
   'Mengandung gluten terigu.'
 ),
@@ -101,7 +101,7 @@ INSERT INTO products (
   2,
   '["Tepung Mocaf Pilihan", "Tepung Terigu Premium", "Kunyit Alami", "Minyak Bumbu Rempah Spesial", "Kecap Manis Gurih", "Bawang Goreng Brebes"]'::JSONB,
   'Tekstur mi kenyal alami berpadu bumbu rempah nusantara yang harum sedap, bebas rasa bersalah karena diolah tanpa proses penggorengan berlebih dan tanpa pewarna sintetis.',
-  'Karya kuliner sehat persembahan PT Azzam Tawaqal Berkemajuan di Serpong Utara.',
+  'Karya kuliner sehat persembahan PT Azam Tawaqal Berkemajuan di Serpong Utara.',
   'Rebus mi selama 3 menit lalu tiriskan airnya. Campurkan dengan bumbu, kecap, dan minyak rempah di piring. Aduk merata.',
   'Mengandung gluten terigu dan kedelai.'
 ),
@@ -121,7 +121,7 @@ INSERT INTO products (
   1,
   '["Tepung Mocaf Segar", "Tepung Terigu Pilihan", "Kunyit Murni & Daun Jeruk", "Bumbu Soto Rempah Tradisional", "Minyak Sayur Aromatik", "Bawang Goreng Renyah"]'::JSONB,
   'Sensasi kuah soto yang segar beraroma rempah dan jeruk nipis, dibuat dari mi sehat bermocaf dan kunyit alami yang menghangatkan tubuh.',
-  'Perpaduan kekayaan kuliner soto nusantara dengan teknologi pengolahan mi sehat modern oleh PT Azzam Tawaqal Berkemajuan di Tangerang Selatan.',
+  'Perpaduan kekayaan kuliner soto nusantara dengan teknologi pengolahan mi sehat modern oleh PT Azam Tawaqal Berkemajuan di Tangerang Selatan.',
   'Rebus mi hingga tingkat kematangan pas. Tuang bersama kuah kaldu soto mengepul ke dalam mangkuk, beri perasan jeruk nipis segar.',
   'Mengandung gluten terigu.'
 )
