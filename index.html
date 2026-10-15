@@ -64,7 +64,7 @@
 
   <!-- AOS (Animate On Scroll) CSS -->
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-  <link rel="stylesheet" href="css/styles.css?v=20261013-anim">
+  <link rel="stylesheet" href="css/styles.css?v=20261015a">
 </head>
 <body class="bg-brand-cream-soft text-brand-brown-dark font-sans antialiased selection:bg-brand-gold selection:text-white">
 
@@ -91,11 +91,12 @@
         </a>
 
         <!-- Desktop Menu -->
-        <nav class="hidden lg:flex items-center space-x-6 xl:space-x-8">
+        <nav class="hidden lg:flex items-center space-x-5 xl:space-x-7">
           <a href="#beranda" class="nav-link text-sm font-semibold text-brand-brown-dark hover:text-brand-accent transition py-1">Beranda</a>
           <a href="#tentang-kami" class="nav-link text-sm font-semibold text-brand-brown-dark hover:text-brand-accent transition py-1">Tentang Kami</a>
           <a href="#katalog" class="nav-link text-sm font-semibold text-brand-brown-dark hover:text-brand-accent transition py-1">Katalog</a>
           <a href="#best-seller" class="nav-link text-sm font-semibold text-brand-brown-dark hover:text-brand-accent transition py-1">Mie Terlaris</a>
+          <a href="#galeri-video" class="nav-link text-sm font-semibold text-brand-brown-dark hover:text-brand-accent transition py-1">Galeri Video</a>
           <a href="#cerita-kuliner" class="nav-link text-sm font-semibold text-brand-brown-dark hover:text-brand-accent transition py-1">Artikel</a>
           <a href="#lokasi" class="nav-link text-sm font-semibold text-brand-brown-dark hover:text-brand-accent transition py-1">Kontak</a>
         </nav>
@@ -133,6 +134,7 @@
       <a href="#tentang-kami" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-semibold text-brand-brown hover:bg-brand-gold-light/30">Tentang Kami</a>
       <a href="#katalog" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-semibold text-brand-brown hover:bg-brand-gold-light/30">Katalog</a>
       <a href="#best-seller" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-semibold text-brand-brown hover:bg-brand-gold-light/30">Mie Terlaris</a>
+      <a href="#galeri-video" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-semibold text-brand-brown hover:bg-brand-gold-light/30">Galeri Video</a>
       <a href="#cerita-kuliner" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-semibold text-brand-brown hover:bg-brand-gold-light/30">Artikel</a>
       <a href="#lokasi" class="mobile-nav-link block px-3 py-2 rounded-lg text-base font-semibold text-brand-brown hover:bg-brand-gold-light/30">Kontak</a>
       <div class="pt-3 border-t border-brand-gold-light space-y-2">
@@ -758,8 +760,254 @@
       </div>
     </section>
 
+    <!-- SECTION: GALERI VIDEO (DOKUMENTASI & MEDIA RESMI LEZATMU) -->
+    <section id="galeri-video" class="py-20 bg-white border-t border-brand-gold-light/60">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Section Header -->
+        <div data-aos="fade-up" class="text-center max-w-3xl mx-auto mb-16 space-y-3">
+          <span class="text-brand-accent uppercase font-bold text-xs tracking-widest inline-flex items-center justify-center gap-1.5 px-3.5 py-1 rounded-full bg-amber-50 border border-amber-200/80">
+            <i data-lucide="video" class="w-3.5 h-3.5 text-brand-gold-dark"></i>
+            <span>Dokumentasi Resmi &amp; Liputan Media</span>
+          </span>
+          <h2 class="font-heading text-3xl sm:text-4xl font-bold text-brand-brown-dark">
+            Galeri Video LezatMU
+          </h2>
+          <div class="w-20 h-1 bg-brand-gold mx-auto rounded-full"></div>
+          <p class="text-brand-brown-light text-sm sm:text-base leading-relaxed">
+            Saksikan liputan eksklusif tokoh daerah, wawancara resmi bersama TV Muhammadiyah, serta wawasan inovasi pembuatan mi sehat berbahan alami lokal nusantara.
+          </p>
+        </div>
+
+        <!-- Video Gallery Grid (3 Kolom Responsif) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+          
+          <!-- Card Video 1: Ulasan Tokoh -->
+          <div data-aos="fade-up" data-aos-duration="700" data-aos-delay="100" class="bg-brand-cream-soft/50 rounded-3xl overflow-hidden border border-brand-gold-light/80 hover:border-brand-gold shadow-warm hover:shadow-warm-lg hover:-translate-y-1 transition-all duration-300 flex flex-col group">
+            <!-- Video Player Viewport -->
+            <div class="relative bg-black aspect-[4/5] overflow-hidden flex items-center justify-center group/player">
+              <video 
+                class="w-full h-full object-contain lezatmu-gallery-video" 
+                controls 
+                playsinline 
+                preload="metadata"
+                data-title="Ulasan Eksklusif Wakil Wali Kota Tangerang Selatan untuk Mi Instan LezatMU"
+                data-desc="Liputan saat produk Mi Instan LezatMU di-review langsung oleh Wakil Wali Kota Tangsel."
+              >
+                <source src="videos/video-ulasan-wakil-walikota-tangsel.mp4#t=0.1" type="video/mp4">
+                Browser Anda tidak mendukung pemutar video HTML5.
+              </video>
+              
+              <!-- Video Badge Top-Left -->
+              <div class="absolute top-3 left-3 z-10 pointer-events-none flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-brown-dark/85 backdrop-blur-md text-brand-gold-light text-xs font-semibold shadow border border-brand-gold/30">
+                <i data-lucide="award" class="w-3.5 h-3.5 text-amber-400"></i>
+                <span>Ulasan Tokoh</span>
+              </div>
+
+              <!-- Theater Fullscreen Button Top-Right -->
+              <button 
+                type="button" 
+                onclick="openCinemaModal('videos/video-ulasan-wakil-walikota-tangsel.mp4', 'Ulasan Eksklusif Wakil Wali Kota Tangerang Selatan untuk Mi Instan LezatMU', 'Liputan saat produk Mi Instan LezatMU di-review langsung oleh Wakil Wali Kota Tangsel.', 'H. Pilar Saga Ichsan, S.T., M.Arch. &bull; Wakil Wali Kota Tangerang Selatan')"
+                class="absolute top-3 right-3 z-10 p-2 rounded-full bg-brand-brown-dark/85 hover:bg-brand-accent text-white backdrop-blur-md transition-all shadow border border-brand-gold/30 hover:scale-110 flex items-center justify-center cursor-pointer"
+                title="Buka Mode Layar Penuh (Bioskop)"
+              >
+                <i data-lucide="maximize-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <!-- Video Info & Meta -->
+            <div class="p-6 flex-1 flex flex-col justify-between bg-white">
+              <div class="space-y-3">
+                <div class="flex items-center gap-2">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">
+                    <i data-lucide="user-check" class="w-3 h-3 text-amber-700"></i>
+                    <span>Tokoh Publik</span>
+                  </span>
+                  <span class="text-[11px] text-brand-brown-light flex items-center gap-1">
+                    <i data-lucide="clock" class="w-3 h-3"></i>
+                    <span>2:54 Menit</span>
+                  </span>
+                </div>
+
+                <h3 class="font-heading font-bold text-lg text-brand-brown-dark group-hover:text-brand-accent transition leading-snug">
+                  Ulasan Eksklusif Wakil Wali Kota Tangerang Selatan untuk Mi Instan LezatMU
+                </h3>
+
+                <p class="text-xs sm:text-sm text-brand-brown-light leading-relaxed">
+                  Liputan saat produk Mi Instan LezatMU di-review langsung oleh Wakil Wali Kota Tangsel.
+                </p>
+              </div>
+
+              <div class="pt-5 mt-4 border-t border-brand-gold-light/50 flex items-center justify-between">
+                <span class="text-[11px] font-semibold text-brand-brown-light flex items-center gap-1">
+                  <i data-lucide="map-pin" class="w-3 h-3 text-brand-accent"></i>
+                  <span>Tangsel &bull; Liputan Khusus</span>
+                </span>
+                <button 
+                  type="button"
+                  onclick="openCinemaModal('videos/video-ulasan-wakil-walikota-tangsel.mp4', 'Ulasan Eksklusif Wakil Wali Kota Tangerang Selatan untuk Mi Instan LezatMU', 'Liputan saat produk Mi Instan LezatMU di-review langsung oleh Wakil Wali Kota Tangsel.', 'H. Pilar Saga Ichsan, S.T., M.Arch. &bull; Wakil Wali Kota Tangerang Selatan')"
+                  class="text-xs font-bold text-brand-accent hover:text-brand-accent-hover inline-flex items-center gap-1.5 transition-all group-hover:gap-2 cursor-pointer"
+                >
+                  <span>Layar Penuh</span>
+                  <i data-lucide="expand" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Video 2: Wawancara Media & Kapasitas Bisnis -->
+          <div data-aos="fade-up" data-aos-duration="700" data-aos-delay="200" class="bg-brand-cream-soft/50 rounded-3xl overflow-hidden border border-brand-gold-light/80 hover:border-brand-gold shadow-warm hover:shadow-warm-lg hover:-translate-y-1 transition-all duration-300 flex flex-col group">
+            <!-- Video Player Viewport -->
+            <div class="relative bg-black aspect-[4/5] overflow-hidden flex items-center justify-center group/player">
+              <video 
+                class="w-full h-full object-contain lezatmu-gallery-video" 
+                controls 
+                playsinline 
+                preload="metadata"
+                data-title="Wawancara TV Muhammadiyah: Perjalanan & Kapasitas Produksi PT ATB"
+                data-desc="Bincang-bincang bersama direksi PT Azam Tawaqal Berkemajuan mengenai kapasitas produksi (mencapai 10 karton dalam sebulan) serta informasi jaringan cabang dan wilayah pemasaran."
+              >
+                <source src="videos/video-wawancara-tvmu-kapasitas-pt-atb.mp4#t=0.1" type="video/mp4">
+                Browser Anda tidak mendukung pemutar video HTML5.
+              </video>
+              
+              <!-- Video Badge Top-Left -->
+              <div class="absolute top-3 left-3 z-10 pointer-events-none flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-brown-dark/85 backdrop-blur-md text-brand-gold-light text-xs font-semibold shadow border border-brand-gold/30">
+                <i data-lucide="tv" class="w-3.5 h-3.5 text-blue-400"></i>
+                <span>Wawancara Media</span>
+              </div>
+
+              <!-- Theater Fullscreen Button Top-Right -->
+              <button 
+                type="button" 
+                onclick="openCinemaModal('videos/video-wawancara-tvmu-kapasitas-pt-atb.mp4', 'Wawancara TV Muhammadiyah: Perjalanan & Kapasitas Produksi PT ATB', 'Bincang-bincang bersama direksi PT Azam Tawaqal Berkemajuan mengenai kapasitas produksi (mencapai 10 karton dalam sebulan) serta informasi jaringan cabang dan wilayah pemasaran.', 'TVMu Televisi Muhammadiyah &bull; Direksi PT ATB')"
+                class="absolute top-3 right-3 z-10 p-2 rounded-full bg-brand-brown-dark/85 hover:bg-brand-accent text-white backdrop-blur-md transition-all shadow border border-brand-gold/30 hover:scale-110 flex items-center justify-center cursor-pointer"
+                title="Buka Mode Layar Penuh (Bioskop)"
+              >
+                <i data-lucide="maximize-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <!-- Video Info & Meta -->
+            <div class="p-6 flex-1 flex flex-col justify-between bg-white">
+              <div class="space-y-3">
+                <div class="flex items-center gap-2">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-900 border border-blue-300">
+                    <i data-lucide="tv-2" class="w-3 h-3 text-blue-700"></i>
+                    <span>TV Muhammadiyah</span>
+                  </span>
+                  <span class="text-[11px] text-brand-brown-light flex items-center gap-1">
+                    <i data-lucide="clock" class="w-3 h-3"></i>
+                    <span>0:59 Menit</span>
+                  </span>
+                </div>
+
+                <h3 class="font-heading font-bold text-lg text-brand-brown-dark group-hover:text-brand-accent transition leading-snug">
+                  Wawancara TV Muhammadiyah: Perjalanan &amp; Kapasitas Produksi PT ATB
+                </h3>
+
+                <p class="text-xs sm:text-sm text-brand-brown-light leading-relaxed">
+                  Bincang-bincang bersama direksi PT Azam Tawaqal Berkemajuan mengenai kapasitas produksi (mencapai 10 karton dalam sebulan) serta informasi jaringan cabang dan wilayah pemasaran.
+                </p>
+              </div>
+
+              <div class="pt-5 mt-4 border-t border-brand-gold-light/50 flex items-center justify-between">
+                <span class="text-[11px] font-semibold text-brand-brown-light flex items-center gap-1">
+                  <i data-lucide="boxes" class="w-3 h-3 text-brand-accent"></i>
+                  <span>Kapasitas Produksi &bull; PT ATB</span>
+                </span>
+                <button 
+                  type="button"
+                  onclick="openCinemaModal('videos/video-wawancara-tvmu-kapasitas-pt-atb.mp4', 'Wawancara TV Muhammadiyah: Perjalanan & Kapasitas Produksi PT ATB', 'Bincang-bincang bersama direksi PT Azam Tawaqal Berkemajuan mengenai kapasitas produksi (mencapai 10 karton dalam sebulan) serta informasi jaringan cabang dan wilayah pemasaran.', 'TVMu Televisi Muhammadiyah &bull; Direksi PT ATB')"
+                  class="text-xs font-bold text-brand-accent hover:text-brand-accent-hover inline-flex items-center gap-1.5 transition-all group-hover:gap-2 cursor-pointer"
+                >
+                  <span>Layar Penuh</span>
+                  <i data-lucide="expand" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card Video 3: Edukasi Bahan & Produk -->
+          <div data-aos="fade-up" data-aos-duration="700" data-aos-delay="300" class="bg-brand-cream-soft/50 rounded-3xl overflow-hidden border border-brand-gold-light/80 hover:border-brand-gold shadow-warm hover:shadow-warm-lg hover:-translate-y-1 transition-all duration-300 flex flex-col group">
+            <!-- Video Player Viewport -->
+            <div class="relative bg-black aspect-[4/5] overflow-hidden flex items-center justify-center group/player">
+              <video 
+                class="w-full h-full object-contain lezatmu-gallery-video" 
+                controls 
+                playsinline 
+                preload="metadata"
+                data-title="Mengenal Lebih Dekat Komposisi & Bahan Alami Mi Instan LezatMU"
+                data-desc="Pengenalan mendalam tentang pembuatan mi yang menggunakan tepung mocaf lokal dan ekstrak kunyit alami."
+              >
+                <source src="videos/video-edukasi-komposisi-bahan-lezatmu.mp4#t=0.1" type="video/mp4">
+                Browser Anda tidak mendukung pemutar video HTML5.
+              </video>
+              
+              <!-- Video Badge Top-Left -->
+              <div class="absolute top-3 left-3 z-10 pointer-events-none flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-brown-dark/85 backdrop-blur-md text-brand-gold-light text-xs font-semibold shadow border border-brand-gold/30">
+                <i data-lucide="leaf" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span>Edukasi Produk</span>
+              </div>
+
+              <!-- Theater Fullscreen Button Top-Right -->
+              <button 
+                type="button" 
+                onclick="openCinemaModal('videos/video-edukasi-komposisi-bahan-lezatmu.mp4', 'Mengenal Lebih Dekat Komposisi & Bahan Alami Mi Instan LezatMU', 'Pengenalan mendalam tentang pembuatan mi yang menggunakan tepung mocaf lokal dan ekstrak kunyit alami.', 'Inovasi Sehat &bull; Tepung Mocaf Lokal &amp; Ekstrak Kunyit')"
+                class="absolute top-3 right-3 z-10 p-2 rounded-full bg-brand-brown-dark/85 hover:bg-brand-accent text-white backdrop-blur-md transition-all shadow border border-brand-gold/30 hover:scale-110 flex items-center justify-center cursor-pointer"
+                title="Buka Mode Layar Penuh (Bioskop)"
+              >
+                <i data-lucide="maximize-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <!-- Video Info & Meta -->
+            <div class="p-6 flex-1 flex flex-col justify-between bg-white">
+              <div class="space-y-3">
+                <div class="flex items-center gap-2">
+                  <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-900 border border-emerald-300">
+                    <i data-lucide="sparkles" class="w-3 h-3 text-emerald-700"></i>
+                    <span>Bahan Alami Pilihan</span>
+                  </span>
+                  <span class="text-[11px] text-brand-brown-light flex items-center gap-1">
+                    <i data-lucide="clock" class="w-3 h-3"></i>
+                    <span>1:12 Menit</span>
+                  </span>
+                </div>
+
+                <h3 class="font-heading font-bold text-lg text-brand-brown-dark group-hover:text-brand-accent transition leading-snug">
+                  Mengenal Lebih Dekat Komposisi &amp; Bahan Alami Mi Instan LezatMU
+                </h3>
+
+                <p class="text-xs sm:text-sm text-brand-brown-light leading-relaxed">
+                  Pengenalan mendalam tentang pembuatan mi yang menggunakan tepung mocaf lokal dan ekstrak kunyit alami.
+                </p>
+              </div>
+
+              <div class="pt-5 mt-4 border-t border-brand-gold-light/50 flex items-center justify-between">
+                <span class="text-[11px] font-semibold text-brand-brown-light flex items-center gap-1">
+                  <i data-lucide="shield-check" class="w-3 h-3 text-emerald-600"></i>
+                  <span>Mocaf &amp; Kunyit Alami</span>
+                </span>
+                <button 
+                  type="button"
+                  onclick="openCinemaModal('videos/video-edukasi-komposisi-bahan-lezatmu.mp4', 'Mengenal Lebih Dekat Komposisi & Bahan Alami Mi Instan LezatMU', 'Pengenalan mendalam tentang pembuatan mi yang menggunakan tepung mocaf lokal dan ekstrak kunyit alami.', 'Inovasi Sehat &bull; Tepung Mocaf Lokal &amp; Ekstrak Kunyit')"
+                  class="text-xs font-bold text-brand-accent hover:text-brand-accent-hover inline-flex items-center gap-1.5 transition-all group-hover:gap-2 cursor-pointer"
+                >
+                  <span>Layar Penuh</span>
+                  <i data-lucide="expand" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
     <!-- SECTION: ARTIKEL & TIPS KULINER (BLOG / CERITA MIE) -->
-    <section id="cerita-kuliner" class="py-20 bg-white border-t border-brand-gold-light/60">
+    <section id="cerita-kuliner" class="py-20 bg-brand-cream-soft border-t border-brand-gold-light/60">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div data-aos="fade-up" class="text-center max-w-3xl mx-auto mb-16 space-y-3">
@@ -775,7 +1023,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="articlesGrid">
           
           <!-- Article 1 -->
-          <article data-aos="fade-up" data-aos-duration="700" data-aos-delay="100" class="bg-brand-cream-soft rounded-3xl overflow-hidden border border-brand-gold-light hover:shadow-warm hover-lift transition-all duration-300 flex flex-col group">
+          <article data-aos="fade-up" data-aos-duration="700" data-aos-delay="100" class="bg-white rounded-3xl overflow-hidden border border-brand-gold-light hover:shadow-warm hover-lift transition-all duration-300 flex flex-col group">
             <div class="relative h-48 overflow-hidden bg-brand-cream">
               <img src="images/mi-ayam-bawang.jpg?v=2" alt="Mi Instan LezatMU Rasa Ayam Bawang" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
               <span class="absolute top-3 left-3 bg-brand-brown-dark/80 backdrop-blur-sm text-brand-gold-light text-xs font-bold px-3 py-1 rounded-full">
@@ -805,7 +1053,7 @@
           </article>
 
           <!-- Article 2 -->
-          <article data-aos="fade-up" data-aos-duration="700" data-aos-delay="200" class="bg-brand-cream-soft rounded-3xl overflow-hidden border border-brand-gold-light hover:shadow-warm hover-lift transition-all duration-300 flex flex-col group">
+          <article data-aos="fade-up" data-aos-duration="700" data-aos-delay="200" class="bg-white rounded-3xl overflow-hidden border border-brand-gold-light hover:shadow-warm hover-lift transition-all duration-300 flex flex-col group">
             <div class="relative h-48 overflow-hidden bg-brand-cream">
               <img src="images/mi-goreng.jpg?v=2" alt="Mi Instan LezatMU Mi Goreng" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
               <span class="absolute top-3 left-3 bg-brand-accent text-white text-xs font-bold px-3 py-1 rounded-full">
@@ -835,7 +1083,7 @@
           </article>
 
           <!-- Article 3 -->
-          <article data-aos="fade-up" data-aos-duration="700" data-aos-delay="300" class="bg-brand-cream-soft rounded-3xl overflow-hidden border border-brand-gold-light hover:shadow-warm hover-lift transition-all duration-300 flex flex-col group">
+          <article data-aos="fade-up" data-aos-duration="700" data-aos-delay="300" class="bg-white rounded-3xl overflow-hidden border border-brand-gold-light hover:shadow-warm hover-lift transition-all duration-300 flex flex-col group">
             <div class="relative h-48 overflow-hidden bg-brand-cream">
               <img src="images/mi-kuah-soto.jpg?v=2" alt="Mi Instan LezatMU Kuah Rasa Soto" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
               <span class="absolute top-3 left-3 bg-emerald-700 text-white text-xs font-bold px-3 py-1 rounded-full">
@@ -870,7 +1118,7 @@
     </section>
 
     <!-- SECTION: HUBUNGI & LOKASI KAMI (SERPONG UTARA TANGERANG SELATAN) -->
-    <section id="lokasi" class="py-20 bg-brand-cream-soft border-t border-brand-gold-light/60">
+    <section id="lokasi" class="py-20 bg-white border-t border-brand-gold-light/60">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div data-aos="fade-up" class="text-center max-w-3xl mx-auto mb-16 space-y-3">
@@ -1103,6 +1351,7 @@
             <li><a href="#tentang-kami" class="hover:text-brand-gold transition">Tentang Kami</a></li>
             <li><a href="#katalog" class="hover:text-brand-gold transition">Katalog</a></li>
             <li><a href="#best-seller" class="hover:text-brand-gold transition">Mie Terlaris</a></li>
+            <li><a href="#galeri-video" class="hover:text-brand-gold transition">Galeri Video</a></li>
             <li><a href="#cerita-kuliner" class="hover:text-brand-gold transition">Artikel</a></li>
             <li><a href="#lokasi" class="hover:text-brand-gold transition">Kontak</a></li>
           </ul>
@@ -2064,6 +2313,67 @@
     </div>
   </div>
 
+  <!-- MODAL: THEATER BIOSKOP PEMUTAR VIDEO RESMI -->
+  <div id="videoCinemaModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 transition-all duration-300">
+    <div class="relative w-full max-w-4xl bg-stone-900 rounded-3xl overflow-hidden shadow-2xl border border-brand-gold/30 flex flex-col max-h-[92vh]">
+      
+      <!-- Modal Header -->
+      <div class="px-5 py-4 bg-brand-brown-dark/95 border-b border-brand-gold/30 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3 overflow-hidden">
+          <div class="w-10 h-10 rounded-full bg-brand-gold/20 flex items-center justify-center flex-shrink-0 text-brand-gold border border-brand-gold/40">
+            <i data-lucide="play-circle" class="w-5 h-5"></i>
+          </div>
+          <div class="overflow-hidden">
+            <h3 id="cinemaModalTitle" class="font-heading font-bold text-base sm:text-lg text-white truncate">
+              Pemutar Video Resmi LezatMU
+            </h3>
+            <p id="cinemaModalSubtitle" class="text-xs text-brand-gold-light truncate">
+              Dokumentasi BUMM PT Azam Tawaqal Berkemajuan
+            </p>
+          </div>
+        </div>
+        
+        <button 
+          id="closeCinemaModalBtn" 
+          type="button" 
+          class="p-2 rounded-full bg-white/10 hover:bg-brand-accent text-white transition flex-shrink-0 cursor-pointer"
+          title="Tutup Pemutar (Esc)"
+        >
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Video Player Screen -->
+      <div class="relative bg-black flex items-center justify-center flex-1 min-h-[260px] max-h-[65vh] overflow-hidden">
+        <video 
+          id="cinemaVideoPlayer" 
+          class="w-full max-h-[65vh] object-contain" 
+          controls 
+          autoplay 
+          playsinline
+        >
+          Browser Anda tidak mendukung pemutar video HTML5.
+        </video>
+      </div>
+
+      <!-- Modal Footer Info -->
+      <div class="px-5 py-4 bg-stone-950 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <p id="cinemaModalDesc" class="text-gray-300 leading-relaxed max-w-2xl text-xs sm:text-sm">
+          Deskripsi video dokumentasi resmi LezatMU.
+        </p>
+        <button 
+          type="button" 
+          onclick="closeCinemaModal()" 
+          class="self-end sm:self-auto px-4 py-2 rounded-xl bg-brand-accent hover:bg-brand-accent-hover text-white font-bold transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap shadow-md"
+        >
+          <i data-lucide="check" class="w-4 h-4"></i>
+          <span>Selesai Menonton</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- TOAST NOTIFICATION CONTAINER -->
   <div id="toastContainer" class="fixed top-24 right-6 z-50 space-y-2 pointer-events-none">
     <!-- Dynamic Toasts injected here -->
@@ -2074,6 +2384,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-config.js?v=20261013d"></script>
   <script src="js/data.js?v=20261013g"></script>
-  <script src="js/app.js?v=20261013g"></script>
+  <script src="js/app.js?v=20261015a"></script>
 </body>
 </html>

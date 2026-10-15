@@ -288,3 +288,12 @@ input[type=range] {
   transform: scale(0.95);
 }
 
+/* Video Gallery Styling */
+.lezatmu-gallery-video {
+  background-color: #0c0a09;
+}
+.lezatmu-gallery-video::-webkit-media-controls-enclosure {
+  border-radius: 0 0 1.25rem 1.25rem;
+}
+
+

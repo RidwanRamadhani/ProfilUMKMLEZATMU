@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   renderBestSellers();
   renderTestimonials();
   renderArticles();
+  initVideoGallery();
   initCatalog();
   initProductFormManagement();
   initTestimonialsManagement();
@@ -1796,6 +1797,10 @@ function initModals() {
         testimonialModal.classList.remove("flex");
         document.body.style.overflow = "";
       }
+      const cinemaModal = document.getElementById("videoCinemaModal");
+      if (cinemaModal && !cinemaModal.classList.contains("hidden")) {
+        closeCinemaModal();
+      }
     }
   });
 }
@@ -2053,6 +2058,95 @@ window.renderArticles = function() {
 
   initLucide();
   refreshAOS();
+};
+
+// ==========================================================================
+// 6B. GALERI VIDEO LEZATMU & MODE BIOSKOP (THEATER MODAL)
+// ==========================================================================
+function initVideoGallery() {
+  const galleryVideos = document.querySelectorAll(".lezatmu-gallery-video");
+  
+  // Auto-pause video lain ketika satu video dimainkan
+  galleryVideos.forEach(vid => {
+    vid.addEventListener("play", () => {
+      galleryVideos.forEach(otherVid => {
+        if (otherVid !== vid && !otherVid.paused) {
+          otherVid.pause();
+        }
+      });
+      const cinemaPlayer = document.getElementById("cinemaVideoPlayer");
+      if (cinemaPlayer && !cinemaPlayer.paused) {
+        cinemaPlayer.pause();
+      }
+    });
+  });
+
+  // Listener tombol tutup modal bioskop
+  const cinemaModal = document.getElementById("videoCinemaModal");
+  const closeBtn = document.getElementById("closeCinemaModalBtn");
+
+  if (closeBtn) {
+    closeBtn.addEventListener("click", closeCinemaModal);
+  }
+
+  if (cinemaModal) {
+    cinemaModal.addEventListener("click", (e) => {
+      if (e.target === cinemaModal) {
+        closeCinemaModal();
+      }
+    });
+  }
+}
+
+// Buka Mode Layar Penuh Bioskop
+window.openCinemaModal = function(videoSrc, title, desc, subtitle) {
+  const cinemaModal = document.getElementById("videoCinemaModal");
+  const cinemaPlayer = document.getElementById("cinemaVideoPlayer");
+  const titleEl = document.getElementById("cinemaModalTitle");
+  const subEl = document.getElementById("cinemaModalSubtitle");
+  const descEl = document.getElementById("cinemaModalDesc");
+
+  if (!cinemaModal || !cinemaPlayer) return;
+
+  // Hentikan video inline yang sedang berjalan agar suaranya tidak bertabrakan
+  document.querySelectorAll(".lezatmu-gallery-video").forEach(v => {
+    if (!v.paused) v.pause();
+  });
+
+  if (titleEl) titleEl.textContent = title || "Pemutar Video LezatMU";
+  if (subEl) subEl.textContent = subtitle || "Dokumentasi Resmi PT Azam Tawaqal Berkemajuan";
+  if (descEl) descEl.textContent = desc || "";
+
+  cinemaPlayer.src = videoSrc;
+  cinemaModal.classList.remove("hidden");
+  cinemaModal.classList.add("flex");
+  document.body.style.overflow = "hidden";
+
+  cinemaPlayer.load();
+  cinemaPlayer.play().catch(e => {
+    console.log("Autoplay ditunda oleh kebijakan browser:", e);
+  });
+
+  initLucide();
+};
+
+// Tutup Mode Layar Penuh Bioskop
+window.closeCinemaModal = function() {
+  const cinemaModal = document.getElementById("videoCinemaModal");
+  const cinemaPlayer = document.getElementById("cinemaVideoPlayer");
+
+  if (cinemaPlayer) {
+    cinemaPlayer.pause();
+    cinemaPlayer.removeAttribute("src");
+    cinemaPlayer.load();
+  }
+
+  if (cinemaModal) {
+    cinemaModal.classList.add("hidden");
+    cinemaModal.classList.remove("flex");
+  }
+
+  document.body.style.overflow = "";
 };
 
 // 7. Fast Consultation Form
