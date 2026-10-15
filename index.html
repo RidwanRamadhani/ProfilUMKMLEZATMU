@@ -160,28 +160,46 @@
     <!-- HERO SECTION WITH CLEAR TRANSPARENT PHOTO BACKGROUND -->
     <section id="beranda" class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28 min-h-[660px] flex items-center">
       <!-- Full-Bleed Real Background Photo: Gedung PCM Serpong Utara / Markaz Dakwah AUM -->
-      <div class="absolute inset-0 z-0 overflow-hidden">
-        <img 
-          src="images/gedung-pcm-serpong-utara.jpg" 
-          alt="Gedung Markaz Dakwah PCM Serpong Utara" 
-          class="w-full h-full object-cover object-center brightness-[0.88] contrast-[1.05]"
-        >
-        <!-- Soft Transparent Dark Vignette so background is 100% visible and text is crystal clear -->
-        <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-black/35"></div>
-        <div class="absolute inset-0 bg-gradient-to-t from-brand-brown-dark/90 via-transparent to-black/40"></div>
+      <div class="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        <picture>
+          <source media="(min-width: 768px)" srcset="images/gedung-pcm-serpong-utara-hd.jpg?v=20261015b">
+          <img 
+            src="images/gedung-pcm-serpong-utara-hd.jpg?v=20261015b"
+            srcset="images/gedung-pcm-serpong-utara.jpg?v=20261015b 1024w, images/gedung-pcm-serpong-utara-hd.jpg?v=20261015b 2048w"
+            sizes="100vw"
+            alt="Gedung Sentra Usaha BUMM PT Azzam Tawaqal Berkemajuan - Markaz Dakwah Lazismu PCM Serpong Utara" 
+            class="w-full h-full object-cover object-[35%_18%] sm:object-center brightness-[0.96] contrast-[1.06] transition-all duration-700"
+            loading="eager"
+            fetchpriority="high"
+          >
+        </picture>
+        <!-- Soft Transparent Dark Vignette so background is 100% visible and text is crystal clear on both HP & Laptop -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/25 to-brand-brown-dark/90 lg:bg-gradient-to-r lg:from-black/80 lg:via-black/45 lg:to-black/20"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-brand-brown-dark/95 via-transparent to-black/25"></div>
       </div>
 
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           
           <!-- Hero Text (Fully Transparent, No Blocking Box) -->
-          <div class="lg:col-span-7 space-y-6 text-center lg:text-left text-white">
-            <div data-aos="fade-down" data-aos-duration="600" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-accent/80 backdrop-blur-sm text-white font-bold text-xs sm:text-sm border border-brand-gold/40 shadow-sm animate-pulse">
-              <i data-lucide="sparkles" class="w-4 h-4 text-amber-300"></i>
-              <span>BUMM PCM Serpong Utara &bull; Pelopor Inovasi Mie Sehat</span>
+          <div class="lg:col-span-7 space-y-6 text-center lg:text-left text-white bg-black/30 lg:bg-transparent backdrop-blur-[2px] lg:backdrop-blur-none p-5 sm:p-6 lg:p-0 rounded-3xl border border-white/10 lg:border-none shadow-2xl lg:shadow-none">
+            <div data-aos="fade-down" data-aos-duration="600" class="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
+              <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-accent/85 backdrop-blur-sm text-white font-bold text-xs sm:text-sm border border-brand-gold/40 shadow-sm animate-pulse">
+                <i data-lucide="sparkles" class="w-4 h-4 text-amber-300"></i>
+                <span>BUMM PCM Serpong Utara &bull; Pelopor Inovasi Mie Sehat</span>
+              </div>
+              <button 
+                type="button" 
+                onclick="openBuildingPhotoModal()" 
+                class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-black/60 hover:bg-brand-accent text-brand-gold-light hover:text-white text-xs font-semibold backdrop-blur-md border border-white/20 transition-all shadow-sm hover:scale-105 cursor-pointer"
+                title="Lihat Foto Gedung HD Lengkap"
+              >
+                <i data-lucide="building-2" class="w-3.5 h-3.5 text-amber-300"></i>
+                <span>Lihat Gedung HD</span>
+              </button>
             </div>
 
-            <h1 data-aos="fade-up" data-aos-duration="800" data-aos-delay="100" style="font-family: 'Plus Jakarta Sans', sans-serif !important;" class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-heading font-extrabold text-white leading-tight drop-shadow-md">
+            <h1 data-aos="fade-up" data-aos-duration="800" data-aos-delay="100" style="font-family: 'Plus Jakarta Sans', sans-serif !important; text-shadow: 0 2px 10px rgba(0,0,0,0.85), 0 4px 20px rgba(0,0,0,0.7);" class="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-heading font-extrabold text-white leading-tight drop-shadow-md">
               PT Azzam Tawaqal Berkemajuan: <br>
               <span style="font-family: 'Plus Jakarta Sans', sans-serif !important;" class="text-amber-400 font-heading italic drop-shadow">
                 Inovasi Mie Sehat LEZATMU
@@ -191,7 +209,7 @@
               </span>
             </h1>
 
-            <p data-aos="fade-up" data-aos-duration="800" data-aos-delay="200" class="text-base sm:text-lg text-brand-gold-light/90 leading-relaxed max-w-2xl mx-auto lg:mx-0 drop-shadow">
+            <p data-aos="fade-up" data-aos-duration="800" data-aos-delay="200" style="text-shadow: 0 2px 8px rgba(0,0,0,0.9);" class="text-base sm:text-lg text-brand-gold-light/95 leading-relaxed max-w-2xl mx-auto lg:mx-0 drop-shadow">
               Unit usaha kebanggaan binaan Pimpinan Cabang Muhammadiyah (PCM) Serpong Utara. Memproduksi olahan mie sehat berbahan tepung mocaf &amp; gandum segar alami tanpa pewarna sintetis dan tanpa bahan pengawet berbahaya.
             </p>
 
@@ -2374,6 +2392,61 @@
     </div>
   </div>
 
+  <!-- MODAL: FOTO RESMI GEDUNG HD PCM SERPONG UTARA -->
+  <div id="buildingPhotoModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 transition-all duration-300">
+    <div class="relative w-full max-w-4xl bg-stone-900 rounded-3xl overflow-hidden shadow-2xl border border-brand-gold/40 flex flex-col max-h-[92vh]">
+      <!-- Modal Header -->
+      <div class="px-5 py-4 bg-brand-brown-dark/95 border-b border-brand-gold/30 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3 overflow-hidden">
+          <div class="w-10 h-10 rounded-full bg-brand-gold/20 flex items-center justify-center flex-shrink-0 text-brand-gold border border-brand-gold/40">
+            <i data-lucide="building-2" class="w-5 h-5"></i>
+          </div>
+          <div class="overflow-hidden">
+            <h3 class="font-heading font-bold text-base sm:text-lg text-white truncate">
+              Gedung Sentra Usaha BUMM &amp; Markaz Dakwah PCM Serpong Utara
+            </h3>
+            <p class="text-xs text-brand-gold-light truncate">
+              Lazismu KL BSD &bull; Jl. Ciater Raya No. 88, Rawa Buntu, Serpong, Tangerang Selatan
+            </p>
+          </div>
+        </div>
+        <button 
+          type="button" 
+          onclick="closeBuildingPhotoModal()"
+          class="p-2 rounded-full bg-white/10 hover:bg-brand-accent text-white transition flex-shrink-0 cursor-pointer"
+          title="Tutup (Esc)"
+        >
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Photo Viewport -->
+      <div class="relative bg-black flex items-center justify-center flex-1 overflow-hidden p-2 sm:p-4">
+        <img 
+          src="images/gedung-pcm-serpong-utara-hd.jpg?v=20261015b" 
+          alt="Foto Gedung Markaz Dakwah PCM Serpong Utara" 
+          class="w-full max-h-[72vh] object-contain rounded-2xl shadow-2xl"
+          loading="eager"
+        >
+      </div>
+
+      <!-- Footer Info -->
+      <div class="px-5 py-3.5 bg-stone-950 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <span class="text-gray-300">
+          Dokumentasi Fisik Resmi Kantor Operasional &amp; Dapur PT Azzam Tawaqal Berkemajuan (LEZATMU)
+        </span>
+        <button 
+          type="button" 
+          onclick="closeBuildingPhotoModal()" 
+          class="self-end sm:self-auto px-4 py-2 rounded-xl bg-brand-accent hover:bg-brand-accent-hover text-white font-bold transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap shadow-md"
+        >
+          <i data-lucide="check" class="w-4 h-4"></i>
+          <span>Tutup Tampilan</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- TOAST NOTIFICATION CONTAINER -->
   <div id="toastContainer" class="fixed top-24 right-6 z-50 space-y-2 pointer-events-none">
     <!-- Dynamic Toasts injected here -->
@@ -2384,6 +2457,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-config.js?v=20261013d"></script>
   <script src="js/data.js?v=20261013g"></script>
-  <script src="js/app.js?v=20261015a"></script>
+  <script src="js/app.js?v=20261015b"></script>
 </body>
 </html>

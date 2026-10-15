@@ -1766,6 +1766,15 @@ function initModals() {
     });
   }
 
+  const buildingPhotoModal = document.getElementById("buildingPhotoModal");
+  if (buildingPhotoModal) {
+    buildingPhotoModal.addEventListener("click", (e) => {
+      if (e.target === buildingPhotoModal) {
+        closeBuildingPhotoModal();
+      }
+    });
+  }
+
   // Escape key support
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
@@ -1800,6 +1809,10 @@ function initModals() {
       const cinemaModal = document.getElementById("videoCinemaModal");
       if (cinemaModal && !cinemaModal.classList.contains("hidden")) {
         closeCinemaModal();
+      }
+      const buildingModal = document.getElementById("buildingPhotoModal");
+      if (buildingModal && !buildingModal.classList.contains("hidden")) {
+        closeBuildingPhotoModal();
       }
     }
   });
@@ -2146,6 +2159,25 @@ window.closeCinemaModal = function() {
     cinemaModal.classList.remove("flex");
   }
 
+  document.body.style.overflow = "";
+};
+
+// Buka Modal Foto HD Gedung PCM Serpong Utara
+window.openBuildingPhotoModal = function() {
+  const modal = document.getElementById("buildingPhotoModal");
+  if (!modal) return;
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+  document.body.style.overflow = "hidden";
+  initLucide();
+};
+
+// Tutup Modal Foto HD Gedung PCM Serpong Utara
+window.closeBuildingPhotoModal = function() {
+  const modal = document.getElementById("buildingPhotoModal");
+  if (!modal) return;
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
   document.body.style.overflow = "";
 };
 
