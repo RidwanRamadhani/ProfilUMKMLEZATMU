@@ -253,12 +253,20 @@
               <!-- Solid Clean Card (Non-Transparan) -->
               <div class="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-brand-gold/40 group bg-white p-2.5 sm:p-3 hover:shadow-warm-lg transition-all duration-500">
                 <div class="relative rounded-2xl overflow-hidden bg-brand-cream-soft flex items-center justify-center">
-                  <img 
-                    src="images/keunggulan-mie-lezatmu.jpg?v=4" 
-                    alt="Alasan Mengapa Memilih Mie LezatMU - PT Azam Tawaqal Berkemajuan" 
-                    class="w-full h-auto max-h-[440px] object-contain rounded-xl group-hover:scale-102 transition-transform duration-500"
-                    loading="eager"
-                  >
+                  <picture>
+                    <source media="(min-width: 640px)" srcset="images/keunggulan-mie-lezatmu-hd.jpg?v=20261015c">
+                    <img 
+                      src="images/keunggulan-mie-lezatmu-hd.jpg?v=20261015c" 
+                      srcset="images/keunggulan-mie-lezatmu.jpg?v=20261015c 743w, images/keunggulan-mie-lezatmu-hd.jpg?v=20261015c 1486w"
+                      sizes="(max-width: 640px) 340px, (max-width: 1024px) 370px, 390px"
+                      alt="Alasan Mengapa Memilih Mie LezatMU - PT Azam Tawaqal Berkemajuan" 
+                      class="w-full h-auto max-h-[460px] object-contain rounded-xl group-hover:scale-102 transition-transform duration-500 cursor-pointer shadow-sm"
+                      loading="eager"
+                      fetchpriority="high"
+                      onclick="openFlyerModal()"
+                      title="Klik untuk melihat poster HD layar penuh"
+                    >
+                  </picture>
                 </div>
               </div>
 
@@ -432,9 +440,12 @@
               <div data-aos="fade-left" data-aos-duration="800" data-aos-delay="150" class="rounded-3xl overflow-hidden shadow-warm border border-brand-gold-light/80 group relative bg-white flex flex-col hover-lift transition-all duration-300 sm:mt-6">
                 <div class="relative overflow-hidden h-80 sm:h-96 lg:h-[430px] bg-brand-cream-soft">
                   <img 
-                    src="images/keunggulan-mie-lezatmu.jpg?v=2" 
+                    src="images/keunggulan-mie-lezatmu-hd.jpg?v=20261015c" 
+                    srcset="images/keunggulan-mie-lezatmu.jpg?v=20261015c 743w, images/keunggulan-mie-lezatmu-hd.jpg?v=20261015c 1486w"
                     alt="Edukasi & Keunggulan Mi Instan LezatMU" 
-                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cursor-pointer"
+                    onclick="openFlyerModal()"
+                    title="Klik untuk melihat poster HD layar penuh"
                     loading="lazy"
                   >
                   <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/50 to-transparent p-4 text-white">
@@ -2496,6 +2507,62 @@
     </div>
   </div>
 
+  <!-- MODAL: POSTER FLYER HD KEUNGGULAN MIE LEZATMU -->
+  <div id="flyerPosterModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden items-center justify-center p-3 sm:p-6 transition-all duration-300">
+    <div class="relative w-full max-w-2xl bg-stone-900 rounded-3xl overflow-hidden shadow-2xl border border-brand-gold/40 flex flex-col max-h-[94vh]">
+      <!-- Modal Header -->
+      <div class="px-5 py-4 bg-brand-brown-dark/95 border-b border-brand-gold/30 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3 overflow-hidden">
+          <div class="w-10 h-10 rounded-full bg-brand-gold/20 flex items-center justify-center flex-shrink-0 text-brand-gold border border-brand-gold/40">
+            <i data-lucide="award" class="w-5 h-5 text-amber-400"></i>
+          </div>
+          <div class="overflow-hidden">
+            <h3 class="font-heading font-bold text-base sm:text-lg text-white truncate">
+              Poster Resmi Keunggulan Mi Instan LezatMU
+            </h3>
+            <p class="text-xs text-brand-gold-light truncate">
+              Sajian Nikmat, Pilihan Tepat &bull; PT Azam Tawaqal Berkemajuan
+            </p>
+          </div>
+        </div>
+        <button 
+          type="button" 
+          onclick="closeFlyerModal()"
+          class="p-2 rounded-full bg-white/10 hover:bg-brand-accent text-white transition flex-shrink-0 cursor-pointer"
+          title="Tutup (Esc)"
+        >
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Photo Viewport -->
+      <div class="relative bg-stone-950 flex items-center justify-center flex-1 overflow-hidden p-2 sm:p-4">
+        <img 
+          src="images/keunggulan-mie-lezatmu-hd.jpg?v=20261015c" 
+          alt="Poster Resmi Keunggulan Mie LezatMU HD" 
+          class="w-full max-h-[75vh] object-contain rounded-2xl shadow-2xl"
+          loading="eager"
+        >
+      </div>
+
+      <!-- Footer Info -->
+      <div class="px-5 py-3.5 bg-stone-950 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+        <span class="text-gray-300 flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span>100% Halal Indonesia &bull; Terdaftar Resmi BPOM RI MD</span>
+        </span>
+        <button 
+          type="button" 
+          onclick="closeFlyerModal()" 
+          class="self-end sm:self-auto px-4 py-2 rounded-xl bg-brand-accent hover:bg-brand-accent-hover text-white font-bold transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap shadow-md"
+        >
+          <i data-lucide="check" class="w-4 h-4"></i>
+          <span>Tutup</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- TOAST NOTIFICATION CONTAINER -->
   <div id="toastContainer" class="fixed top-24 right-6 z-50 space-y-2 pointer-events-none">
     <!-- Dynamic Toasts injected here -->
@@ -2506,6 +2573,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-config.js?v=20261013d"></script>
   <script src="js/data.js?v=20261015c"></script>
-  <script src="js/app.js?v=20261015d"></script>
+  <script src="js/app.js?v=20261015e"></script>
 </body>
 </html>

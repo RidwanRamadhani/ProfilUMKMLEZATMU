@@ -1775,6 +1775,15 @@ function initModals() {
     });
   }
 
+  const flyerPosterModal = document.getElementById("flyerPosterModal");
+  if (flyerPosterModal) {
+    flyerPosterModal.addEventListener("click", (e) => {
+      if (e.target === flyerPosterModal) {
+        closeFlyerModal();
+      }
+    });
+  }
+
   // Escape key support
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape") {
@@ -1813,6 +1822,10 @@ function initModals() {
       const buildingModal = document.getElementById("buildingPhotoModal");
       if (buildingModal && !buildingModal.classList.contains("hidden")) {
         closeBuildingPhotoModal();
+      }
+      const flyerModal = document.getElementById("flyerPosterModal");
+      if (flyerModal && !flyerModal.classList.contains("hidden")) {
+        closeFlyerModal();
       }
     }
   });
@@ -2175,6 +2188,25 @@ window.openBuildingPhotoModal = function() {
 // Tutup Modal Foto HD Gedung PCM Serpong Utara
 window.closeBuildingPhotoModal = function() {
   const modal = document.getElementById("buildingPhotoModal");
+  if (!modal) return;
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+  document.body.style.overflow = "";
+};
+
+// Buka Modal Poster Flyer HD Keunggulan Mie LezatMU
+window.openFlyerModal = function() {
+  const modal = document.getElementById("flyerPosterModal");
+  if (!modal) return;
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+  document.body.style.overflow = "hidden";
+  initLucide();
+};
+
+// Tutup Modal Poster Flyer HD Keunggulan Mie LezatMU
+window.closeFlyerModal = function() {
+  const modal = document.getElementById("flyerPosterModal");
   if (!modal) return;
   modal.classList.add("hidden");
   modal.classList.remove("flex");
